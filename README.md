@@ -1,5 +1,7 @@
 # PCQ 3D 배선 실습 시뮬레이터
 
+**공개 사이트:** https://10048-design.github.io/pcq-3d-wiring-simulator/
+
 ## 최신 작업: 핵심 3D (2026-09-12)
 
 `npm run dev` 실행 후 [핵심 3D 실습](http://127.0.0.1:5173/3d.html)을 엽니다. 목록의 **핵심 3D 실습 열기**로도 진입합니다.
