@@ -1,0 +1,346 @@
+[
+  {
+    "id": "main",
+    "scope": "주회로",
+    "check": "전선 종류·굵기·상별 색상",
+    "parameters": {
+      "kind": "단선",
+      "area": 2.5,
+      "colors": {
+        "L1": "갈색",
+        "L2": "검은색",
+        "L3": "회색",
+        "N": "해당 도면 지정"
+      }
+    },
+    "source": {
+      "page": 1,
+      "section": "5항",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "aux",
+    "scope": "보조회로 / MCCB 2차측 이후",
+    "check": "전선 종류·굵기·색상",
+    "parameters": {
+      "kind": "연선",
+      "area": 1.5,
+      "color": "노란색"
+    },
+    "source": {
+      "page": 1,
+      "section": "6~7항",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "pe",
+    "scope": "보호도체",
+    "check": "전선 종류·굵기·색상",
+    "parameters": {
+      "kind": "단선",
+      "area": 2.5,
+      "color": "녹색-노란색"
+    },
+    "source": {
+      "page": 1,
+      "section": "8~9항",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "crimp-main",
+    "scope": "MC 주접점, TB",
+    "check": "압착단자 규격",
+    "parameters": {
+      "value": "2.5-4Y"
+    },
+    "source": {
+      "page": 1,
+      "section": "표1",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "crimp-pe",
+    "scope": "PLC·인버터·SMPS 접지, 인버터 주회로 입출력",
+    "check": "압착단자 규격",
+    "parameters": {
+      "value": "2.5-3Y"
+    },
+    "source": {
+      "page": 1,
+      "section": "표1",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "crimp-switch",
+    "scope": "파일럿램프, 셀렉터스위치, 푸시버튼",
+    "check": "압착단자 규격",
+    "parameters": {
+      "value": "1.5-4Y"
+    },
+    "source": {
+      "page": 1,
+      "section": "표1",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "crimp-aux",
+    "scope": "릴레이소켓14핀, OCR, MC 접점, SMPS, PLC 입출력",
+    "check": "압착단자 규격",
+    "parameters": {
+      "value": "1.5-3Y"
+    },
+    "source": {
+      "page": 1,
+      "section": "표1",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "crimp-breaker-in",
+    "scope": "MCCB 1차측",
+    "check": "압착단자 규격",
+    "parameters": {
+      "value": "2.5-4Blade"
+    },
+    "source": {
+      "page": 1,
+      "section": "표1",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "crimp-coil",
+    "scope": "MC 전원, MCCB 2차측",
+    "check": "압착단자 규격",
+    "parameters": {
+      "value": "1.5-3Blade"
+    },
+    "source": {
+      "page": 1,
+      "section": "표1",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "exception",
+    "scope": "명시되지 않은/접속이 불편한 시험장 기구",
+    "check": "자유 접속 허용, 견고하게 조임·손상 금지",
+    "parameters": {},
+    "source": {
+      "page": 1,
+      "section": "10항",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "tube",
+    "scope": "PLC",
+    "check": "문제별 전체/입출력 범위 우선",
+    "parameters": {
+      "override": "catalog.ruleOverrides.tubeScope"
+    },
+    "source": {
+      "page": 2,
+      "section": "12항 또는 1페이지 11항",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "capacity",
+    "scope": "단자",
+    "check": "3가닥 접속 금지",
+    "parameters": {
+      "maxConnections": 2
+    },
+    "source": {
+      "page": 2,
+      "section": "22항 다②",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "fastening",
+    "scope": "접속부",
+    "check": "나선 노출 2mm 이상 / 피복 물림은 불량",
+    "parameters": {
+      "bareMmExclusiveMax": 2,
+      "insulationClamped": false,
+      "tight": true
+    },
+    "source": {
+      "page": 2,
+      "section": "13항",
+      "status": "confirmed"
+    },
+    "enforcement": "self-reported"
+  },
+  {
+    "id": "duct",
+    "scope": "배선",
+    "check": "판 밖 인출 금지, 음영 구역 배선",
+    "parameters": {},
+    "source": {
+      "page": 1,
+      "section": "4항",
+      "status": "confirmed"
+    },
+    "enforcement": "self-reported"
+  },
+  {
+    "id": "route-detail",
+    "scope": "배선",
+    "check": "기구 접촉·기구 사이 배선 금지 / 타이 최대100mm / 잔여 제거",
+    "parameters": {
+      "appliesOnlyWhenRoutingDetailed": true,
+      "maxTieSpacingMm": 100
+    },
+    "source": {
+      "page": 1,
+      "section": "4항",
+      "status": "confirmed"
+    },
+    "enforcement": "self-reported"
+  },
+  {
+    "id": "layout",
+    "scope": "기구",
+    "check": "배치·방향 도면과 동일, 흔들림 없이 고정",
+    "parameters": {},
+    "source": {
+      "page": 1,
+      "section": "3항 및 2페이지 22항 다①",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "tb-order",
+    "scope": "고정식단자대",
+    "check": "가로 왼쪽부터 / 세로 위쪽부터 L1 L2 L3 N E",
+    "parameters": {},
+    "source": {
+      "page": 2,
+      "section": "14항",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "leads",
+    "scope": "TB1",
+    "check": "인출 50~100mm, 끝단 피복 약10mm; TB4 인출 생략",
+    "parameters": {
+      "lengthMin": 50,
+      "lengthMax": 100,
+      "stripApproxMm": 10
+    },
+    "source": {
+      "page": 2,
+      "section": "15항",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "relay-orientation",
+    "scope": "릴레이소켓",
+    "check": "6페이지 소켓 방향 및 핀 번호 기준",
+    "parameters": {},
+    "source": {
+      "page": 2,
+      "section": "19항",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "inspection",
+    "scope": "전원 점검",
+    "check": "CP를 사용한 통전 및 벨테스터 확인 허용",
+    "parameters": {},
+    "source": {
+      "page": 2,
+      "section": "16항",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "disqualification",
+    "scope": "결과물",
+    "check": "배치·결선 상이, 3가닥, 미지급재료, 전선 규격·색상 상이, 위험 배선·조임, 보호도체 누락, TB순서 상이",
+    "parameters": {},
+    "source": {
+      "page": 2,
+      "section": "22항",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "no-rewire",
+    "scope": "제1과제 종료 후",
+    "check": "결선 수정 금지",
+    "parameters": {},
+    "source": {
+      "page": 2,
+      "section": "24항",
+      "status": "confirmed"
+    },
+    "enforcement": "automatic"
+  },
+  {
+    "id": "motor",
+    "scope": "전동기",
+    "check": "수험생이 모터 자체를 접속하지 않고 TB4까지 배선",
+    "parameters": {},
+    "source": {
+      "page": 3,
+      "section": "요구사항 3)",
+      "status": "confirmed"
+    },
+    "enforcement": "manual"
+  },
+  {
+    "id": "crimp-direction",
+    "scope": "Y형 압착단자 단독 방향",
+    "check": "세부 기준 미기재",
+    "parameters": {},
+    "source": {
+      "page": 1,
+      "section": "1~6페이지 전체 검토",
+      "status": "pending"
+    },
+    "enforcement": "pending"
+  },
+  {
+    "id": "dual-direction",
+    "scope": "2개 압착단자 체결 방향",
+    "check": "세부 기준 미기재",
+    "parameters": {},
+    "source": {
+      "page": 1,
+      "section": "1~6페이지 전체 검토",
+      "status": "pending"
+    },
+    "enforcement": "pending"
+  }
+]

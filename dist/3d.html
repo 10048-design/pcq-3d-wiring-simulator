@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+ <title>PCQ 3D 배선 실습</title>
+ <link rel="stylesheet" href="3d.css">
+ <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+ <header class="exam-header">
+  <a href="index.html" class="back-link">기출 목록</a>
+  <div class="problem-heading"><strong id="problem-title">PCQ 3D 배선 실습</strong><select id="problem-select" aria-label="기출문제 선택"></select></div>
+  <div class="timer"><span id="clock-label">경과시간</span><output id="clock">00:00:00</output></div>
+  <div class="exam-actions"><button id="start" class="primary">시작</button><button id="finish" disabled>완료</button><button id="grade" disabled>채점하기</button><button id="retry">다시 풀기</button></div>
+ </header>
+ <main id="split-layout">
+  <section class="work pane" aria-label="3D 배선 작업판">
+   <div id="viewport">
+    <div id="instruction">시작 버튼을 눌러주세요</div>
+    <div id="hover" role="status"></div>
+    <div id="scene-tools">
+     <button id="home" aria-label="기본 보기" title="기본 보기"><b>⌂</b><small>기본 보기</small></button>
+     <button id="undo" aria-label="실행취소" title="실행취소" disabled><b>↶</b><small>실행취소</small></button>
+     <button id="delete" aria-label="선택 배선 삭제" title="선택 배선 삭제" disabled><b>⌫</b><small>선택 배선 삭제</small></button>
+     <button id="cancel" aria-label="현재 전선 취소" title="현재 전선 취소" disabled><b>×</b><small>현재 전선 취소</small></button>
+    </div>
+    <div id="material-shelf" aria-label="3D 재료함"></div>
+    <div id="error-popover" hidden></div>
+    <div id="status" role="status">회로도를 확인한 뒤 시작하세요.</div>
+   </div>
+  </section>
+  <div id="splitter" role="separator" aria-label="작업판과 문제 자료 크기 조절" aria-orientation="vertical" aria-valuemin="30" aria-valuemax="75" aria-valuenow="60" tabindex="0"><span></span></div>
+  <aside class="pane" aria-label="문제 자료">
+   <section id="viewer" aria-label="PDF 문제 뷰어">
+    <div class="viewer-tabs" role="tablist" aria-label="문제 페이지"><button data-page="5" class="active" role="tab" aria-selected="true">제어회로도</button><button data-page="6" role="tab" aria-selected="false">추가 결선도</button><button data-page="4" role="tab" aria-selected="false">배치도</button><button data-page="1" role="tab" aria-selected="false">규칙 1</button><button data-page="2" role="tab" aria-selected="false">규칙 2</button></div>
+    <div class="viewer-toolbar"><button id="zoomout" aria-label="축소" title="축소">−</button><output id="zoom-label">맞춤</output><button id="zoomin" aria-label="확대" title="확대">＋</button><button id="fit">맞춤</button><button id="rotate-ccw" aria-label="반시계방향 90도 회전">↶ 90°</button><button id="rotate-cw" aria-label="시계방향 90도 회전">↷ 90°</button><button id="rotate-180" aria-label="180도 회전">180°</button><button id="fullscreen">전체화면</button><a id="original" href="assets/p01/5.webp" target="_blank" rel="noopener">원본</a></div>
+    <div id="document" tabindex="0"><div id="page-stage"><img id="page" src="assets/p01/5.webp" alt="기출문제 원본 제어회로도" draggable="false"></div></div>
+   </section>
+   <details id="results" hidden><summary><span id="result-summary">채점 결과</span></summary><div id="errors"></div></details>
+  </aside>
+ </main>
+ <dialog id="confirm"><h2>배선 작업 완료</h2><p>완료 후에는 배선을 수정할 수 없습니다.</p><div><button id="keepworking">취소</button><button id="confirmfinish" class="primary">완료</button></div></dialog>
+ <script type="module" src="3d-app.mjs"></script>
+</body></html>

@@ -1,0 +1,6613 @@
+{
+  "id": "p01",
+  "name": "2025년 12월 13일 기출문제",
+  "devices": [
+    {
+      "id": "TB1",
+      "box": [
+        64,
+        20,
+        64,
+        35
+      ],
+      "position": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "TB1.L1",
+        "TB1.L2",
+        "TB1.L3",
+        "TB1.N"
+      ]
+    },
+    {
+      "id": "TB2",
+      "box": [
+        135,
+        20,
+        64,
+        35
+      ],
+      "position": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "TB2.E",
+        "TB2.예비2",
+        "TB2.예비3",
+        "TB2.예비4"
+      ]
+    },
+    {
+      "id": "TB3",
+      "box": [
+        11,
+        332,
+        41,
+        67
+      ],
+      "position": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "TB3.예비1",
+        "TB3.예비2",
+        "TB3.E1",
+        "TB3.E2"
+      ]
+    },
+    {
+      "id": "TB4",
+      "box": [
+        11,
+        410,
+        41,
+        64
+      ],
+      "position": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "TB4.T1",
+        "TB4.T2",
+        "TB4.T3",
+        "TB4.E"
+      ]
+    },
+    {
+      "id": "MCCB",
+      "box": [
+        99,
+        135,
+        74,
+        47
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "MCCB.1차 L",
+        "MCCB.1차 N",
+        "MCCB.2차 L",
+        "MCCB.2차 N"
+      ]
+    },
+    {
+      "id": "SMPS",
+      "box": [
+        235,
+        126,
+        92,
+        66
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "SMPS.L1",
+        "SMPS.N",
+        "SMPS.+V",
+        "SMPS.-V",
+        "SMPS.E"
+      ]
+    },
+    {
+      "id": "OCR",
+      "box": [
+        98,
+        291,
+        74,
+        47
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "OCR.L1",
+        "OCR.L2",
+        "OCR.L3",
+        "OCR.T1",
+        "OCR.T2",
+        "OCR.T3",
+        "OCR.96",
+        "OCR.98",
+        "OCR.95",
+        "OCR.A1",
+        "OCR.A2"
+      ]
+    },
+    {
+      "id": "MC",
+      "box": [
+        98,
+        376,
+        74,
+        47
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "MC.L1",
+        "MC.L2",
+        "MC.L3",
+        "MC.T1",
+        "MC.T2",
+        "MC.T3",
+        "MC.43",
+        "MC.44",
+        "MC.31",
+        "MC.32",
+        "MC.A1",
+        "MC.A2"
+      ]
+    },
+    {
+      "id": "INVERTER",
+      "box": [
+        235,
+        270,
+        92,
+        171
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "INVERTER.입력 L1",
+        "INVERTER.입력 L2",
+        "INVERTER.입력 L3",
+        "INVERTER.출력 T1",
+        "INVERTER.출력 T2",
+        "INVERTER.출력 T3",
+        "INVERTER.E",
+        "INVERTER.CM",
+        "INVERTER.P3",
+        "INVERTER.P4",
+        "INVERTER.P5",
+        "INVERTER.S+",
+        "INVERTER.S-"
+      ]
+    },
+    {
+      "id": "PLC",
+      "box": [
+        390,
+        324,
+        253,
+        102
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PLC.전원 L/+",
+        "PLC.전원 N/-",
+        "PLC.E",
+        "PLC.입력 COM",
+        "PLC.입력 0",
+        "PLC.입력 1",
+        "PLC.입력 2",
+        "PLC.입력 3",
+        "PLC.입력 4",
+        "PLC.입력 5",
+        "PLC.출력 COM",
+        "PLC.출력 0",
+        "PLC.출력 1",
+        "PLC.출력 2",
+        "PLC.출력 3",
+        "PLC.출력 4",
+        "PLC.출력 5",
+        "PLC.SG",
+        "PLC.485+",
+        "PLC.485-"
+      ]
+    },
+    {
+      "id": "RY1",
+      "box": [
+        399,
+        125,
+        46,
+        70
+      ],
+      "position": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RY1.8",
+        "RY1.7",
+        "RY1.6",
+        "RY1.5",
+        "RY1.4",
+        "RY1.3",
+        "RY1.2",
+        "RY1.1",
+        "RY1.14",
+        "RY1.13",
+        "RY1.12",
+        "RY1.11",
+        "RY1.10",
+        "RY1.9"
+      ]
+    },
+    {
+      "id": "RY2",
+      "box": [
+        449,
+        125,
+        46,
+        70
+      ],
+      "position": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RY2.8",
+        "RY2.7",
+        "RY2.6",
+        "RY2.5",
+        "RY2.4",
+        "RY2.3",
+        "RY2.2",
+        "RY2.1",
+        "RY2.14",
+        "RY2.13",
+        "RY2.12",
+        "RY2.11",
+        "RY2.10",
+        "RY2.9"
+      ]
+    },
+    {
+      "id": "RY3",
+      "box": [
+        499,
+        125,
+        46,
+        70
+      ],
+      "position": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RY3.8",
+        "RY3.7",
+        "RY3.6",
+        "RY3.5",
+        "RY3.4",
+        "RY3.3",
+        "RY3.2",
+        "RY3.1",
+        "RY3.14",
+        "RY3.13",
+        "RY3.12",
+        "RY3.11",
+        "RY3.10",
+        "RY3.9"
+      ]
+    },
+    {
+      "id": "RY4",
+      "box": [
+        549,
+        125,
+        46,
+        70
+      ],
+      "position": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RY4.8",
+        "RY4.7",
+        "RY4.6",
+        "RY4.5",
+        "RY4.4",
+        "RY4.3",
+        "RY4.2",
+        "RY4.1",
+        "RY4.14",
+        "RY4.13",
+        "RY4.12",
+        "RY4.11",
+        "RY4.10",
+        "RY4.9"
+      ]
+    },
+    {
+      "id": "RY5",
+      "box": [
+        599,
+        125,
+        46,
+        70
+      ],
+      "position": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RY5.8",
+        "RY5.7",
+        "RY5.6",
+        "RY5.5",
+        "RY5.4",
+        "RY5.3",
+        "RY5.2",
+        "RY5.1",
+        "RY5.14",
+        "RY5.13",
+        "RY5.12",
+        "RY5.11",
+        "RY5.10",
+        "RY5.9"
+      ]
+    },
+    {
+      "id": "YL2",
+      "box": [
+        329,
+        21,
+        40,
+        33
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "YL2.상단 접속부",
+        "YL2.하단 접속부"
+      ]
+    },
+    {
+      "id": "RL2",
+      "box": [
+        387,
+        21,
+        40,
+        33
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RL2.상단 접속부",
+        "RL2.하단 접속부"
+      ]
+    },
+    {
+      "id": "GL2",
+      "box": [
+        446,
+        21,
+        40,
+        33
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "GL2.상단 접속부",
+        "GL2.하단 접속부"
+      ]
+    },
+    {
+      "id": "RL1",
+      "box": [
+        503,
+        21,
+        40,
+        33
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "RL1.상단 접속부",
+        "RL1.하단 접속부"
+      ]
+    },
+    {
+      "id": "YL1",
+      "box": [
+        561,
+        21,
+        40,
+        33
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "YL1.상단 접속부",
+        "YL1.하단 접속부"
+      ]
+    },
+    {
+      "id": "GL1",
+      "box": [
+        619,
+        21,
+        40,
+        33
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "GL1.상단 접속부",
+        "GL1.하단 접속부"
+      ]
+    },
+    {
+      "id": "PB6",
+      "box": [
+        33,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB6.접점 위",
+        "PB6.접점 아래"
+      ]
+    },
+    {
+      "id": "PB7",
+      "box": [
+        91,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB7.접점 위",
+        "PB7.접점 아래"
+      ]
+    },
+    {
+      "id": "PB1",
+      "box": [
+        163,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB1.접점 위",
+        "PB1.접점 아래"
+      ]
+    },
+    {
+      "id": "PB2",
+      "box": [
+        221,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB2.접점 위",
+        "PB2.접점 아래"
+      ]
+    },
+    {
+      "id": "PB3",
+      "box": [
+        281,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB3.접점 위",
+        "PB3.접점 아래"
+      ]
+    },
+    {
+      "id": "PB4",
+      "box": [
+        399,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB4.접점 위",
+        "PB4.접점 아래"
+      ]
+    },
+    {
+      "id": "PB5",
+      "box": [
+        457,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "PB5.접점 위",
+        "PB5.접점 아래"
+      ]
+    },
+    {
+      "id": "SS1",
+      "box": [
+        515,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "SS1.접점 위",
+        "SS1.접점 아래"
+      ]
+    },
+    {
+      "id": "SS2",
+      "box": [
+        573,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "SS2.접점 위",
+        "SS2.접점 아래"
+      ]
+    },
+    {
+      "id": "SS3",
+      "box": [
+        631,
+        527,
+        40,
+        32
+      ],
+      "position": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 4
+      },
+      "terminals": [
+        "SS3.접점 위",
+        "SS3.접점 아래"
+      ]
+    }
+  ],
+  "terminals": [
+    {
+      "id": "TB1.L1",
+      "deviceId": "TB1",
+      "name": "L1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB1.L2",
+      "deviceId": "TB1",
+      "name": "L2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB1.L3",
+      "deviceId": "TB1",
+      "name": "L3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB1.N",
+      "deviceId": "TB1",
+      "name": "N",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB2.E",
+      "deviceId": "TB2",
+      "name": "E",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB2.예비2",
+      "deviceId": "TB2",
+      "name": "예비2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB2.예비3",
+      "deviceId": "TB2",
+      "name": "예비3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB2.예비4",
+      "deviceId": "TB2",
+      "name": "예비4",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB3.예비1",
+      "deviceId": "TB3",
+      "name": "예비1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB3.예비2",
+      "deviceId": "TB3",
+      "name": "예비2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB3.E1",
+      "deviceId": "TB3",
+      "name": "E1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB3.E2",
+      "deviceId": "TB3",
+      "name": "E2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB4.T1",
+      "deviceId": "TB4",
+      "name": "T1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB4.T2",
+      "deviceId": "TB4",
+      "name": "T2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB4.T3",
+      "deviceId": "TB4",
+      "name": "T3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "TB4.E",
+      "deviceId": "TB4",
+      "name": "E",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MCCB.1차 L",
+      "deviceId": "MCCB",
+      "name": "1차 L",
+      "crimp": "2.5-4Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MCCB.1차 N",
+      "deviceId": "MCCB",
+      "name": "1차 N",
+      "crimp": "2.5-4Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MCCB.2차 L",
+      "deviceId": "MCCB",
+      "name": "2차 L",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MCCB.2차 N",
+      "deviceId": "MCCB",
+      "name": "2차 N",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SMPS.L1",
+      "deviceId": "SMPS",
+      "name": "L1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SMPS.N",
+      "deviceId": "SMPS",
+      "name": "N",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SMPS.+V",
+      "deviceId": "SMPS",
+      "name": "+V",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SMPS.-V",
+      "deviceId": "SMPS",
+      "name": "-V",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SMPS.E",
+      "deviceId": "SMPS",
+      "name": "E",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "OCR.L1",
+      "deviceId": "OCR",
+      "name": "L1",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    {
+      "id": "OCR.L2",
+      "deviceId": "OCR",
+      "name": "L2",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    {
+      "id": "OCR.L3",
+      "deviceId": "OCR",
+      "name": "L3",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    {
+      "id": "OCR.T1",
+      "deviceId": "OCR",
+      "name": "T1",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    {
+      "id": "OCR.T2",
+      "deviceId": "OCR",
+      "name": "T2",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    {
+      "id": "OCR.T3",
+      "deviceId": "OCR",
+      "name": "T3",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    {
+      "id": "OCR.96",
+      "deviceId": "OCR",
+      "name": "96",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "OCR.98",
+      "deviceId": "OCR",
+      "name": "98",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "OCR.95",
+      "deviceId": "OCR",
+      "name": "95",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "OCR.A1",
+      "deviceId": "OCR",
+      "name": "A1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "OCR.A2",
+      "deviceId": "OCR",
+      "name": "A2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.L1",
+      "deviceId": "MC",
+      "name": "L1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.L2",
+      "deviceId": "MC",
+      "name": "L2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.L3",
+      "deviceId": "MC",
+      "name": "L3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.T1",
+      "deviceId": "MC",
+      "name": "T1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.T2",
+      "deviceId": "MC",
+      "name": "T2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.T3",
+      "deviceId": "MC",
+      "name": "T3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.43",
+      "deviceId": "MC",
+      "name": "43",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.44",
+      "deviceId": "MC",
+      "name": "44",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.31",
+      "deviceId": "MC",
+      "name": "31",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.32",
+      "deviceId": "MC",
+      "name": "32",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.A1",
+      "deviceId": "MC",
+      "name": "A1",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "MC.A2",
+      "deviceId": "MC",
+      "name": "A2",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.입력 L1",
+      "deviceId": "INVERTER",
+      "name": "입력 L1",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.입력 L2",
+      "deviceId": "INVERTER",
+      "name": "입력 L2",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.입력 L3",
+      "deviceId": "INVERTER",
+      "name": "입력 L3",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.출력 T1",
+      "deviceId": "INVERTER",
+      "name": "출력 T1",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.출력 T2",
+      "deviceId": "INVERTER",
+      "name": "출력 T2",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.출력 T3",
+      "deviceId": "INVERTER",
+      "name": "출력 T3",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.E",
+      "deviceId": "INVERTER",
+      "name": "E",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.CM",
+      "deviceId": "INVERTER",
+      "name": "CM",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.P3",
+      "deviceId": "INVERTER",
+      "name": "P3",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.P4",
+      "deviceId": "INVERTER",
+      "name": "P4",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.P5",
+      "deviceId": "INVERTER",
+      "name": "P5",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.S+",
+      "deviceId": "INVERTER",
+      "name": "S+",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "INVERTER.S-",
+      "deviceId": "INVERTER",
+      "name": "S-",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.전원 L/+",
+      "deviceId": "PLC",
+      "name": "전원 L/+",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.전원 N/-",
+      "deviceId": "PLC",
+      "name": "전원 N/-",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.E",
+      "deviceId": "PLC",
+      "name": "E",
+      "crimp": "2.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 COM",
+      "deviceId": "PLC",
+      "name": "입력 COM",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 0",
+      "deviceId": "PLC",
+      "name": "입력 0",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 1",
+      "deviceId": "PLC",
+      "name": "입력 1",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 2",
+      "deviceId": "PLC",
+      "name": "입력 2",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 3",
+      "deviceId": "PLC",
+      "name": "입력 3",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 4",
+      "deviceId": "PLC",
+      "name": "입력 4",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.입력 5",
+      "deviceId": "PLC",
+      "name": "입력 5",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 COM",
+      "deviceId": "PLC",
+      "name": "출력 COM",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 0",
+      "deviceId": "PLC",
+      "name": "출력 0",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 1",
+      "deviceId": "PLC",
+      "name": "출력 1",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 2",
+      "deviceId": "PLC",
+      "name": "출력 2",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 3",
+      "deviceId": "PLC",
+      "name": "출력 3",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 4",
+      "deviceId": "PLC",
+      "name": "출력 4",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.출력 5",
+      "deviceId": "PLC",
+      "name": "출력 5",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.SG",
+      "deviceId": "PLC",
+      "name": "SG",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.485+",
+      "deviceId": "PLC",
+      "name": "485+",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PLC.485-",
+      "deviceId": "PLC",
+      "name": "485-",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.8",
+      "deviceId": "RY1",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.7",
+      "deviceId": "RY1",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.6",
+      "deviceId": "RY1",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.5",
+      "deviceId": "RY1",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.4",
+      "deviceId": "RY1",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.3",
+      "deviceId": "RY1",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.2",
+      "deviceId": "RY1",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.1",
+      "deviceId": "RY1",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.14",
+      "deviceId": "RY1",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.13",
+      "deviceId": "RY1",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.12",
+      "deviceId": "RY1",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.11",
+      "deviceId": "RY1",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.10",
+      "deviceId": "RY1",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY1.9",
+      "deviceId": "RY1",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.8",
+      "deviceId": "RY2",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.7",
+      "deviceId": "RY2",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.6",
+      "deviceId": "RY2",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.5",
+      "deviceId": "RY2",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.4",
+      "deviceId": "RY2",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.3",
+      "deviceId": "RY2",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.2",
+      "deviceId": "RY2",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.1",
+      "deviceId": "RY2",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.14",
+      "deviceId": "RY2",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.13",
+      "deviceId": "RY2",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.12",
+      "deviceId": "RY2",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.11",
+      "deviceId": "RY2",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.10",
+      "deviceId": "RY2",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY2.9",
+      "deviceId": "RY2",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.8",
+      "deviceId": "RY3",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.7",
+      "deviceId": "RY3",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.6",
+      "deviceId": "RY3",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.5",
+      "deviceId": "RY3",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.4",
+      "deviceId": "RY3",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.3",
+      "deviceId": "RY3",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.2",
+      "deviceId": "RY3",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.1",
+      "deviceId": "RY3",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.14",
+      "deviceId": "RY3",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.13",
+      "deviceId": "RY3",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.12",
+      "deviceId": "RY3",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.11",
+      "deviceId": "RY3",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.10",
+      "deviceId": "RY3",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY3.9",
+      "deviceId": "RY3",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.8",
+      "deviceId": "RY4",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.7",
+      "deviceId": "RY4",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.6",
+      "deviceId": "RY4",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.5",
+      "deviceId": "RY4",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.4",
+      "deviceId": "RY4",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.3",
+      "deviceId": "RY4",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.2",
+      "deviceId": "RY4",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.1",
+      "deviceId": "RY4",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.14",
+      "deviceId": "RY4",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.13",
+      "deviceId": "RY4",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.12",
+      "deviceId": "RY4",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.11",
+      "deviceId": "RY4",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.10",
+      "deviceId": "RY4",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY4.9",
+      "deviceId": "RY4",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.8",
+      "deviceId": "RY5",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.7",
+      "deviceId": "RY5",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.6",
+      "deviceId": "RY5",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.5",
+      "deviceId": "RY5",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.4",
+      "deviceId": "RY5",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.3",
+      "deviceId": "RY5",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.2",
+      "deviceId": "RY5",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.1",
+      "deviceId": "RY5",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.14",
+      "deviceId": "RY5",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.13",
+      "deviceId": "RY5",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.12",
+      "deviceId": "RY5",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.11",
+      "deviceId": "RY5",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.10",
+      "deviceId": "RY5",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RY5.9",
+      "deviceId": "RY5",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "YL2.상단 접속부",
+      "deviceId": "YL2",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "YL2.하단 접속부",
+      "deviceId": "YL2",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RL2.상단 접속부",
+      "deviceId": "RL2",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RL2.하단 접속부",
+      "deviceId": "RL2",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "GL2.상단 접속부",
+      "deviceId": "GL2",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "GL2.하단 접속부",
+      "deviceId": "GL2",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RL1.상단 접속부",
+      "deviceId": "RL1",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "RL1.하단 접속부",
+      "deviceId": "RL1",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "YL1.상단 접속부",
+      "deviceId": "YL1",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "YL1.하단 접속부",
+      "deviceId": "YL1",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "GL1.상단 접속부",
+      "deviceId": "GL1",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "GL1.하단 접속부",
+      "deviceId": "GL1",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB6.접점 위",
+      "deviceId": "PB6",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB6.접점 아래",
+      "deviceId": "PB6",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB7.접점 위",
+      "deviceId": "PB7",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB7.접점 아래",
+      "deviceId": "PB7",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB1.접점 위",
+      "deviceId": "PB1",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB1.접점 아래",
+      "deviceId": "PB1",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB2.접점 위",
+      "deviceId": "PB2",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB2.접점 아래",
+      "deviceId": "PB2",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB3.접점 위",
+      "deviceId": "PB3",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB3.접점 아래",
+      "deviceId": "PB3",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB4.접점 위",
+      "deviceId": "PB4",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB4.접점 아래",
+      "deviceId": "PB4",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB5.접점 위",
+      "deviceId": "PB5",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "PB5.접점 아래",
+      "deviceId": "PB5",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SS1.접점 위",
+      "deviceId": "SS1",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SS1.접점 아래",
+      "deviceId": "SS1",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SS2.접점 위",
+      "deviceId": "SS2",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SS2.접점 아래",
+      "deviceId": "SS2",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SS3.접점 위",
+      "deviceId": "SS3",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    {
+      "id": "SS3.접점 아래",
+      "deviceId": "SS3",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    }
+  ],
+  "nets": [
+    {
+      "id": "상전원 1",
+      "members": [
+        "TB1.L1",
+        "OCR.L1",
+        "MCCB.1차 L"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "갈색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "OCR-MC 1",
+      "members": [
+        "OCR.T1",
+        "MC.L1"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "갈색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "MC-인버터 1",
+      "members": [
+        "MC.T1",
+        "INVERTER.입력 L1"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "갈색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터-전동기 단자대 1",
+      "members": [
+        "INVERTER.출력 T1",
+        "TB4.T1"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": null
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "상전원 2",
+      "members": [
+        "TB1.L2",
+        "OCR.L2"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "검은색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "OCR-MC 2",
+      "members": [
+        "OCR.T2",
+        "MC.L2"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "검은색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "MC-인버터 2",
+      "members": [
+        "MC.T2",
+        "INVERTER.입력 L2"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "검은색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터-전동기 단자대 2",
+      "members": [
+        "INVERTER.출력 T2",
+        "TB4.T2"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": null
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "상전원 3",
+      "members": [
+        "TB1.L3",
+        "OCR.L3"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "회색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "OCR-MC 3",
+      "members": [
+        "OCR.T3",
+        "MC.L3"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "회색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "MC-인버터 3",
+      "members": [
+        "MC.T3",
+        "INVERTER.입력 L3"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "회색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터-전동기 단자대 3",
+      "members": [
+        "INVERTER.출력 T3",
+        "TB4.T3"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": null
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "주회로 N",
+      "members": [
+        "TB1.N",
+        "MCCB.1차 N"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "갈색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "보조회로 L",
+      "members": [
+        "MCCB.2차 L",
+        "SMPS.L1",
+        "OCR.A1",
+        "OCR.95",
+        "RY1.11",
+        "RY2.11",
+        "RY3.11",
+        "RY4.11",
+        "RY5.11",
+        "PLC.출력 COM",
+        "PLC.전원 L/+"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "보조회로 N",
+      "members": [
+        "MCCB.2차 N",
+        "SMPS.N",
+        "OCR.A2",
+        "MC.A2",
+        "YL2.하단 접속부",
+        "RL1.하단 접속부",
+        "GL1.하단 접속부",
+        "YL1.하단 접속부",
+        "RL2.하단 접속부",
+        "GL2.하단 접속부",
+        "RY1.14",
+        "RY2.14",
+        "RY3.14",
+        "RY4.14",
+        "RY5.14",
+        "PLC.전원 N/-"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "OCR b접점 이후",
+      "members": [
+        "OCR.96",
+        "PB6.접점 위",
+        "MC.43",
+        "MC.31"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "자기유지 분기",
+      "members": [
+        "PB6.접점 아래",
+        "MC.44",
+        "PB7.접점 위"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "MC 코일",
+      "members": [
+        "PB7.접점 아래",
+        "MC.A1"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "정지 표시등",
+      "members": [
+        "MC.32",
+        "YL2.상단 접속부"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "릴레이 표시 1",
+      "members": [
+        "RY1.7",
+        "RL1.상단 접속부"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "릴레이 표시 2",
+      "members": [
+        "RY2.7",
+        "GL1.상단 접속부"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "릴레이 표시 3",
+      "members": [
+        "RY3.7",
+        "YL1.상단 접속부"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "릴레이 표시 4",
+      "members": [
+        "RY4.7",
+        "RL2.상단 접속부"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "릴레이 표시 5",
+      "members": [
+        "RY5.7",
+        "GL2.상단 접속부"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "DC +24V",
+      "members": [
+        "SMPS.+V",
+        "PLC.입력 COM"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "DC 0V",
+      "members": [
+        "SMPS.-V",
+        "PB1.접점 위",
+        "PB2.접점 위",
+        "PB3.접점 위",
+        "PB4.접점 위",
+        "PB5.접점 위"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 입력 0",
+      "members": [
+        "PB1.접점 아래",
+        "PLC.입력 0"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 출력 0",
+      "members": [
+        "PLC.출력 0",
+        "RY1.13"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 입력 1",
+      "members": [
+        "PB2.접점 아래",
+        "PLC.입력 1"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 출력 1",
+      "members": [
+        "PLC.출력 1",
+        "RY2.13"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 입력 2",
+      "members": [
+        "PB3.접점 아래",
+        "PLC.입력 2"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 출력 2",
+      "members": [
+        "PLC.출력 2",
+        "RY3.13"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 입력 3",
+      "members": [
+        "PB4.접점 아래",
+        "PLC.입력 3"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 출력 3",
+      "members": [
+        "PLC.출력 3",
+        "RY4.13"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 입력 4",
+      "members": [
+        "PB5.접점 아래",
+        "PLC.입력 4"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 출력 4",
+      "members": [
+        "PLC.출력 4",
+        "RY5.13"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터 CM",
+      "members": [
+        "INVERTER.CM",
+        "SS1.접점 위",
+        "SS2.접점 위",
+        "SS3.접점 위",
+        "PLC.SG"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터 다기능 1",
+      "members": [
+        "SS1.접점 아래",
+        "INVERTER.P3"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터 다기능 2",
+      "members": [
+        "SS2.접점 아래",
+        "INVERTER.P4"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터 다기능 3",
+      "members": [
+        "SS3.접점 아래",
+        "INVERTER.P5"
+      ],
+      "policy": {
+        "kind": "연선",
+        "area": 1.5,
+        "color": "노란색"
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "통신 +",
+      "members": [
+        "PLC.485+",
+        "INVERTER.S+"
+      ],
+      "policy": {
+        "kind": null,
+        "area": null,
+        "color": null
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "통신 -",
+      "members": [
+        "PLC.485-",
+        "INVERTER.S-"
+      ],
+      "policy": {
+        "kind": null,
+        "area": null,
+        "color": null
+      },
+      "source": {
+        "page": 6
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "인버터 보호도체",
+      "members": [
+        "INVERTER.E",
+        "TB3.E1"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "녹색-노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "PLC 보호도체",
+      "members": [
+        "PLC.E",
+        "TB3.E2"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "녹색-노란색"
+      },
+      "source": {
+        "page": 5
+      },
+      "status": "confirmed"
+    },
+    {
+      "id": "SMPS/전원 보호도체 확인 필요",
+      "members": [
+        "SMPS.E",
+        "TB2.E",
+        "TB4.E"
+      ],
+      "policy": {
+        "kind": "단선",
+        "area": 2.5,
+        "color": "녹색-노란색"
+      },
+      "source": {
+        "page": 1
+      },
+      "status": "pending"
+    }
+  ],
+  "terminalMap": {
+    "TB1.L1": {
+      "id": "TB1.L1",
+      "deviceId": "TB1",
+      "name": "L1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB1.L2": {
+      "id": "TB1.L2",
+      "deviceId": "TB1",
+      "name": "L2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB1.L3": {
+      "id": "TB1.L3",
+      "deviceId": "TB1",
+      "name": "L3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB1.N": {
+      "id": "TB1.N",
+      "deviceId": "TB1",
+      "name": "N",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB2.E": {
+      "id": "TB2.E",
+      "deviceId": "TB2",
+      "name": "E",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB2.예비2": {
+      "id": "TB2.예비2",
+      "deviceId": "TB2",
+      "name": "예비2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB2.예비3": {
+      "id": "TB2.예비3",
+      "deviceId": "TB2",
+      "name": "예비3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB2.예비4": {
+      "id": "TB2.예비4",
+      "deviceId": "TB2",
+      "name": "예비4",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB3.예비1": {
+      "id": "TB3.예비1",
+      "deviceId": "TB3",
+      "name": "예비1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB3.예비2": {
+      "id": "TB3.예비2",
+      "deviceId": "TB3",
+      "name": "예비2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB3.E1": {
+      "id": "TB3.E1",
+      "deviceId": "TB3",
+      "name": "E1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB3.E2": {
+      "id": "TB3.E2",
+      "deviceId": "TB3",
+      "name": "E2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB4.T1": {
+      "id": "TB4.T1",
+      "deviceId": "TB4",
+      "name": "T1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB4.T2": {
+      "id": "TB4.T2",
+      "deviceId": "TB4",
+      "name": "T2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB4.T3": {
+      "id": "TB4.T3",
+      "deviceId": "TB4",
+      "name": "T3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "TB4.E": {
+      "id": "TB4.E",
+      "deviceId": "TB4",
+      "name": "E",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 4페이지",
+      "source": {
+        "page": 4
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MCCB.1차 L": {
+      "id": "MCCB.1차 L",
+      "deviceId": "MCCB",
+      "name": "1차 L",
+      "crimp": "2.5-4Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MCCB.1차 N": {
+      "id": "MCCB.1차 N",
+      "deviceId": "MCCB",
+      "name": "1차 N",
+      "crimp": "2.5-4Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MCCB.2차 L": {
+      "id": "MCCB.2차 L",
+      "deviceId": "MCCB",
+      "name": "2차 L",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MCCB.2차 N": {
+      "id": "MCCB.2차 N",
+      "deviceId": "MCCB",
+      "name": "2차 N",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SMPS.L1": {
+      "id": "SMPS.L1",
+      "deviceId": "SMPS",
+      "name": "L1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SMPS.N": {
+      "id": "SMPS.N",
+      "deviceId": "SMPS",
+      "name": "N",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SMPS.+V": {
+      "id": "SMPS.+V",
+      "deviceId": "SMPS",
+      "name": "+V",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SMPS.-V": {
+      "id": "SMPS.-V",
+      "deviceId": "SMPS",
+      "name": "-V",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SMPS.E": {
+      "id": "SMPS.E",
+      "deviceId": "SMPS",
+      "name": "E",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "OCR.L1": {
+      "id": "OCR.L1",
+      "deviceId": "OCR",
+      "name": "L1",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    "OCR.L2": {
+      "id": "OCR.L2",
+      "deviceId": "OCR",
+      "name": "L2",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    "OCR.L3": {
+      "id": "OCR.L3",
+      "deviceId": "OCR",
+      "name": "L3",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    "OCR.T1": {
+      "id": "OCR.T1",
+      "deviceId": "OCR",
+      "name": "T1",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    "OCR.T2": {
+      "id": "OCR.T2",
+      "deviceId": "OCR",
+      "name": "T2",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    "OCR.T3": {
+      "id": "OCR.T3",
+      "deviceId": "OCR",
+      "name": "T3",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null,
+      "crimpNote": "표1의 OCR 1.5-3Y와 주회로 2.5㎟ 적용 관계 확인 필요"
+    },
+    "OCR.96": {
+      "id": "OCR.96",
+      "deviceId": "OCR",
+      "name": "96",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "OCR.98": {
+      "id": "OCR.98",
+      "deviceId": "OCR",
+      "name": "98",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "OCR.95": {
+      "id": "OCR.95",
+      "deviceId": "OCR",
+      "name": "95",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "OCR.A1": {
+      "id": "OCR.A1",
+      "deviceId": "OCR",
+      "name": "A1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "OCR.A2": {
+      "id": "OCR.A2",
+      "deviceId": "OCR",
+      "name": "A2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.L1": {
+      "id": "MC.L1",
+      "deviceId": "MC",
+      "name": "L1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.L2": {
+      "id": "MC.L2",
+      "deviceId": "MC",
+      "name": "L2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.L3": {
+      "id": "MC.L3",
+      "deviceId": "MC",
+      "name": "L3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.T1": {
+      "id": "MC.T1",
+      "deviceId": "MC",
+      "name": "T1",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.T2": {
+      "id": "MC.T2",
+      "deviceId": "MC",
+      "name": "T2",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.T3": {
+      "id": "MC.T3",
+      "deviceId": "MC",
+      "name": "T3",
+      "crimp": "2.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.43": {
+      "id": "MC.43",
+      "deviceId": "MC",
+      "name": "43",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.44": {
+      "id": "MC.44",
+      "deviceId": "MC",
+      "name": "44",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.31": {
+      "id": "MC.31",
+      "deviceId": "MC",
+      "name": "31",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.32": {
+      "id": "MC.32",
+      "deviceId": "MC",
+      "name": "32",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.A1": {
+      "id": "MC.A1",
+      "deviceId": "MC",
+      "name": "A1",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "MC.A2": {
+      "id": "MC.A2",
+      "deviceId": "MC",
+      "name": "A2",
+      "crimp": "1.5-3Blade",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.입력 L1": {
+      "id": "INVERTER.입력 L1",
+      "deviceId": "INVERTER",
+      "name": "입력 L1",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.입력 L2": {
+      "id": "INVERTER.입력 L2",
+      "deviceId": "INVERTER",
+      "name": "입력 L2",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.입력 L3": {
+      "id": "INVERTER.입력 L3",
+      "deviceId": "INVERTER",
+      "name": "입력 L3",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.출력 T1": {
+      "id": "INVERTER.출력 T1",
+      "deviceId": "INVERTER",
+      "name": "출력 T1",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.출력 T2": {
+      "id": "INVERTER.출력 T2",
+      "deviceId": "INVERTER",
+      "name": "출력 T2",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.출력 T3": {
+      "id": "INVERTER.출력 T3",
+      "deviceId": "INVERTER",
+      "name": "출력 T3",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.E": {
+      "id": "INVERTER.E",
+      "deviceId": "INVERTER",
+      "name": "E",
+      "crimp": "2.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.CM": {
+      "id": "INVERTER.CM",
+      "deviceId": "INVERTER",
+      "name": "CM",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.P3": {
+      "id": "INVERTER.P3",
+      "deviceId": "INVERTER",
+      "name": "P3",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.P4": {
+      "id": "INVERTER.P4",
+      "deviceId": "INVERTER",
+      "name": "P4",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.P5": {
+      "id": "INVERTER.P5",
+      "deviceId": "INVERTER",
+      "name": "P5",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.S+": {
+      "id": "INVERTER.S+",
+      "deviceId": "INVERTER",
+      "name": "S+",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "INVERTER.S-": {
+      "id": "INVERTER.S-",
+      "deviceId": "INVERTER",
+      "name": "S-",
+      "crimp": null,
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.전원 L/+": {
+      "id": "PLC.전원 L/+",
+      "deviceId": "PLC",
+      "name": "전원 L/+",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.전원 N/-": {
+      "id": "PLC.전원 N/-",
+      "deviceId": "PLC",
+      "name": "전원 N/-",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.E": {
+      "id": "PLC.E",
+      "deviceId": "PLC",
+      "name": "E",
+      "crimp": "2.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 COM": {
+      "id": "PLC.입력 COM",
+      "deviceId": "PLC",
+      "name": "입력 COM",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 0": {
+      "id": "PLC.입력 0",
+      "deviceId": "PLC",
+      "name": "입력 0",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 1": {
+      "id": "PLC.입력 1",
+      "deviceId": "PLC",
+      "name": "입력 1",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 2": {
+      "id": "PLC.입력 2",
+      "deviceId": "PLC",
+      "name": "입력 2",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 3": {
+      "id": "PLC.입력 3",
+      "deviceId": "PLC",
+      "name": "입력 3",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 4": {
+      "id": "PLC.입력 4",
+      "deviceId": "PLC",
+      "name": "입력 4",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.입력 5": {
+      "id": "PLC.입력 5",
+      "deviceId": "PLC",
+      "name": "입력 5",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 COM": {
+      "id": "PLC.출력 COM",
+      "deviceId": "PLC",
+      "name": "출력 COM",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 0": {
+      "id": "PLC.출력 0",
+      "deviceId": "PLC",
+      "name": "출력 0",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 1": {
+      "id": "PLC.출력 1",
+      "deviceId": "PLC",
+      "name": "출력 1",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 2": {
+      "id": "PLC.출력 2",
+      "deviceId": "PLC",
+      "name": "출력 2",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 3": {
+      "id": "PLC.출력 3",
+      "deviceId": "PLC",
+      "name": "출력 3",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 4": {
+      "id": "PLC.출력 4",
+      "deviceId": "PLC",
+      "name": "출력 4",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.출력 5": {
+      "id": "PLC.출력 5",
+      "deviceId": "PLC",
+      "name": "출력 5",
+      "crimp": "1.5-3Y",
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.SG": {
+      "id": "PLC.SG",
+      "deviceId": "PLC",
+      "name": "SG",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.485+": {
+      "id": "PLC.485+",
+      "deviceId": "PLC",
+      "name": "485+",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PLC.485-": {
+      "id": "PLC.485-",
+      "deviceId": "PLC",
+      "name": "485-",
+      "crimp": null,
+      "insulationTube": true,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.8": {
+      "id": "RY1.8",
+      "deviceId": "RY1",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.7": {
+      "id": "RY1.7",
+      "deviceId": "RY1",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.6": {
+      "id": "RY1.6",
+      "deviceId": "RY1",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.5": {
+      "id": "RY1.5",
+      "deviceId": "RY1",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.4": {
+      "id": "RY1.4",
+      "deviceId": "RY1",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.3": {
+      "id": "RY1.3",
+      "deviceId": "RY1",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.2": {
+      "id": "RY1.2",
+      "deviceId": "RY1",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.1": {
+      "id": "RY1.1",
+      "deviceId": "RY1",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.14": {
+      "id": "RY1.14",
+      "deviceId": "RY1",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.13": {
+      "id": "RY1.13",
+      "deviceId": "RY1",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.12": {
+      "id": "RY1.12",
+      "deviceId": "RY1",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.11": {
+      "id": "RY1.11",
+      "deviceId": "RY1",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.10": {
+      "id": "RY1.10",
+      "deviceId": "RY1",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY1.9": {
+      "id": "RY1.9",
+      "deviceId": "RY1",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.8": {
+      "id": "RY2.8",
+      "deviceId": "RY2",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.7": {
+      "id": "RY2.7",
+      "deviceId": "RY2",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.6": {
+      "id": "RY2.6",
+      "deviceId": "RY2",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.5": {
+      "id": "RY2.5",
+      "deviceId": "RY2",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.4": {
+      "id": "RY2.4",
+      "deviceId": "RY2",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.3": {
+      "id": "RY2.3",
+      "deviceId": "RY2",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.2": {
+      "id": "RY2.2",
+      "deviceId": "RY2",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.1": {
+      "id": "RY2.1",
+      "deviceId": "RY2",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.14": {
+      "id": "RY2.14",
+      "deviceId": "RY2",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.13": {
+      "id": "RY2.13",
+      "deviceId": "RY2",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.12": {
+      "id": "RY2.12",
+      "deviceId": "RY2",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.11": {
+      "id": "RY2.11",
+      "deviceId": "RY2",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.10": {
+      "id": "RY2.10",
+      "deviceId": "RY2",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY2.9": {
+      "id": "RY2.9",
+      "deviceId": "RY2",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.8": {
+      "id": "RY3.8",
+      "deviceId": "RY3",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.7": {
+      "id": "RY3.7",
+      "deviceId": "RY3",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.6": {
+      "id": "RY3.6",
+      "deviceId": "RY3",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.5": {
+      "id": "RY3.5",
+      "deviceId": "RY3",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.4": {
+      "id": "RY3.4",
+      "deviceId": "RY3",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.3": {
+      "id": "RY3.3",
+      "deviceId": "RY3",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.2": {
+      "id": "RY3.2",
+      "deviceId": "RY3",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.1": {
+      "id": "RY3.1",
+      "deviceId": "RY3",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.14": {
+      "id": "RY3.14",
+      "deviceId": "RY3",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.13": {
+      "id": "RY3.13",
+      "deviceId": "RY3",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.12": {
+      "id": "RY3.12",
+      "deviceId": "RY3",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.11": {
+      "id": "RY3.11",
+      "deviceId": "RY3",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.10": {
+      "id": "RY3.10",
+      "deviceId": "RY3",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY3.9": {
+      "id": "RY3.9",
+      "deviceId": "RY3",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.8": {
+      "id": "RY4.8",
+      "deviceId": "RY4",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.7": {
+      "id": "RY4.7",
+      "deviceId": "RY4",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.6": {
+      "id": "RY4.6",
+      "deviceId": "RY4",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.5": {
+      "id": "RY4.5",
+      "deviceId": "RY4",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.4": {
+      "id": "RY4.4",
+      "deviceId": "RY4",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.3": {
+      "id": "RY4.3",
+      "deviceId": "RY4",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.2": {
+      "id": "RY4.2",
+      "deviceId": "RY4",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.1": {
+      "id": "RY4.1",
+      "deviceId": "RY4",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.14": {
+      "id": "RY4.14",
+      "deviceId": "RY4",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.13": {
+      "id": "RY4.13",
+      "deviceId": "RY4",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.12": {
+      "id": "RY4.12",
+      "deviceId": "RY4",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.11": {
+      "id": "RY4.11",
+      "deviceId": "RY4",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.10": {
+      "id": "RY4.10",
+      "deviceId": "RY4",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY4.9": {
+      "id": "RY4.9",
+      "deviceId": "RY4",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.8": {
+      "id": "RY5.8",
+      "deviceId": "RY5",
+      "name": "8",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.7": {
+      "id": "RY5.7",
+      "deviceId": "RY5",
+      "name": "7",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.6": {
+      "id": "RY5.6",
+      "deviceId": "RY5",
+      "name": "6",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.5": {
+      "id": "RY5.5",
+      "deviceId": "RY5",
+      "name": "5",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.4": {
+      "id": "RY5.4",
+      "deviceId": "RY5",
+      "name": "4",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.3": {
+      "id": "RY5.3",
+      "deviceId": "RY5",
+      "name": "3",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.2": {
+      "id": "RY5.2",
+      "deviceId": "RY5",
+      "name": "2",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.1": {
+      "id": "RY5.1",
+      "deviceId": "RY5",
+      "name": "1",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.14": {
+      "id": "RY5.14",
+      "deviceId": "RY5",
+      "name": "14",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.13": {
+      "id": "RY5.13",
+      "deviceId": "RY5",
+      "name": "13",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.12": {
+      "id": "RY5.12",
+      "deviceId": "RY5",
+      "name": "12",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.11": {
+      "id": "RY5.11",
+      "deviceId": "RY5",
+      "name": "11",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.10": {
+      "id": "RY5.10",
+      "deviceId": "RY5",
+      "name": "10",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RY5.9": {
+      "id": "RY5.9",
+      "deviceId": "RY5",
+      "name": "9",
+      "crimp": "1.5-3Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "원본 6페이지 소켓 핀 배열",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "YL2.상단 접속부": {
+      "id": "YL2.상단 접속부",
+      "deviceId": "YL2",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "YL2.하단 접속부": {
+      "id": "YL2.하단 접속부",
+      "deviceId": "YL2",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RL2.상단 접속부": {
+      "id": "RL2.상단 접속부",
+      "deviceId": "RL2",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RL2.하단 접속부": {
+      "id": "RL2.하단 접속부",
+      "deviceId": "RL2",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "GL2.상단 접속부": {
+      "id": "GL2.상단 접속부",
+      "deviceId": "GL2",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "GL2.하단 접속부": {
+      "id": "GL2.하단 접속부",
+      "deviceId": "GL2",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RL1.상단 접속부": {
+      "id": "RL1.상단 접속부",
+      "deviceId": "RL1",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "RL1.하단 접속부": {
+      "id": "RL1.하단 접속부",
+      "deviceId": "RL1",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "YL1.상단 접속부": {
+      "id": "YL1.상단 접속부",
+      "deviceId": "YL1",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "YL1.하단 접속부": {
+      "id": "YL1.하단 접속부",
+      "deviceId": "YL1",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "GL1.상단 접속부": {
+      "id": "GL1.상단 접속부",
+      "deviceId": "GL1",
+      "name": "상단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "GL1.하단 접속부": {
+      "id": "GL1.하단 접속부",
+      "deviceId": "GL1",
+      "name": "하단 접속부",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB6.접점 위": {
+      "id": "PB6.접점 위",
+      "deviceId": "PB6",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB6.접점 아래": {
+      "id": "PB6.접점 아래",
+      "deviceId": "PB6",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB7.접점 위": {
+      "id": "PB7.접점 위",
+      "deviceId": "PB7",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB7.접점 아래": {
+      "id": "PB7.접점 아래",
+      "deviceId": "PB7",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB1.접점 위": {
+      "id": "PB1.접점 위",
+      "deviceId": "PB1",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB1.접점 아래": {
+      "id": "PB1.접점 아래",
+      "deviceId": "PB1",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB2.접점 위": {
+      "id": "PB2.접점 위",
+      "deviceId": "PB2",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB2.접점 아래": {
+      "id": "PB2.접점 아래",
+      "deviceId": "PB2",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB3.접점 위": {
+      "id": "PB3.접점 위",
+      "deviceId": "PB3",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB3.접점 아래": {
+      "id": "PB3.접점 아래",
+      "deviceId": "PB3",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB4.접점 위": {
+      "id": "PB4.접점 위",
+      "deviceId": "PB4",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB4.접점 아래": {
+      "id": "PB4.접점 아래",
+      "deviceId": "PB4",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB5.접점 위": {
+      "id": "PB5.접점 위",
+      "deviceId": "PB5",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "PB5.접점 아래": {
+      "id": "PB5.접점 아래",
+      "deviceId": "PB5",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SS1.접점 위": {
+      "id": "SS1.접점 위",
+      "deviceId": "SS1",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SS1.접점 아래": {
+      "id": "SS1.접점 아래",
+      "deviceId": "SS1",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SS2.접점 위": {
+      "id": "SS2.접점 위",
+      "deviceId": "SS2",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SS2.접점 아래": {
+      "id": "SS2.접점 아래",
+      "deviceId": "SS2",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SS3.접점 위": {
+      "id": "SS3.접점 위",
+      "deviceId": "SS3",
+      "name": "접점 위",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    },
+    "SS3.접점 아래": {
+      "id": "SS3.접점 아래",
+      "deviceId": "SS3",
+      "name": "접점 아래",
+      "crimp": "1.5-4Y",
+      "insulationTube": false,
+      "maxConnections": 2,
+      "positionStatus": "확인 필요: 실제 제품 단자 위치 미제공",
+      "source": {
+        "page": 6
+      },
+      "orientationRule": null,
+      "doubleCrimpRule": null
+    }
+  },
+  "equivalentPairs": [
+    [
+      "RY1.13",
+      "RY1.14"
+    ],
+    [
+      "RY2.13",
+      "RY2.14"
+    ],
+    [
+      "RY3.13",
+      "RY3.14"
+    ],
+    [
+      "RY4.13",
+      "RY4.14"
+    ],
+    [
+      "RY5.13",
+      "RY5.14"
+    ]
+  ],
+  "materialUnconfirmedTerminals": [
+    "PLC.SG",
+    "PLC.485+",
+    "PLC.485-",
+    "INVERTER.S+",
+    "INVERTER.S-"
+  ],
+  "pending": [
+    {
+      "id": "physical",
+      "title": "제품별 실제 단자 위치",
+      "detail": "4페이지는 기구 외곽만 제공. TB와 릴레이 외 단자는 기능명 선택 방식이며 물리 위치를 재현하지 않았습니다."
+    },
+    {
+      "id": "direction",
+      "title": "Y형 방향·2개 압착단자 체결 방향",
+      "detail": "1~6페이지에 세부 방향 기준 없음. 선택값은 저장하지만 옳고 그름은 판정하지 않습니다."
+    },
+    {
+      "id": "earth",
+      "title": "SMPS·전원 보호도체",
+      "detail": "1페이지 8항의 TB4 지시와 5페이지 TB2 E 그림이 상충. 이 구간은 전기적 정답 확정 보류."
+    },
+    {
+      "id": "pins",
+      "title": "번호 없는 접점·제품에 따른 단자",
+      "detail": "PB·SS·램프는 도면의 위/아래 접속부 기능명. MC·OCR은 6페이지 예시 번호이며 실물 호환 확인 필요. AC 릴레이 코일 13/14 교환은 허용합니다."
+    },
+    {
+      "id": "material",
+      "title": "명시되지 않은 자재 규격",
+      "detail": "PLC 전원·통신, 인버터 제어의 압착 규격, 통신 전선, 인버터 출력 색상, OCR 주회로 압착규격은 확인 필요."
+    },
+    {
+      "id": "workmanship",
+      "title": "실물 시공·인출선 점검",
+      "detail": "기구 접촉·타이·조임은 입력한 작업 상태로만 검사합니다. TB1 인출선 50~100mm·끝단 약10mm, 실물 고정 및 동작 시험은 사람이 확인해야 합니다."
+    }
+  ],
+  "power": "AC"
+}

@@ -1,0 +1,31 @@
+✔ same NET accepts A-B-C and A-C-B (25.047ms)
+✔ wire endpoint direction does not affect NET (0.3818ms)
+✔ one missing bridge is one repair (1.3898ms)
+✔ wrong endpoint does not cascade into duplicate missing error (0.3855ms)
+✔ independent missing connection survives wrong-wire grouping (0.3169ms)
+✔ short between two otherwise complete NETs is one connection fault (0.4666ms)
+✔ wire color and endpoint crimp are separate errors (2.582ms)
+✔ PLC insulation checked per connection end (0.5552ms)
+✔ three wires on a terminal are one capacity error (1.0097ms)
+✔ 2mm bare conductor threshold is inclusive and fastening faults grouped (0.649ms)
+✔ unknown direction is not guessed (0.4805ms)
+✔ confirmed future orientation and dual mount rules are enforced (0.4034ms)
+✔ pending NET does not become false missing or wrong connection (0.222ms)
+✔ deterministic output independent of wire array order (0.3915ms)
+✔ never bridges internal switching contacts automatically (1.5609ms)
+✔ complete representative circuit and alternate JUMPs pass confirmed rules (18.6421ms)
+✔ all representative IDs resolve and each terminal appears in at most one NET (1.2503ms)
+✔ stopwatch starts only once and stops exactly at completion (0.2644ms)
+✔ no score before finish and all mutations lock after finish/grade (0.8772ms)
+✔ undo and retry reset wires, results, time, and state (0.1983ms)
+✔ time format permits durations beyond 24 hours (0.1297ms)
+✔ non-polar AC relay coil roles can be reversed (0.3722ms)
+✔ deleting an existing wire removes it and undo restores it (0.1969ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 262.8219

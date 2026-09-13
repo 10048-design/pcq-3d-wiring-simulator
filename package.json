@@ -1,0 +1,1 @@
+{"name":"pcq-wiring-simulator","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","dev":"node serve.mjs","preview":"node serve.mjs","build":"node verify.mjs","deploy:check":"npm test && npm run build"},"dependencies":{"three":"0.180.0"}}

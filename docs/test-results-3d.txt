@@ -1,0 +1,46 @@
+
+> pcq-wiring-simulator@0.1.0 test
+> node --test tests/*.test.mjs
+
+✔ same NET accepts A-B-C and A-C-B (53.6932ms)
+✔ wire endpoint direction does not affect NET (0.9898ms)
+✔ one missing bridge is one repair (3.622ms)
+✔ wrong endpoint does not cascade into duplicate missing error (2.3163ms)
+✔ independent missing connection survives wrong-wire grouping (2.7582ms)
+✔ short between two otherwise complete NETs is one connection fault (1.6668ms)
+✔ wire color and endpoint crimp are separate errors (4.4816ms)
+✔ PLC insulation checked per connection end (0.7265ms)
+✔ three wires on a terminal are one capacity error (1.0529ms)
+✔ 2mm bare conductor threshold is inclusive and fastening faults grouped (1.3794ms)
+✔ unknown direction is not guessed (0.8558ms)
+✔ confirmed future orientation and dual mount rules are enforced (0.753ms)
+✔ pending NET does not become false missing or wrong connection (0.764ms)
+✔ deterministic output independent of wire array order (1.0001ms)
+✔ never bridges internal switching contacts automatically (4.3862ms)
+✔ complete representative circuit and alternate JUMPs pass confirmed rules (40.6215ms)
+✔ all representative IDs resolve and each terminal appears in at most one NET (4.0034ms)
+✔ stopwatch starts only once and stops exactly at completion (0.6761ms)
+✔ no score before finish and all mutations lock after finish/grade (2.6519ms)
+✔ undo and retry reset wires, results, time, and state (0.8306ms)
+✔ time format permits durations beyond 24 hours (1.064ms)
+✔ non-polar AC relay coil roles can be reversed (2.7205ms)
+✔ deleting an existing wire removes it and undo restores it (0.7655ms)
+✔ hardware: all device, map and mesh references point to the SAME Terminal object (253.7509ms)
+✔ hardware: every screw can be raycast from in front without intersecting its body first (278.6327ms)
+✔ hardware: PLC official input/output numbering and four isolated COM groups (10.2963ms)
+✔ hardware: CT ports cannot be wired as screw terminals (9.5154ms)
+✔ wiring lifecycle: stripping, source fastening, moving draft, destination creates one Connection (16.9385ms)
+✔ wiring: cloned or NC terminal cannot be selected and canceled draft adds no wire (12.3786ms)
+✔ NET: upper/lower screws share a pole, adjacent poles and switching contacts do not (8.5814ms)
+✔ grade: hardware full NETs and reverse JUMP chain pass; exact terminal objects survive grading (71.3485ms)
+✔ grade: one missing CT passage is a workmanship error without breaking the electrical NET (16.0601ms)
+✔ grade: PLC tube, inverted lug and paired mount are separately tracked repairs (24.368ms)
+✔ 3D curved wires, CT paths and inverted/tubed lugs contain finite geometry and source references (37.7023ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1273.0236

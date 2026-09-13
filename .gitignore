@@ -1,0 +1,6 @@
+node_modules/
+docs/research/
+docs/contact-sheets/
+*.log
+.DS_Store
+
