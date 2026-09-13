@@ -5,19 +5,26 @@ import {Workbench3D} from './workbench-3d.mjs';
 import {ViewerState,pageGeometry} from './viewer-state.mjs';
 import {SplitState} from './split-state.mjs';
 import {groupErrorsForMarkers} from './error-markers.mjs';
+import {ProgressStore,captureProgress,restoreProgress} from './progress-storage.mjs';
 
 const $=id=>document.getElementById(id);
 const catalog=await fetch('./catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('문제 목록을 불러오지 못했습니다.')));
 const requestedId=new URLSearchParams(location.search).get('problem')??'p01',problemItem=catalog.find(x=>x.id===requestedId)??catalog[0],problemId=problemItem.id;
 const p=createHardwareProblem(problemId),attempt=new Attempt(),wiring=new WiringController(p,attempt);
+const progressStore=new ProgressStore(),savedProgress=await progressStore.load(problemId);
 const readStored=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
 const saveStored=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{}};
 const viewerStorageKey=`pcq-3d-view-v2:${problemId}`,viewerState=new ViewerState(readStored(viewerStorageKey,{})),splitState=new SplitState(readStored('pcq-3d-split-v1',60));
 let lastWire=readStored('pcq-3d-wire-v2',{kind:'연선',area:1.5,color:'노란색'});
 let board,selectedWireId=null,viewerResizeTimer=null,statusTimer=null;
+let progressSaveTimer=null,progressSaveChain=Promise.resolve();
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const act=fn=>{try{return fn();}catch(e){notify(e.message);return null;}};
 function notify(text){const box=$('status');box.textContent=text;box.classList.add('show');clearTimeout(statusTimer);statusTimer=setTimeout(()=>box.classList.remove('show'),2600);}
+function progressSnapshot(){return captureProgress(p,attempt,wiring,{selectedWireId,lastWire});}
+function saveProgressNow(){clearTimeout(progressSaveTimer);progressSaveTimer=null;const snapshot=progressSnapshot();if(snapshot)progressSaveChain=progressSaveChain.then(()=>progressStore.save(snapshot));return progressSaveChain;}
+function scheduleProgressSave(){if(!['running','finished'].includes(attempt.state))return;clearTimeout(progressSaveTimer);progressSaveTimer=setTimeout(saveProgressNow,80);}
+function clearProgress(){clearTimeout(progressSaveTimer);progressSaveTimer=null;progressSaveChain=progressSaveChain.then(()=>progressStore.delete(problemId));return progressSaveChain;}
 
 document.title=`${problemItem.name} · PCQ 3D 배선 실습`;$('problem-title').textContent=problemItem.name.replace(' 기출문제','')+' · 3D 배선 실습';
 const problemSelect=$('problem-select');for(const item of [...catalog].sort((a,b)=>a.name.localeCompare(b.name,'ko'))){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;option.selected=item.id===problemId;problemSelect.append(option);}
@@ -93,13 +100,14 @@ function refreshDraft(){
   b.classList.toggle('active',active);
  });
  refreshControls();
+ scheduleProgressSave();
 }
 function refreshControls(){
  const run=attempt.state==='running',done=['finished','graded'].includes(attempt.state);
  $('start').disabled=attempt.state!=='ready'||!board;$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;$('clock-label').textContent=done?'최종 작업시간':'경과시간';
  for(const b of document.querySelectorAll('#material-shelf button')){const allowed=b.dataset.kind==='wire'?wiring.stage===STAGES.WIRE:b.dataset.kind==='tube'?[STAGES.START_TUBE,STAGES.END_TUBE].includes(wiring.stage):[STAGES.START_CRIMP,STAGES.END_CRIMP].includes(wiring.stage);b.disabled=!run||!allowed;}
 }
-function refreshConnections(){board?.setConnections(attempt.connections);if(selectedWireId&&!attempt.connections.some(w=>w.id===selectedWireId))selectedWireId=null;refreshControls();}
+function refreshConnections(){board?.setConnections(attempt.connections);if(selectedWireId&&!attempt.connections.some(w=>w.id===selectedWireId))selectedWireId=null;refreshControls();scheduleProgressSave();}
 function showError(e){
  e.viewed=true;board?.markErrorViewed(e.id);const pop=$('error-popover');pop.hidden=false;const items=(e.errors??[e]).map(x=>`<li>${escapeHtml(x.simpleMessage??x.wrong)}</li>`).join('');pop.innerHTML=`<button aria-label="닫기">×</button><strong>${escapeHtml(e.title??e.type)} · ${e.count??1}개</strong><ol>${items}</ol>`;pop.querySelector('button').onclick=()=>pop.hidden=true;board?.focusItems(e.terminalIds,e.wireIds);
 }
@@ -111,9 +119,9 @@ function renderResults(r){
 
 $('start').onclick=()=>{if(attempt.start()){wiring.cancel();notify('작업을 시작합니다.');refreshDraft();}};
 $('finish').onclick=()=>$('confirm').showModal();$('keepworking').onclick=()=>$('confirm').close();
-$('confirmfinish').onclick=()=>{if(!attempt.finish())return;wiring.cancel();$('confirm').close();saveStored(`pcq-3d-last-completed-v1:${problemId}`,{problemId:p.id,elapsedMs:attempt.elapsedMs,completedAt:new Date().toISOString(),connections:attempt.connections});refreshDraft();refreshConnections();notify('작업판이 잠겼습니다.');};
-$('grade').onclick=()=>act(()=>{const r=attempt.score(p);renderResults(r);refreshDraft();notify('오류 위치에 느낌표를 표시했습니다.');});
-$('retry').onclick=()=>{if((attempt.connections.length||attempt.state==='running')&&!confirm('현재 작업을 지우고 같은 문제를 다시 풀까요?'))return;attempt.reset();wiring.cancel();selectedWireId=null;$('results').hidden=true;$('errors').replaceChildren();$('error-popover').hidden=true;$('clock').textContent='00:00:00';board?.setErrorMarkers([]);board?.highlight();board?.home();refreshConnections();refreshDraft();};
+$('confirmfinish').onclick=()=>{if(!attempt.finish())return;wiring.cancel();$('confirm').close();saveStored(`pcq-3d-last-completed-v1:${problemId}`,{problemId:p.id,elapsedMs:attempt.elapsedMs,completedAt:new Date().toISOString(),connections:attempt.connections});refreshDraft();refreshConnections();saveProgressNow();notify('작업판이 잠겼습니다.');};
+$('grade').onclick=()=>act(()=>{const r=attempt.score(p);clearProgress();renderResults(r);refreshDraft();notify('오류 위치에 느낌표를 표시했습니다.');});
+$('retry').onclick=()=>{if((attempt.connections.length||attempt.state==='running')&&!confirm('현재 작업을 지우고 같은 문제를 다시 풀까요?'))return;clearProgress();attempt.reset();wiring.cancel();selectedWireId=null;$('results').hidden=true;$('errors').replaceChildren();$('error-popover').hidden=true;$('clock').textContent='00:00:00';board?.setErrorMarkers([]);board?.highlight();board?.home();refreshConnections();refreshDraft();};
 $('undo').onclick=()=>act(()=>{const e=wiring.undo();if(e?.type==='connection')selectedWireId=null;refreshConnections();refreshDraft();notify('마지막 작업을 되돌렸습니다.');});
 $('delete').onclick=()=>act(()=>{if(!selectedWireId)throw Error('삭제할 배선을 먼저 선택해주세요.');const id=selectedWireId;attempt.remove(id);selectedWireId=null;board?.highlight();refreshConnections();notify(id+' 전선을 삭제했습니다.');});
 $('cancel').onclick=()=>{wiring.cancel();board?.setDraft(null);refreshDraft();notify('현재 전선 작업을 취소했습니다.');};
@@ -140,4 +148,12 @@ splitter.onpointerdown=e=>{splitter.setPointerCapture(e.pointerId);splitter.clas
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('confirm').open&&!document.fullscreenElement)$('cancel').click();if(attempt.state!=='running')return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!$('undo').disabled){e.preventDefault();$('undo').click();}if(e.key==='Delete'&&!$('delete').disabled){e.preventDefault();$('delete').click();}});
 setInterval(()=>{$('clock').textContent=formatTime(attempt.elapsed());},100);
+setInterval(()=>{if(attempt.state==='running')saveProgressNow();},5000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgressNow();});
+window.addEventListener('pagehide',()=>saveProgressNow());
 buildShelf();refreshConnections();refreshDraft();
+
+const resumeDialog=$('resume-dialog');resumeDialog.oncancel=e=>e.preventDefault();
+$('resume-saved').onclick=()=>{try{const restored=restoreProgress(savedProgress,p,attempt,wiring);selectedWireId=restored.selectedWireId;if(restored.lastWire)lastWire=restored.lastWire;resumeDialog.close();$('clock').textContent=formatTime(attempt.elapsed());refreshConnections();refreshDraft();notify('저장된 실습을 이어서 시작합니다.');}catch(e){clearProgress();resumeDialog.close();notify('저장된 진행상황을 불러올 수 없어 처음부터 시작합니다.');}};
+$('restart-saved').onclick=async()=>{await clearProgress();attempt.reset();wiring.cancel();selectedWireId=null;resumeDialog.close();$('clock').textContent='00:00:00';refreshConnections();refreshDraft();notify('새 실습을 시작할 준비가 되었습니다.');};
+if(savedProgress)resumeDialog.showModal();
