@@ -95,15 +95,16 @@ export function grade(problem,connections){
 }
 export class Attempt {
  constructor(now=()=>performance.now()){this.now=now;this.reset();}
- reset(){this.state='ready';this.startedAt=null;this.elapsedMs=0;this.connections=[];this.history=[];this.result=null;this.serial=0;}
+ reset(){this.state='ready';this.startedAt=null;this.elapsedMs=0;this.connections=[];this.history=[];this.future=[];this.result=null;this.serial=0;}
  start(){if(this.state!=='ready')return false;this.startedAt=this.now();this.state='running';return true;}
  elapsed(){return this.state==='running'?Math.max(0,this.now()-this.startedAt):this.elapsedMs;}
  finish(){if(this.state!=='running')return false;this.elapsedMs=this.elapsed();this.state='finished';return true;}
- mutate(fn){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');this.history.push(structuredClone(this.connections));fn(this.connections);}
+ mutate(fn){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');this.history.push(structuredClone(this.connections));this.future=[];fn(this.connections);}
  add(w){const id='W'+String(++this.serial).padStart(3,'0');this.mutate(a=>a.push({...structuredClone(w),id}));return id;}
  update(id,w){this.mutate(a=>{const i=a.findIndex(x=>x.id===id);if(i<0)throw Error('전선 없음');a[i]={...structuredClone(w),id};});}
  remove(id){this.mutate(a=>{const i=a.findIndex(x=>x.id===id);if(i>=0)a.splice(i,1);});}
- undo(){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');if(this.history.length)this.connections=this.history.pop();}
+ undo(){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');if(!this.history.length)return false;this.future.push(structuredClone(this.connections));this.connections=this.history.pop();return true;}
+ redo(){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');if(!this.future.length)return false;this.history.push(structuredClone(this.connections));this.connections=this.future.pop();return true;}
  score(problem){if(!['finished','graded'].includes(this.state))throw Error('완료 후에만 채점할 수 있습니다.');this.result=grade(problem,this.connections);this.state='graded';return this.result;}
 }
 export function formatTime(ms){const s=Math.floor(ms/1000);return [Math.floor(s/3600),Math.floor(s/60)%60,s%60].map(n=>String(n).padStart(2,'0')).join(':');}

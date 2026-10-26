@@ -40,6 +40,7 @@ try{
   terminal:t=>act(()=>pickTerminal(t)),
   device:d=>board?.focus(d.id),
   wire:w=>selectWire(w.id),
+  blank:()=>deselectWire(),
   port:port=>act(()=>{if(wiring.through(port)){notify('✓ '+port.label+' 경로를 통과합니다.');refreshDraft();}}),
   autoPort:port=>act(()=>{if(wiring.through(port)){notify('✓ '+port.label+' 자동 통과를 감지했습니다.');refreshDraft();}}),
   routePoint:point=>act(()=>{wiring.waypoint(point);notify('경로 지점을 추가했습니다.');refreshDraft();}),
@@ -95,7 +96,8 @@ function pickTerminal(t){
  if(event.type==='destination')notify(t.id+' 끝부분 피복을 자동으로 제거했습니다.');
  refreshDraft();
 }
-function selectWire(id){const w=attempt.connections.find(x=>x.id===id);if(!w)return;selectedWireId=id;board?.focusItems([w.from,w.to],[id]);notify(id+' 전선을 선택했습니다.');refreshControls();}
+function deselectWire({notifyUser=false}={}){if(!selectedWireId)return false;selectedWireId=null;board?.highlight();refreshControls();scheduleProgressSave();if(notifyUser)notify('배선 선택을 해제했습니다.');return true;}
+function selectWire(id){const w=attempt.connections.find(x=>x.id===id);if(!w)return;if(selectedWireId===id){deselectWire({notifyUser:true});return;}selectedWireId=id;board?.focusItems([w.from,w.to],[id]);notify(id+' 전선을 선택했습니다.');refreshControls();scheduleProgressSave();}
 function refreshDraft(){
  const end=wiring.stage.startsWith('끝측')?wiring.draft?.ends?.to:wiring.draft?.ends?.from;
  board?.setDraft(wiring.draft,end??wiring.material.end);
@@ -110,7 +112,7 @@ function refreshDraft(){
 }
 function refreshControls(){
  const run=attempt.state==='running',done=['finished','graded'].includes(attempt.state);
- $('start').disabled=attempt.state!=='ready'||!board;$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;modeSelect.disabled=attempt.state!=='ready';$('clock-label').textContent=done?'최종 작업시간':'경과시간';
+ $('start').disabled=attempt.state!=='ready'||!board;$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('redo').disabled=!run||(!wiring.future.length&&!attempt.future.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;modeSelect.disabled=attempt.state!=='ready';$('clock-label').textContent=done?'최종 작업시간':'경과시간';
  for(const b of document.querySelectorAll('#material-shelf button')){const allowed=b.dataset.kind==='wire'?wiring.stage===STAGES.WIRE:b.dataset.kind==='tube'?[STAGES.START_TUBE,STAGES.END_TUBE].includes(wiring.stage):[STAGES.START_CRIMP,STAGES.END_CRIMP].includes(wiring.stage);b.disabled=!run||!allowed;}
 }
 function refreshPracticeFeedback(latestWireId=null){
@@ -137,7 +139,8 @@ $('finish').onclick=()=>$('confirm').showModal();$('keepworking').onclick=()=>$(
 $('confirmfinish').onclick=()=>{if(!attempt.finish())return;wiring.cancel();$('confirm').close();saveStored(`pcq-3d-last-completed-v1:${problemId}`,{problemId:p.id,elapsedMs:attempt.elapsedMs,completedAt:new Date().toISOString(),connections:attempt.connections});refreshDraft();refreshConnections();saveProgressNow();notify('작업판이 잠겼습니다.');};
 $('grade').onclick=()=>act(()=>{const r=attempt.score(p);clearProgress();renderResults(r);refreshDraft();notify('오류 위치에 느낌표를 표시했습니다.');});
 $('retry').onclick=()=>{if((attempt.connections.length||attempt.state==='running')&&!confirm('현재 작업을 지우고 같은 문제를 다시 풀까요?'))return;clearProgress();attempt.reset();wiring.cancel();selectedWireId=null;$('results').hidden=true;$('errors').replaceChildren();$('error-popover').hidden=true;$('clock').textContent='00:00:00';board?.setErrorMarkers([]);board?.highlight();board?.home();refreshConnections();refreshDraft();};
-$('undo').onclick=()=>act(()=>{const e=wiring.undo();if(e?.type==='connection')selectedWireId=null;refreshConnections();refreshDraft();notify('마지막 작업을 되돌렸습니다.');});
+$('undo').onclick=()=>act(()=>{const e=wiring.undo();if(e?.type==='none')return;if(e.type==='connection')deselectWire();refreshConnections();refreshDraft();notify('마지막 작업을 되돌렸습니다.');});
+$('redo').onclick=()=>act(()=>{const e=wiring.redo();if(e?.type==='none')return;if(e.type==='connection')deselectWire();refreshConnections();refreshDraft();notify('되돌린 작업을 다시 실행했습니다.');});
 $('delete').onclick=()=>act(()=>{if(!selectedWireId)throw Error('삭제할 배선을 먼저 선택해주세요.');const id=selectedWireId;attempt.remove(id);selectedWireId=null;board?.highlight();refreshConnections();notify(id+' 전선을 삭제했습니다.');});
 $('cancel').onclick=()=>{wiring.cancel();board?.setDraft(null);refreshDraft();notify('현재 전선 작업을 취소했습니다.');};
 $('home').onclick=()=>board?.home();
@@ -161,7 +164,14 @@ function applySplit(){document.documentElement.style.setProperty('--split',split
 function moveSplit(e){const r=layout.getBoundingClientRect();splitState.fromPointer(isStacked()?e.clientY-r.top:e.clientX-r.left,isStacked()?r.height:r.width);applySplit();}
 splitter.onpointerdown=e=>{splitter.setPointerCapture(e.pointerId);splitter.classList.add('dragging');moveSplit(e);};splitter.onpointermove=e=>{if(splitter.hasPointerCapture(e.pointerId))moveSplit(e);};splitter.onpointerup=e=>{if(splitter.hasPointerCapture(e.pointerId))splitter.releasePointerCapture(e.pointerId);splitter.classList.remove('dragging');};splitter.onkeydown=e=>{const previous=isStacked()?'ArrowUp':'ArrowLeft',next=isStacked()?'ArrowDown':'ArrowRight';if(e.key===previous||e.key===next){e.preventDefault();splitState.nudge(e.key===previous?-2:2);applySplit();}};window.addEventListener('resize',applySplit);applySplit();
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('confirm').open&&!document.fullscreenElement)$('cancel').click();if(attempt.state!=='running')return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!$('undo').disabled){e.preventDefault();$('undo').click();}if(e.key==='Delete'&&!$('delete').disabled){e.preventDefault();$('delete').click();}});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'&&!$('confirm').open&&!document.fullscreenElement){if(wiring.draft&&!$('cancel').disabled){e.preventDefault();$('cancel').click();}else if(selectedWireId){e.preventDefault();deselectWire({notifyUser:true});}}
+ if(attempt.state!=='running')return;
+ const command=e.ctrlKey||e.metaKey,key=e.key.toLowerCase();
+ if(command&&((key==='y')||(key==='z'&&e.shiftKey))&&!$('redo').disabled){e.preventDefault();$('redo').click();return;}
+ if(command&&key==='z'&&!e.shiftKey&&!$('undo').disabled){e.preventDefault();$('undo').click();return;}
+ if(e.key==='Delete'&&!$('delete').disabled){e.preventDefault();$('delete').click();}
+});
 setInterval(()=>{$('clock').textContent=formatTime(attempt.elapsed());},100);
 setInterval(()=>{if(attempt.state==='running')saveProgressNow();},5000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgressNow();});
