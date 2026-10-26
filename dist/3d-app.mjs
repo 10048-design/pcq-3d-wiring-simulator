@@ -6,6 +6,7 @@ import {ViewerState,pageGeometry} from './viewer-state.mjs';
 import {SplitState} from './split-state.mjs';
 import {groupErrorsForMarkers} from './error-markers.mjs';
 import {ProgressStore,captureProgress,restoreProgress} from './progress-storage.mjs';
+import {assessPractice} from './practice-feedback.mjs';
 
 const $=id=>document.getElementById(id);
 const catalog=await fetch('./catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('문제 목록을 불러오지 못했습니다.')));
@@ -16,6 +17,8 @@ const readStored=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key
 const saveStored=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{}};
 const viewerStorageKey=`pcq-3d-view-v2:${problemId}`,viewerState=new ViewerState(readStored(viewerStorageKey,{})),splitState=new SplitState(readStored('pcq-3d-split-v1',60));
 let lastWire=readStored('pcq-3d-wire-v2',{kind:'연선',area:1.5,color:'노란색'});
+let sessionMode=readStored('pcq-3d-session-mode-v1','exam');
+if(!['exam','practice'].includes(sessionMode))sessionMode='exam';
 let board,selectedWireId=null,viewerResizeTimer=null,statusTimer=null;
 let progressSaveTimer=null,progressSaveChain=Promise.resolve();
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -29,13 +32,16 @@ function clearProgress(){clearTimeout(progressSaveTimer);progressSaveTimer=null;
 document.title=`${problemItem.name} · PCQ 3D 배선 실습`;$('problem-title').textContent=problemItem.name.replace(' 기출문제','')+' · 3D 배선 실습';
 const problemSelect=$('problem-select');for(const item of [...catalog].sort((a,b)=>a.name.localeCompare(b.name,'ko'))){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;option.selected=item.id===problemId;problemSelect.append(option);}
 problemSelect.onchange=()=>{if(attempt.state==='running'&&!confirm('진행 중인 작업을 끝내고 다른 문제로 이동할까요?')){problemSelect.value=problemId;return;}location.href=`3d.html?problem=${encodeURIComponent(problemSelect.value)}`;};
+const modeSelect=$('mode-select');modeSelect.value=sessionMode;modeSelect.onchange=()=>{if(attempt.state!=='ready'){modeSelect.value=sessionMode;return;}sessionMode=modeSelect.value;saveStored('pcq-3d-session-mode-v1',sessionMode);refreshModeUi();notify(sessionMode==='practice'?'연습 모드: 연결할 때마다 즉시 확인합니다.':'시험 모드: 완료 후 채점합니다.');};
+function refreshModeUi(){const practice=sessionMode==='practice';document.body.dataset.mode=sessionMode;$('instruction').classList.toggle('practice',practice&&attempt.state==='running');}
 
 try{
  board=new Workbench3D($('viewport'),p,{
   terminal:t=>act(()=>pickTerminal(t)),
   device:d=>board?.focus(d.id),
   wire:w=>selectWire(w.id),
-  port:port=>act(()=>{wiring.through(port);notify(port.label+' 경로를 통과합니다.');refreshDraft();}),
+  port:port=>act(()=>{if(wiring.through(port)){notify('✓ '+port.label+' 경로를 통과합니다.');refreshDraft();}}),
+  autoPort:port=>act(()=>{if(wiring.through(port)){notify('✓ '+port.label+' 자동 통과를 감지했습니다.');refreshDraft();}}),
   routePoint:point=>act(()=>{wiring.waypoint(point);notify('경로 지점을 추가했습니다.');refreshDraft();}),
   error:e=>showError(e),
   hover:item=>{$('hover').textContent=item?(item.displayNumber?item.deviceId+' · '+item.displayNumber:item.label??''):'';}
@@ -80,7 +86,7 @@ function handleMaterial(button){
  else if(kind==='tube')event=act(()=>wiring.chooseTube(value==='yes'));
  else event=act(()=>wiring.chooseCrimp(value));
  if(!event)return;animatePick(button);
- if(event.type==='connection'){selectedWireId=event.id;notify(event.id+' 체결이 완료되었습니다.');refreshConnections();}
+ if(event.type==='connection'){selectedWireId=event.id;if(sessionMode==='exam')notify(event.id+' 체결이 완료되었습니다.');refreshConnections(event.id);}
  refreshDraft();
 }
 function pickTerminal(t){
@@ -94,7 +100,7 @@ function refreshDraft(){
  const end=wiring.stage.startsWith('끝측')?wiring.draft?.ends?.to:wiring.draft?.ends?.from;
  board?.setDraft(wiring.draft,end??wiring.material.end);
  board?.showPreparation(wiring.stage,wiring.material,wiring.draft);
- $('instruction').textContent=attempt.state==='ready'?'시작 버튼을 눌러주세요':attempt.state==='finished'?'채점하기를 눌러주세요':attempt.state==='graded'?'빨간 느낌표를 눌러 오류를 확인하세요':instruction[wiring.stage]??'선을 선택해주세요';
+ const runningText=instruction[wiring.stage]??'선을 선택해주세요';$('instruction').textContent=attempt.state==='ready'?(sessionMode==='practice'?'연습 모드 · 시작 버튼을 눌러주세요':'시험 모드 · 시작 버튼을 눌러주세요'):attempt.state==='finished'?'채점하기를 눌러주세요':attempt.state==='graded'?'빨간 느낌표를 눌러 오류를 확인하세요':sessionMode==='practice'?`연습 모드 · ${runningText}`:runningText;refreshModeUi();
  document.querySelectorAll('#material-shelf button').forEach(b=>{
   const active=(b.dataset.kind==='wire'&&b.dataset.value===(wiring.draft?.material?.color??lastWire.color))||(b.dataset.kind==='tube'&&wiring.draft&&String((wiring.stage.startsWith('끝측')?wiring.draft.ends.to.tube:wiring.draft.ends.from.tube)===true)===(b.dataset.value==='yes'))||(b.dataset.kind==='crimp'&&b.dataset.value===end?.crimp);
   b.classList.toggle('active',active);
@@ -104,10 +110,19 @@ function refreshDraft(){
 }
 function refreshControls(){
  const run=attempt.state==='running',done=['finished','graded'].includes(attempt.state);
- $('start').disabled=attempt.state!=='ready'||!board;$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;$('clock-label').textContent=done?'최종 작업시간':'경과시간';
+ $('start').disabled=attempt.state!=='ready'||!board;$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;modeSelect.disabled=attempt.state!=='ready';$('clock-label').textContent=done?'최종 작업시간':'경과시간';
  for(const b of document.querySelectorAll('#material-shelf button')){const allowed=b.dataset.kind==='wire'?wiring.stage===STAGES.WIRE:b.dataset.kind==='tube'?[STAGES.START_TUBE,STAGES.END_TUBE].includes(wiring.stage):[STAGES.START_CRIMP,STAGES.END_CRIMP].includes(wiring.stage);b.disabled=!run||!allowed;}
 }
-function refreshConnections(){board?.setConnections(attempt.connections);if(selectedWireId&&!attempt.connections.some(w=>w.id===selectedWireId))selectedWireId=null;refreshControls();scheduleProgressSave();}
+function refreshPracticeFeedback(latestWireId=null){
+ if(sessionMode!=='practice'||attempt.state!=='running'){if(attempt.state==='running')board?.setErrorMarkers([]);return;}
+ const assessment=assessPractice(p,attempt.connections,latestWireId),groups=groupErrorsForMarkers(p,assessment.errors,attempt.connections);
+ board?.setErrorMarkers(groups);
+ if(latestWireId){
+  if(assessment.latestErrors.length)notify(`${latestWireId} 연결에 오류가 있습니다. 느낌표를 확인하세요.`);
+  else notify(`${latestWireId} 연결이 올바릅니다.`);
+ }
+}
+function refreshConnections(latestWireId=null){board?.setConnections(attempt.connections);if(selectedWireId&&!attempt.connections.some(w=>w.id===selectedWireId))selectedWireId=null;refreshPracticeFeedback(latestWireId);refreshControls();scheduleProgressSave();}
 function showError(e){
  e.viewed=true;board?.markErrorViewed(e.id);const pop=$('error-popover');pop.hidden=false;const items=(e.errors??[e]).map(x=>`<li>${escapeHtml(x.simpleMessage??x.wrong)}</li>`).join('');pop.innerHTML=`<button aria-label="닫기">×</button><strong>${escapeHtml(e.title??e.type)} · ${e.count??1}개</strong><ol>${items}</ol>`;pop.querySelector('button').onclick=()=>pop.hidden=true;board?.focusItems(e.terminalIds,e.wireIds);
 }
@@ -117,7 +132,7 @@ function renderResults(r){
  board?.setErrorMarkers(groups);
 }
 
-$('start').onclick=()=>{if(attempt.start()){wiring.cancel();notify('작업을 시작합니다.');refreshDraft();}};
+$('start').onclick=()=>{if(attempt.start()){wiring.cancel();notify(sessionMode==='practice'?'연습 모드를 시작합니다. 연결마다 바로 확인합니다.':'시험 모드를 시작합니다.');refreshConnections();refreshDraft();}};
 $('finish').onclick=()=>$('confirm').showModal();$('keepworking').onclick=()=>$('confirm').close();
 $('confirmfinish').onclick=()=>{if(!attempt.finish())return;wiring.cancel();$('confirm').close();saveStored(`pcq-3d-last-completed-v1:${problemId}`,{problemId:p.id,elapsedMs:attempt.elapsedMs,completedAt:new Date().toISOString(),connections:attempt.connections});refreshDraft();refreshConnections();saveProgressNow();notify('작업판이 잠겼습니다.');};
 $('grade').onclick=()=>act(()=>{const r=attempt.score(p);clearProgress();renderResults(r);refreshDraft();notify('오류 위치에 느낌표를 표시했습니다.');});
@@ -151,7 +166,7 @@ setInterval(()=>{$('clock').textContent=formatTime(attempt.elapsed());},100);
 setInterval(()=>{if(attempt.state==='running')saveProgressNow();},5000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgressNow();});
 window.addEventListener('pagehide',()=>saveProgressNow());
-buildShelf();refreshConnections();refreshDraft();
+refreshModeUi();buildShelf();refreshConnections();refreshDraft();
 
 const resumeDialog=$('resume-dialog');resumeDialog.oncancel=e=>e.preventDefault();
 $('resume-saved').onclick=()=>{try{const restored=restoreProgress(savedProgress,p,attempt,wiring);selectedWireId=restored.selectedWireId;if(restored.lastWire)lastWire=restored.lastWire;resumeDialog.close();$('clock').textContent=formatTime(attempt.elapsed());refreshConnections();refreshDraft();notify('저장된 실습을 이어서 시작합니다.');}catch(e){clearProgress();resumeDialog.close();notify('저장된 진행상황을 불러올 수 없어 처음부터 시작합니다.');}};

@@ -14,20 +14,29 @@ export function groupRepairErrors(errors){
  return grouped;
 }
 export function grade(problem,connections){
- // The p6 AC relay coil is non-polar. Resolve its 13/14 roles from the user's
- // connections without changing their physical terminal IDs or wire metadata.
- if(problem.equivalentPairs?.length){
+ // Resolve non-polar / physically reversible terminal roles from the user's
+ // connections without changing physical terminal IDs or wire metadata.
+ // Some devices swap one pair independently; MCCB swaps input/output pole pairs together.
+ if(problem.equivalentPairs?.length||problem.equivalentPairGroups?.length){
   problem={...problem,nets:structuredClone(problem.nets)};
   const roles=new Map(problem.nets.flatMap(n=>n.status==='confirmed'?n.members.map(t=>[t,n.id]):[]));
   const same=(a,b)=>roles.has(a)&&roles.get(a)===roles.get(b);
-  for(let pass=0;pass<problem.equivalentPairs.length;pass++){
+  const applySwap=pairs=>{
+   const swap=id=>{for(const [a,b] of pairs){if(id===a)return b;if(id===b)return a;}return id;};
+   const touched=new Set(pairs.flat());
+   const relevant=connections.filter(w=>touched.has(w.from)||touched.has(w.to));
+   const before=relevant.filter(w=>same(w.from,w.to)).length;
+   const after=relevant.filter(w=>same(swap(w.from),swap(w.to))).length;
+   if(after<=before)return false;
+   const previous=new Map(pairs.flat().map(id=>[id,roles.get(id)]));
+   for(const [a,b] of pairs){roles.set(a,previous.get(b));roles.set(b,previous.get(a));}
+   for(const n of problem.nets)n.members=n.members.map(swap);
+   return true;
+  };
+  const choices=[...(problem.equivalentPairs??[]).map(pair=>[pair]),...(problem.equivalentPairGroups??[])];
+  for(let pass=0;pass<choices.length;pass++){
    let changed=false;
-   for(const [a,b] of problem.equivalentPairs){const relevant=connections.filter(w=>[w.from,w.to].some(t=>t===a||t===b));
-    const before=relevant.filter(w=>same(w.from,w.to)).length;
-    const swap=id=>id===a?b:id===b?a:id;
-    const after=relevant.filter(w=>same(swap(w.from),swap(w.to))).length;
-    if(after>before){const ra=roles.get(a),rb=roles.get(b);roles.set(a,rb);roles.set(b,ra);for(const n of problem.nets)n.members=n.members.map(swap);changed=true;}
-   }
+   for(const pairs of choices)if(applySwap(pairs))changed=true;
    if(!changed)break;
   }
  }

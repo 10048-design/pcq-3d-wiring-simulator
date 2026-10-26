@@ -1,9 +1,10 @@
 import * as T from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {deviceMesh,wireMesh,lugMesh,block,cylinder,disposeGroup} from './scene-geometry.mjs';
+import {CTPassDetector,eligibleRoutePortIds} from './ct-pass-detector.mjs';
 export class Workbench3D {
  constructor(host,problem,events){
-  this.host=host;this.problem=problem;this.events=events;this.deviceGroups=new Map();this.connections=[];this.pointer=[0,0,100];
+  this.host=host;this.problem=problem;this.events=events;this.deviceGroups=new Map();this.connections=[];this.pointer=[0,0,100];this.ctPassDetector=new CTPassDetector();this.ctInside=new Set();this.portRings=new Map();
   this.renderer=new T.WebGLRenderer({antialias:true,alpha:false});this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));host.append(this.renderer.domElement);
   this.scene=new T.Scene();this.scene.background=new T.Color('#1c2933');this.camera=new T.PerspectiveCamera(42,1,1,5000);this.camera.position.set(0,-340,1050);
   this.controls=new OrbitControls(this.camera,this.renderer.domElement);this.controls.enableDamping=true;this.controls.enableRotate=false;this.controls.minDistance=65;this.controls.maxDistance=1800;this.controls.maxPolarAngle=Math.PI*.85;this.controls.target.set(0,0,30);this.controls.mouseButtons.LEFT=T.MOUSE.PAN;this.controls.mouseButtons.RIGHT=T.MOUSE.PAN;this.controls.touches.ONE=T.TOUCH.PAN;this.controls.touches.TWO=T.TOUCH.DOLLY_PAN;this.controls.update();this.controls.saveState();
@@ -12,11 +13,11 @@ export class Workbench3D {
   // Page 4 routing tape: each segment stays inside the measured gaps between devices.
   for(const x of [-275,0,320])block(this.scene,[9,432,1],[x,1,.5],'#cad0ca');for(const y of [217,76,-215])block(this.scene,[595,9,1],[22.5,y,.5],'#cad0ca');
   this.picks=[];for(const d of problem.devices){const g=deviceMesh(d);this.scene.add(g);this.deviceGroups.set(d.id,g);g.traverse(o=>{if(o.isMesh)this.picks.push(o);});}
-  this.portTargets=[];for(const port of problem.routePorts){const ring=new T.Mesh(new T.TorusGeometry(5.5,.6,6,20),new T.MeshBasicMaterial({color:'#62b9d2'}));ring.position.set(...port.positionMm);ring.position.y+=20;ring.rotation.x=Math.PI/2;ring.userData.port=port;this.scene.add(ring);const hit=new T.Mesh(new T.SphereGeometry(5.5,10,8),new T.MeshBasicMaterial({visible:false}));hit.position.copy(ring.position);hit.userData.port=port;this.scene.add(hit);this.portTargets.push(hit);}
+  this.portTargets=[];for(const port of problem.routePorts){const ring=new T.Mesh(new T.TorusGeometry(5.5,.6,6,20),new T.MeshBasicMaterial({color:'#62b9d2'}));ring.position.set(...port.positionMm);ring.position.y+=20;ring.rotation.x=Math.PI/2;ring.userData.port=port;this.scene.add(ring);this.portRings.set(port.id,ring);const hit=new T.Mesh(new T.SphereGeometry(5.5,10,8),new T.MeshBasicMaterial({visible:false}));hit.position.copy(ring.position);hit.userData.port=port;this.scene.add(hit);this.portTargets.push(hit);}
   this.wires=new T.Group();this.wireTargets=[];this.draftGroup=new T.Group();this.labels=new T.Group();this.selection=new T.Group();this.preparation=new T.Group();this.errorMarkers=new T.Group();this.errorHits=[];this.scene.add(this.wires,this.draftGroup,this.labels,this.selection,this.preparation,this.errorMarkers);
   this.ray=new T.Raycaster();this.ndc=new T.Vector2();this.down=null;const canvas=this.renderer.domElement;canvas.style.touchAction='none';
   canvas.addEventListener('pointerdown',e=>{this.down={x:e.clientX,y:e.clientY,button:e.button};});
-  canvas.addEventListener('pointermove',e=>this.move(e));canvas.addEventListener('pointerleave',()=>events.hover(null));
+  canvas.addEventListener('pointermove',e=>this.move(e));canvas.addEventListener('pointerleave',()=>{events.hover(null);this.resetCtTracking();});
   canvas.addEventListener('pointerup',e=>{if(!this.down||this.down.button!==0||Math.hypot(e.clientX-this.down.x,e.clientY-this.down.y)>5)return;this.move(e);const h=this.hit();if(h?.userData.error)events.error?.(h.userData.error);else if(h?.userData.terminal)events.terminal(h.userData.terminal);else if(h?.userData.connection)events.wire?.(h.userData.connection);else if(h?.userData.port)events.port(h.userData.port);else if(h){let o=h;while(o&&!o.userData.device)o=o.parent;if(o)events.device(o.userData.device);else if(this.draft?.source)events.routePoint?.(this.pointer);}else if(this.draft?.source)events.routePoint?.(this.pointer);});
   this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(host);this.resize();this.renderer.setAnimationLoop(time=>{this.controls.update();if(this.preparation.children[0]){const g=this.preparation.children[0],age=Math.min(1,(time-(this.prepStarted??time))/260);g.scale.setScalar(.35+.65*(1-(1-age)**3));g.position.z=50+Math.sin(time/170)*2;}this.renderer.render(this.scene,this.camera);});
  }
@@ -24,8 +25,20 @@ export class Workbench3D {
  hit(){this.scene.updateMatrixWorld(true);return this.ray.intersectObjects([...this.errorHits,...this.wireTargets,...this.portTargets,...this.picks],false)[0]?.object;}
  move(e){const r=this.renderer.domElement.getBoundingClientRect();this.ndc.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.ray.setFromCamera(this.ndc,this.camera);const h=this.hit();this.events.hover(h?.userData.terminal??h?.userData.port??null);
   const z=this.draft?.source?.positionMm?.[2]??80,point=new T.Vector3();if(this.ray.ray.intersectPlane(new T.Plane(new T.Vector3(0,0,1),-Math.max(z,45)),point))this.pointer=point.toArray();
-  if(h?.userData.terminal)this.pointer=[...h.userData.terminal.positionMm];if(this.draft)this.drawDraft();
+  if(h?.userData.terminal)this.pointer=[...h.userData.terminal.positionMm];
+  this.trackCtPass(e,r);if(this.draft)this.drawDraft();
  }
+ projectCtTargets(rect){
+  if(!this.draft?.source||this.draft?.destination)return [];const eligible=eligibleRoutePortIds(this.problem,this.draft.source.id);if(!eligible.size)return [];this.scene.updateMatrixWorld(true);this.camera.updateMatrixWorld(true);const out=[];
+  for(const [id,ring] of this.portRings){if(!eligible.has(id)||this.draft.via?.includes(id))continue;const world=ring.getWorldPosition(new T.Vector3()),center=world.clone().project(this.camera),edge=world.clone().add(new T.Vector3(this.problem.routePorts.find(p=>p.id===id)?.diameterMm/2??5,0,0)).project(this.camera);const x=rect.left+(center.x+1)*rect.width/2,y=rect.top+(1-center.y)*rect.height/2,ex=rect.left+(edge.x+1)*rect.width/2,ey=rect.top+(1-edge.y)*rect.height/2;if(center.z<-1||center.z>1)continue;out.push({id,x,y,radius:Math.max(9,Math.min(30,Math.hypot(ex-x,ey-y)*1.2))});}
+  return out;
+ }
+ trackCtPass(e,rect){
+  if(e.buttons||!this.draft?.source||this.draft?.destination){this.resetCtTracking();return;}const targets=this.projectCtTargets(rect),result=this.ctPassDetector.update({x:e.clientX,y:e.clientY},targets);this.ctInside=new Set(result.inside);this.updatePortVisuals();
+  for(const id of result.passed){const port=this.problem.routePorts.find(p=>p.id===id);if(port&&!this.draft?.via?.includes(id))this.events.autoPort?.(port);}
+ }
+ resetCtTracking(){this.ctPassDetector.reset();this.ctInside.clear();this.updatePortVisuals();}
+ updatePortVisuals(){for(const [id,ring] of this.portRings){const passed=Boolean(this.draft?.via?.includes(id)),inside=this.ctInside.has(id);ring.material.color.set(passed?'#48d17a':inside?'#ffb238':'#62b9d2');ring.scale.setScalar(passed?1.22:inside?1.3:1);}}
  focus(id){const d=this.problem.devices.find(d=>d.id===id);if(!d)return;const c=new T.Vector3(...d.centerMm);c.z=d.displaySizeMm[2]*.6;this.controls.target.copy(c);const span=Math.max(d.displaySizeMm[0],d.displaySizeMm[1],100);this.camera.position.copy(c).add(new T.Vector3(0,-span*.45,span*2.3));this.controls.update();this.showTerminals(d);}
  home(){this.controls.reset();disposeGroup(this.labels);}
  sprite(text){const c=document.createElement('canvas');c.width=384;c.height=64;const ctx=c.getContext('2d');ctx.fillStyle='#102332ed';ctx.fillRect(0,0,384,64);ctx.font='26px sans-serif';ctx.textAlign='center';ctx.fillStyle='white';ctx.fillText(text,192,42);const tex=new T.CanvasTexture(c);const s=new T.Sprite(new T.SpriteMaterial({map:tex,depthTest:false}));s.scale.set(28,4.7,1);s.renderOrder=20;return s;}
@@ -44,7 +57,7 @@ export class Workbench3D {
  setConnections(connections){this.connections=connections;disposeGroup(this.wires);this.wireTargets=[];const incident=new Map();for(const w of connections)for(const side of ['from','to']){if(!incident.has(w[side]))incident.set(w[side],[]);incident.get(w[side]).push(w.id);}
   for(const w of connections){const mounts={};for(const id of [w.from,w.to])mounts[id]={paired:incident.get(id).length>1,index:incident.get(id).indexOf(w.id)};const g=wireMesh(this.problem,w,null,mounts);g.traverse(o=>{if(o.isMesh&&!o.userData.terminal){o.userData.connection=w;this.wireTargets.push(o);}});this.wires.add(g);}
  }
- setDraft(draft,end){this.draft=draft;this.looseEnd=end;this.drawDraft();}
+ setDraft(draft,end){const previousSource=this.draft?.source?.id;this.draft=draft;this.looseEnd=end;if(previousSource!==this.draft?.source?.id||!this.draft?.source||this.draft?.destination){this.ctPassDetector.reset();this.ctInside.clear();}this.updatePortVisuals();this.drawDraft();}
  drawDraft(){disposeGroup(this.draftGroup);if(!this.draft?.source)return;const d=this.draft,target=d.destination?.positionMm??this.pointer;this.draftGroup.add(wireMesh(this.problem,{from:d.source.id,...d.material,ends:{from:d.ends?.from??d.material.end,to:d.ends?.to??this.looseEnd},via:d.via},target));}
  showPreparation(stage,material,draft=null){disposeGroup(this.preparation);if(stage==='전선 선택'||stage==='전선')return;const g=new T.Group();g.position.set(-230,-235,50);g.scale.setScalar(.35);const color=material.color==='갈색'?'#8b4b24':material.color==='검은색'?'#202733':material.color==='회색'?'#85909d':material.color==='녹색-노란색'?'#269957':'#e0b600';block(g,[3,42,3],[0,-21,0],color);block(g,[1.3,10,1.3],[0,5,0],'#bd7a42');const side=stage.startsWith('끝측')?'to':'from',end=draft?.ends?.[side]??material.end;if(end?.tube===true){const tube=cylinder(g,2.2,9,[0,-1,0],'#3c87c2');tube.rotation.set(0,0,0);}if(end?.crimp){const lug=lugMesh(end);lug.position.set(0,12,0);g.add(lug);}this.prepStarted=performance.now();this.preparation.add(g);}
  destroy(){this.renderer.setAnimationLoop(null);this.observer.disconnect();this.controls.dispose();disposeGroup(this.scene);this.renderer.dispose();}
