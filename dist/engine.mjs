@@ -60,6 +60,9 @@ export function grade(problem,connections){
   if(pn||pm){
    if(pn&&pm&&pn.id===pm.id){
     reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],detail:`${pn.id}: 도면·유의사항 상충으로 연결 관계 확인 필요`});
+    // Pending NETs are excluded from scoring, but their internal connectivity is
+    // still useful for practice-mode progress visualization.
+    uf.join(w.from,w.to);
    }else{
     const left=pn?.id??netOf.get(w.from)?.id??'미분류',right=pm?.id??netOf.get(w.to)?.id??'미분류';
     wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 확인 필요 NET과 다른 NET을 연결했습니다.`,`${left} / ${right}를 분리하고 목적지를 확인하세요.`));
@@ -105,7 +108,25 @@ export function grade(problem,connections){
   if(ends.length===2&&t.doubleCrimpRule&&(!t.orientationYOnly||ends.every(({w,side})=>w.ends[side].crimp?.endsWith('Y')))&&ends.some(({w,side})=>w.ends[side].doubleMount!==t.doubleCrimpRule))add('double:'+id,'2개 압착단자 체결',[id],ends.map(x=>x.w.id),`${id}: 2개 압착단자 체결 방법이 다릅니다.`,`필요: ${t.doubleCrimpRule}`);
  }
  const repairErrors=groupRepairErrors(errors);
- return {errors:repairErrors,count:repairErrors.length,reviews,pending:problem.pending,completeAssessment:false,netGroups:problem.nets.filter(n=>n.status==='confirmed').map(n=>({id:n.id,components:[...new Set(n.members.map(t=>uf.find(t)))].length})),basis:'확정된 NET 및 명시 규칙에 대한 부분 채점. 확인 필요 항목은 오류 개수에서 제외.'};
+ const blockingProgressTypes=new Set(['잘못된 연결','연결 데이터','CT 관통']);
+ const netProgress=problem.nets.map(n=>{
+  const memberSet=new Set(n.members),groups=new Map();
+  for(const t of n.members){const root=uf.find(t);if(!groups.has(root))groups.set(root,[]);groups.get(root).push(t);}
+  const components=[...groups.values()].map(items=>items.sort()).sort((a,b)=>b.length-a.length||a[0].localeCompare(b[0]));
+  const wireIds=connections.filter(w=>memberSet.has(w.from)||memberSet.has(w.to)).map(w=>w.id);
+  const relatedErrors=repairErrors.filter(e=>(e.terminalIds??[]).some(t=>memberSet.has(t)));
+  const relatedReviews=reviews.filter(r=>(r.terminalIds??[]).some(t=>memberSet.has(t)));
+  const blockers=relatedErrors.filter(e=>blockingProgressTypes.has(e.type));
+  const warnings=relatedErrors.filter(e=>e.type!=='필수 연결 누락'&&!blockingProgressTypes.has(e.type));
+  const started=wireIds.length>0;
+  let state;
+  if(n.status==='pending')state=blockers.length?'error':started?'review':'pending';
+  else if(blockers.length)state='error';
+  else if(components.length===1)state='complete';
+  else state=started?'progress':'not-started';
+  return {id:n.id,status:n.status,state,members:[...n.members],components,componentCount:components.length,wireIds:[...new Set(wireIds)].sort(),errorIds:blockers.map(e=>e.id).sort(),warningIds:warnings.map(e=>e.id).sort(),warningCount:warnings.length,reviewIds:relatedReviews.map(r=>r.id).sort(),reviewCount:relatedReviews.length,requiredPassages:(problem.requiredPassages??[]).filter(r=>r.netId===n.id).map(r=>r.portId).sort()};
+ });
+ return {errors:repairErrors,count:repairErrors.length,reviews,pending:problem.pending,completeAssessment:false,netGroups:netProgress.filter(n=>n.status==='confirmed').map(n=>({id:n.id,components:n.componentCount})),netProgress,basis:'확정된 NET 및 명시 규칙에 대한 부분 채점. 확인 필요 항목은 오류 개수에서 제외.'};
 }
 export class Attempt {
  constructor(now=()=>performance.now()){this.now=now;this.reset();}

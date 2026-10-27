@@ -35,11 +35,17 @@
   <div id="splitter" role="separator" aria-label="작업판과 문제 자료 크기 조절" aria-orientation="vertical" aria-valuemin="30" aria-valuemax="75" aria-valuenow="60" tabindex="0"><span></span></div>
   <aside class="pane" aria-label="문제 자료">
    <section id="viewer" aria-label="PDF 문제 뷰어">
-    <div class="viewer-tabs" role="tablist" aria-label="문제 페이지"><button data-page="5" class="active" role="tab" aria-selected="true">제어회로도</button><button data-page="6" role="tab" aria-selected="false">추가 결선도</button><button data-page="4" role="tab" aria-selected="false">배치도</button><button data-page="1" role="tab" aria-selected="false">규칙 1</button><button data-page="2" role="tab" aria-selected="false">규칙 2</button></div>
+    <div class="viewer-tab-row"><div class="viewer-tabs" role="tablist" aria-label="문제 페이지"><button data-page="5" class="active" role="tab" aria-selected="true">제어회로도</button><button data-page="6" role="tab" aria-selected="false">추가 결선도</button><button data-page="4" role="tab" aria-selected="false">배치도</button><button data-page="1" role="tab" aria-selected="false">규칙 1</button><button data-page="2" role="tab" aria-selected="false">규칙 2</button></div><button id="progress-toggle" type="button" aria-controls="progress-panel" aria-expanded="false" hidden>진행상황 <span id="progress-toggle-count">0/0</span></button></div>
     <div class="viewer-toolbar"><button id="zoomout" aria-label="축소" title="축소">−</button><output id="zoom-label">맞춤</output><button id="zoomin" aria-label="확대" title="확대">＋</button><button id="fit">맞춤</button><button id="rotate-ccw" aria-label="반시계방향 90도 회전">↶ 90°</button><button id="rotate-cw" aria-label="시계방향 90도 회전">↷ 90°</button><button id="rotate-180" aria-label="180도 회전">180°</button><button id="fullscreen">전체화면</button><a id="original" href="assets/p01/5.webp" target="_blank" rel="noopener">원본</a></div>
     <div id="document" tabindex="0"><div id="page-stage"><img id="page" src="assets/p01/5.webp" alt="기출문제 원본 제어회로도" draggable="false"></div></div>
    </section>
    <details id="results" hidden><summary><span id="result-summary">채점 결과</span></summary><div id="errors"></div></details>
+   <section id="progress-panel" aria-label="배선 진행상황" aria-hidden="true">
+    <div class="progress-panel-head"><div><strong>배선 진행상황</strong><small>정답 전선 순서가 아닌 전기적 NET 연결 기준</small></div><button id="progress-close" type="button" aria-label="진행상황 닫기">×</button></div>
+    <div class="progress-overview"><div class="progress-score"><strong id="progress-score">0 / 0</strong><span>확정 NET 완료</span></div><div class="progress-track" aria-hidden="true"><i id="progress-bar"></i></div><div id="progress-stats" class="progress-stats"></div></div>
+    <div class="progress-filters" role="group" aria-label="진행상황 필터"><button type="button" data-progress-filter="all" class="active">전체</button><button type="button" data-progress-filter="incomplete">미완료</button><button type="button" data-progress-filter="issues">오류·확인</button></div>
+    <div id="progress-groups" class="progress-groups"></div>
+   </section>
   </aside>
  </main>
  <dialog id="confirm"><h2>배선 작업 완료</h2><p>완료 후에는 배선을 수정할 수 없습니다.</p><div><button id="keepworking">취소</button><button id="confirmfinish" class="primary">완료</button></div></dialog>

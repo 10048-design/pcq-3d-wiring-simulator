@@ -41,24 +41,24 @@ export function createHardwareProblem(problemId='p01'){
  const add=(d,name,props={})=>{const t={id:d.id+'.'+name,deviceId:d.id,name,crimp:null,insulationTube:d.id==='PLC',maxConnections:2,...props};p.terminals.push(t);d.terminals.push(t.id);return t;};
  const find=id=>p.terminals.find(t=>t.id===id);
  const replaceNetTerminal=(oldId,newId)=>{for(const n of p.nets)n.members=n.members.map(id=>id===oldId?newId:id);};
- const contactDevices=[...Array.from({length:7},(_,i)=>`PB${i+1}`),...Array.from({length:3},(_,i)=>`SS${i+1}`),'YL2','RL2','GL2','RL1','YL1','GL1'];
+ const contactDevices=[...Array.from({length:7},(_,i)=>`PB${i+1}`),...Array.from({length:3},(_,i)=>`SS${i+1}`)];
  const activeContactType=id=>{
-  if(/^PB[1-5]$/.test(id)||/^SS[1-3]$/.test(id)||/^(YL|RL|GL)/.test(id))return 'NO';
+  if(/^PB[1-5]$/.test(id)||/^SS[1-3]$/.test(id))return 'NO';
   if(id==='PB6')return profile.circuit==='trip-lamp-swapped-10'?'NC':'NO';
   if(id==='PB7')return profile.circuit==='trip-lamp-swapped-10'?'NO':'NC';
   return 'NO';
  };
  for(const id of contactDevices){
-  const d=p.devices.find(x=>x.id===id),lamp=/^(YL|RL|GL)/.test(id),old1=find(`${id}.${lamp?'상단 접속부':'접점 위'}`),old2=find(`${id}.${lamp?'하단 접속부':'접점 아래'}`);
+  const d=p.devices.find(x=>x.id===id),old1=find(`${id}.접점 위`),old2=find(`${id}.접점 아래`);
   if(!d||!old1||!old2)continue;
   const active=activeContactType(id),crimp=old1.crimp??old2.crimp;
   replaceNetTerminal(old1.id,`${id}.${active} 단자1`);replaceNetTerminal(old2.id,`${id}.${active} 단자2`);
   remove(old1.id);remove(old2.id);
   for(const type of ['NO','NC'])for(const n of [1,2]){const t=add(d,`${type} 단자${n}`,{crimp});t.contactType=type;t.contactNumber=n;t.displayNumber=`${type}${n}`;t.function=`${type==='NO'?'a접점 (NO)':'b접점 (NC)'} 단자 ${n}`;}
  }
- p.equivalentPairs=(p.equivalentPairs??[]).filter(pair=>!pair.some(id=>/^(PB[1-7]|SS[1-3]|YL[12]|RL[12]|GL[12])\./.test(id)));
+ p.equivalentPairs=(p.equivalentPairs??[]).filter(pair=>!pair.some(id=>/^(PB[1-7]|SS[1-3])\./.test(id)));
  for(const id of contactDevices)for(const type of ['NO','NC'])p.equivalentPairs.push([`${id}.${type} 단자1`,`${id}.${type} 단자2`]);
- const pinsPending=p.pending.find(x=>x.id==='pins');if(pinsPending)pinsPending.detail='PB·SS·램프는 연습 모델에서 상단 NO1/NO2, 하단 NC1/NC2의 2×2 물리 단자로 구분합니다. 각 NO/NC 쌍 안에서는 단자1/2 반전을 허용하며, 문제 회로가 사용하는 접점 종류만 정답 NET에 연결됩니다. MC·OCR은 6페이지 예시 번호이며 실물 호환 확인 필요.';
+ const pinsPending=p.pending.find(x=>x.id==='pins');if(pinsPending)pinsPending.detail='PB·SS는 연습 모델에서 상단 NO1/NO2, 하단 NC1/NC2의 2×2 물리 단자로 구분합니다. 각 NO/NC 쌍 안에서는 단자1/2 반전을 허용하며, 문제 회로가 사용하는 접점 종류만 정답 NET에 연결됩니다. 램프는 극성 없는 2단자이며 두 단자의 반전을 허용합니다. MC·OCR은 6페이지 예시 번호이며 실물 호환 확인 필요.';
  for(const d of p.devices){
   const [x,y,w,h]=d.box;d.centerMm=[(x+w/2)*700/698-350,300-(y+h/2)*600/599,0];d.rotationZ=0;
   d.model=d.id;d.dimensionsMm=null;d.displaySizeMm=[w,h,25];d.geometryStatus='PDF 배치 외곽 기반 경량 외형';d.sourceKey='exam';
@@ -137,9 +137,13 @@ export function createHardwareProblem(problemId='p01'){
    for(const [n,x] of [['A1 하단',-5.8],['A2 하단',5.8]]){const t=find('MC.'+n);t.localPositionMm=[x,-32,65];t.displayNumber=n.split(' ')[0];t.numberStatus='official';}
   }
   if(/^RY/.test(d.id))items.forEach((t,i)=>{t.localPositionMm=i<8?[(i%4-1.5)*9,28-Math.floor(i/4)*9,12]:i<10?[(i===8?-1:1)*13.5,-20,12]:[(i-10-1.5)*9,-29,12];t.numberStatus='exam-page6';});
-  if(/^(PB|SS|[RYG]L)/.test(d.id)){
+  if(/^(PB|SS)/.test(d.id)){
    const positions={'NO 단자1':[-12,10,z+1],'NO 단자2':[12,10,z+1],'NC 단자1':[-12,-10,z+1],'NC 단자2':[12,-10,z+1]};
    for(const t of items)if(positions[t.name]){t.localPositionMm=[...positions[t.name]];t.displayNumber=t.name.replace(' 단자','');t.numberStatus='연습 모델 NO/NC 2×2 배치';}
+  }
+  if(/^[RYG]L[12]$/.test(d.id)){
+   const positions={'상단 접속부':[-10,0,z+1],'하단 접속부':[10,0,z+1]};
+   for(const t of items)if(positions[t.name]){t.localPositionMm=[...positions[t.name]];t.displayNumber=t.name==='상단 접속부'?'단자1':'단자2';t.function='극성 없는 램프 단자';t.numberStatus='연습 모델 무극성 2단자 배치';}
   }
   items.forEach((t,i)=>{
    if(!t.localPositionMm){const columns=Math.ceil(items.length/2);t.localPositionMm=[columns===1?0:(i%columns-(columns-1)/2)*w/(columns+1),i<columns?h*.32:-h*.32,z+1];}
@@ -149,7 +153,7 @@ export function createHardwareProblem(problemId='p01'){
    const [lx,ly,lz]=t.localPositionMm,c=Math.cos(d.rotationZ),s=Math.sin(d.rotationZ);t.positionMm=[d.centerMm[0]+lx*c-ly*s,d.centerMm[1]+lx*s+ly*c,lz];
    t.normal=[0,0,1];t.wireEntryDirection=[0,-1,0];
    if(['TB3','TB4'].includes(d.id))t.wireEntryDirection=[1,0,0];
-   else if((d.id==='PLC'&&ly>0)||(d.id==='MCCB'&&ly>0)||(/^RY/.test(d.id)&&ly>0)||(/^(PB|SS|[RYG]L)/.test(d.id)&&ly>0))t.wireEntryDirection=[0,1,0];
+   else if((d.id==='PLC'&&ly>0)||(d.id==='MCCB'&&ly>0)||(/^RY/.test(d.id)&&ly>0)||(/^(PB|SS)/.test(d.id)&&ly>0))t.wireEntryDirection=[0,1,0];
    t.sourceKey??=d.sourceKey;t.requiredCrimp=t.crimp;t.insulationTubeRequired=t.insulationTube;
    if(d.id==='MC')t.function=/^L/.test(t.name)?'주접점 전원측':/^T/.test(t.name)?'주접점 부하측':/^A/.test(t.name)?'전자석 코일 전원':['43','44'].includes(t.name)?'보조 a접점 (NO)':'보조 b접점 (NC)';
    if(d.id==='OCR')t.function=/^A/.test(t.name)?'동작전원 AC220V':['95','96'].includes(t.name)?'보호 출력 95–96':'보호 출력 97–98 · 카탈로그 NO/NC 표기 상충 확인 필요';
