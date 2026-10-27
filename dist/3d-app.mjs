@@ -121,6 +121,7 @@ function refreshPracticeFeedback(latestWireId=null){
  board?.setErrorMarkers(groups);
  if(latestWireId){
   if(assessment.latestErrors.length)notify(`${latestWireId} 연결에 오류가 있습니다. 느낌표를 확인하세요.`);
+  else if(assessment.latestReviews.length)notify(`${latestWireId} 연결은 확인 필요 항목입니다. 최종 채점의 확인 필요 목록을 참고하세요.`);
   else notify(`${latestWireId} 연결이 올바릅니다.`);
  }
 }

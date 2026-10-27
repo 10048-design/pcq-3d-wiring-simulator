@@ -40,6 +40,25 @@ export function createHardwareProblem(problemId='p01'){
  const remove=id=>{p.terminals=p.terminals.filter(t=>t.id!==id);for(const d of p.devices)d.terminals=d.terminals.filter(x=>x!==id);};
  const add=(d,name,props={})=>{const t={id:d.id+'.'+name,deviceId:d.id,name,crimp:null,insulationTube:d.id==='PLC',maxConnections:2,...props};p.terminals.push(t);d.terminals.push(t.id);return t;};
  const find=id=>p.terminals.find(t=>t.id===id);
+ const replaceNetTerminal=(oldId,newId)=>{for(const n of p.nets)n.members=n.members.map(id=>id===oldId?newId:id);};
+ const contactDevices=[...Array.from({length:7},(_,i)=>`PB${i+1}`),...Array.from({length:3},(_,i)=>`SS${i+1}`),'YL2','RL2','GL2','RL1','YL1','GL1'];
+ const activeContactType=id=>{
+  if(/^PB[1-5]$/.test(id)||/^SS[1-3]$/.test(id)||/^(YL|RL|GL)/.test(id))return 'NO';
+  if(id==='PB6')return profile.circuit==='trip-lamp-swapped-10'?'NC':'NO';
+  if(id==='PB7')return profile.circuit==='trip-lamp-swapped-10'?'NO':'NC';
+  return 'NO';
+ };
+ for(const id of contactDevices){
+  const d=p.devices.find(x=>x.id===id),lamp=/^(YL|RL|GL)/.test(id),old1=find(`${id}.${lamp?'상단 접속부':'접점 위'}`),old2=find(`${id}.${lamp?'하단 접속부':'접점 아래'}`);
+  if(!d||!old1||!old2)continue;
+  const active=activeContactType(id),crimp=old1.crimp??old2.crimp;
+  replaceNetTerminal(old1.id,`${id}.${active} 단자1`);replaceNetTerminal(old2.id,`${id}.${active} 단자2`);
+  remove(old1.id);remove(old2.id);
+  for(const type of ['NO','NC'])for(const n of [1,2]){const t=add(d,`${type} 단자${n}`,{crimp});t.contactType=type;t.contactNumber=n;t.displayNumber=`${type}${n}`;t.function=`${type==='NO'?'a접점 (NO)':'b접점 (NC)'} 단자 ${n}`;}
+ }
+ p.equivalentPairs=(p.equivalentPairs??[]).filter(pair=>!pair.some(id=>/^(PB[1-7]|SS[1-3]|YL[12]|RL[12]|GL[12])\./.test(id)));
+ for(const id of contactDevices)for(const type of ['NO','NC'])p.equivalentPairs.push([`${id}.${type} 단자1`,`${id}.${type} 단자2`]);
+ const pinsPending=p.pending.find(x=>x.id==='pins');if(pinsPending)pinsPending.detail='PB·SS·램프는 연습 모델에서 상단 NO1/NO2, 하단 NC1/NC2의 2×2 물리 단자로 구분합니다. 각 NO/NC 쌍 안에서는 단자1/2 반전을 허용하며, 문제 회로가 사용하는 접점 종류만 정답 NET에 연결됩니다. MC·OCR은 6페이지 예시 번호이며 실물 호환 확인 필요.';
  for(const d of p.devices){
   const [x,y,w,h]=d.box;d.centerMm=[(x+w/2)*700/698-350,300-(y+h/2)*600/599,0];d.rotationZ=0;
   d.model=d.id;d.dimensionsMm=null;d.displaySizeMm=[w,h,25];d.geometryStatus='PDF 배치 외곽 기반 경량 외형';d.sourceKey='exam';
@@ -69,11 +88,18 @@ export function createHardwareProblem(problemId='p01'){
  const upper=['RX','485+','TX','485-','SG',...Array.from({length:12},(_,i)=>'입력 '+i),...Array.from({length:6},(_,i)=>'상부 NC'+(i+18)),'입력 COM'];
  const lower=['전원 L/+','E','전원 N/-','COM0','출력 0','COM1','출력 1','COM2','출력 2','출력 3','하부 NC11','COM3','출력 4','출력 5','출력 6','출력 7',...Array.from({length:6},(_,i)=>'하부 NC'+(i+17)),'24V','24G'];
  for(const n of [...upper,...lower].filter(n=>n.includes('NC')))add(plc,n,{connectable:false});
- for(const [row,names] of [[1,upper],[-1,lower]])names.forEach((name,i)=>{
-  const t=find('PLC.'+name);t.physicalNumber=(row===1?'IN':'OUT')+' TB'+(i+1);t.displayNumber=name.startsWith('입력 ' )&&name!=='입력 COM'?'P'+Number(name.slice(3)).toString(16).toUpperCase().padStart(2,'0'):name.startsWith('출력 ')?'P4'+name.slice(3):name;
-  const rowOffset=row===1?(i%2?3.5:-3.5):(i%2?-3.5:3.5);
-  t.localPositionMm=[-38+Math.floor(i/2)*8,row*37+rowOffset,57];t.numberStatus='official';t.function=name;t.sourceKey='plc';
- });
+ // XBC-DR20SU terminal blocks are a true staggered chain: TB1, TB2,
+ // TB3... each advances along the strip while odd/even terminals alternate
+ // between the inner and outer screw rows. The reference drawings show 24
+ // distinct longitudinal positions rather than 12 aligned terminal pairs.
+ for(const [row,names] of [[1,upper],[-1,lower]]){
+  const stripCenterX=12,terminalSpan=84,step=terminalSpan/(names.length-1);
+  names.forEach((name,i)=>{
+   const t=find('PLC.'+name);t.physicalNumber=(row===1?'IN':'OUT')+' TB'+(i+1);t.displayNumber=name.startsWith('입력 ' )&&name!=='입력 COM'?'P'+Number(name.slice(3)).toString(16).toUpperCase().padStart(2,'0'):name.startsWith('출력 ')?'P4'+name.slice(3):name;
+   const innerY=row*33.5,outerY=row*40.5;
+   t.localPositionMm=[stripCenterX-terminalSpan/2+i*step,i%2===0?innerY:outerY,57];t.numberStatus='official';t.function=name;t.sourceKey='plc';
+  });
+ }
  // The exam board exposes one fastening screw per pole: the lower row on
  // horizontal TB1/TB2, and the right row on vertical TB3/TB4.
  for(const d of p.devices.filter(d=>d.id.startsWith('TB'))){
@@ -111,6 +137,10 @@ export function createHardwareProblem(problemId='p01'){
    for(const [n,x] of [['A1 하단',-5.8],['A2 하단',5.8]]){const t=find('MC.'+n);t.localPositionMm=[x,-32,65];t.displayNumber=n.split(' ')[0];t.numberStatus='official';}
   }
   if(/^RY/.test(d.id))items.forEach((t,i)=>{t.localPositionMm=i<8?[(i%4-1.5)*9,28-Math.floor(i/4)*9,12]:i<10?[(i===8?-1:1)*13.5,-20,12]:[(i-10-1.5)*9,-29,12];t.numberStatus='exam-page6';});
+  if(/^(PB|SS|[RYG]L)/.test(d.id)){
+   const positions={'NO 단자1':[-12,10,z+1],'NO 단자2':[12,10,z+1],'NC 단자1':[-12,-10,z+1],'NC 단자2':[12,-10,z+1]};
+   for(const t of items)if(positions[t.name]){t.localPositionMm=[...positions[t.name]];t.displayNumber=t.name.replace(' 단자','');t.numberStatus='연습 모델 NO/NC 2×2 배치';}
+  }
   items.forEach((t,i)=>{
    if(!t.localPositionMm){const columns=Math.ceil(items.length/2);t.localPositionMm=[columns===1?0:(i%columns-(columns-1)/2)*w/(columns+1),i<columns?h*.32:-h*.32,z+1];}
    t.terminalId=t.id;t.displayNumber??=t.name;t.physicalNumber??=null;t.function??=t.name;t.connectable??=true;

@@ -27,5 +27,5 @@ test('CT auto detection only arms the passage belonging to the selected main-pow
  const p=createHardwareProblem('p01');
  assert.deepEqual([...eligibleRoutePortIds(p,'TB1.L1')],['OCR.CT1']);
  assert.deepEqual([...eligibleRoutePortIds(p,'MC.L2')],['OCR.CT2']);
- assert.deepEqual([...eligibleRoutePortIds(p,'PB1.접점 위')],[]);
+ assert.deepEqual([...eligibleRoutePortIds(p,'PB1.NO 단자1')],[]);
 });

@@ -40,8 +40,13 @@ export function grade(problem,connections){
    if(!changed)break;
   }
  }
- const errors=[],reviews=[],ts=problem.terminalMap,netOf=new Map(),pending=new Set();
- for(const n of problem.nets)for(const id of n.members){if(!ts[id])throw Error(`정답 데이터 단자 누락: ${id}`);if(netOf.has(id)||pending.has(id))throw Error(`정답 NET 중복: ${id}`);if(n.status==='pending')pending.add(id);else netOf.set(id,n);}
+ const errors=[],reviews=[],ts=problem.terminalMap,netOf=new Map(),pending=new Set(),pendingNetOf=new Map();
+ for(const n of problem.nets)for(const id of n.members){
+  if(!ts[id])throw Error(`정답 데이터 단자 누락: ${id}`);
+  if(netOf.has(id)||pending.has(id))throw Error(`정답 NET 중복: ${id}`);
+  if(n.status==='pending'){pending.add(id);pendingNetOf.set(id,n);}
+  else netOf.set(id,n);
+ }
  for(const t of problem.terminals)if(!netOf.has(t.id)&&!pending.has(t.id))netOf.set(t.id,{id:'unused:'+t.id,members:[t.id],policy:{},status:'confirmed'});
  const uf=new UnionFind(problem.terminals.map(t=>t.id)),incident=new Map(),wrong=[];
  for(const [a,b] of problem.internalLinks??[])uf.join(a,b);
@@ -51,12 +56,21 @@ export function grade(problem,connections){
   if(ids.has(w.id))throw Error('중복 전선 ID');ids.add(w.id);
   if(!ts[w.from]||!ts[w.to]||w.from===w.to||ts[w.from].connectable===false||ts[w.to].connectable===false){add('invalid:'+w.id,'연결 데이터',[w.from,w.to],[w.id],'유효하지 않은 단자 연결입니다.','서로 다른 실제 등록 단자를 선택하세요.');continue;}
   for(const [side,id]of [['from',w.from],['to',w.to]]){if(!incident.has(id))incident.set(id,[]);incident.get(id).push({w,side});}
-  if(pending.has(w.from)||pending.has(w.to)){reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],detail:'보호도체 도면 상충 구간: 연결 관계 확인 필요'});}
-  else if(netOf.get(w.from).id!==netOf.get(w.to).id){wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 서로 다른 NET을 연결했습니다.`,`${netOf.get(w.from).id} / ${netOf.get(w.to).id}를 분리하고 목적지를 확인하세요.`));}
-  else uf.join(w.from,w.to);
+  const pn=pendingNetOf.get(w.from),pm=pendingNetOf.get(w.to);
+  if(pn||pm){
+   if(pn&&pm&&pn.id===pm.id){
+    reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],detail:`${pn.id}: 도면·유의사항 상충으로 연결 관계 확인 필요`});
+   }else{
+    const left=pn?.id??netOf.get(w.from)?.id??'미분류',right=pm?.id??netOf.get(w.to)?.id??'미분류';
+    wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 확인 필요 NET과 다른 NET을 연결했습니다.`,`${left} / ${right}를 분리하고 목적지를 확인하세요.`));
+   }
+  }else if(netOf.get(w.from).id!==netOf.get(w.to).id){
+   wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 서로 다른 NET을 연결했습니다.`,`${netOf.get(w.from).id} / ${netOf.get(w.to).id}를 분리하고 목적지를 확인하세요.`));
+  }else uf.join(w.from,w.to);
   const n=netOf.get(w.from),m=netOf.get(w.to);
   // A cross-net wire has no unambiguous circuit class. Do not invent material errors.
-  const policy=n&&m&&n.id===m.id?n.policy:(pending.has(w.from)&&pending.has(w.to)?{kind:'단선',area:2.5,color:'녹색-노란색'}:null);
+  const samePending=pn&&pm&&pn.id===pm.id;
+  const policy=n&&m&&n.id===m.id?n.policy:(samePending?pn.policy:null);
   if(policy&&![w.from,w.to].some(id=>problem.materialUnconfirmedTerminals?.includes(id)))for(const [field,label]of [['kind','전선 종류'],['area','전선 굵기'],['color','전선 색상']])if(policy[field]!=null&&w[field]!==policy[field])add(`${field}:${w.id}`,label,[w.from,w.to],[w.id],`${label}: 사용 ${w[field]??'미선택'}`,`필요: ${policy[field]}${field==='area'?'㎟':''}`);
   if(w.route?.inDuct===false)add('route:'+w.id,'배선 경로',[w.from,w.to],[w.id],'음영 배선 구역을 벗어난 경로로 지정했습니다.','4페이지 음영 구역을 따르고 기구 사이를 통과하지 마세요.');
   if(w.route?.touchesDevice===true)add('touch:'+w.id,'기구 접촉',[w.from,w.to],[w.id],'기구 접촉 상태로 지정했습니다.','전선이 기구에 닿지 않도록 배선하세요.');
