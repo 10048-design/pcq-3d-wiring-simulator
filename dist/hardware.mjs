@@ -148,7 +148,6 @@ export function createHardwareProblem(problemId='p01'){
   items.forEach((t,i)=>{
    if(!t.localPositionMm){const columns=Math.ceil(items.length/2);t.localPositionMm=[columns===1?0:(i%columns-(columns-1)/2)*w/(columns+1),i<columns?h*.32:-h*.32,z+1];}
    t.terminalId=t.id;t.displayNumber??=t.name;t.physicalNumber??=null;t.function??=t.name;t.connectable??=true;
-   if(d.id==='PLC'&&profile.tubeScope==='io')t.insulationTube=/^(입력|출력|COM[0-3])/.test(t.name);
    t.actualPositionMm=null;t.positionConfidence='drawing-derived-unmeasured';t.numberStatus??=d.sourceKey==='exam'?'PDF 기능명 · 실물 각인 확인 필요':'기능 확정 · 실물 위치 확인 필요';
    const [lx,ly,lz]=t.localPositionMm,c=Math.cos(d.rotationZ),s=Math.sin(d.rotationZ);t.positionMm=[d.centerMm[0]+lx*c-ly*s,d.centerMm[1]+lx*s+ly*c,lz];
    t.normal=[0,0,1];t.wireEntryDirection=[0,-1,0];
