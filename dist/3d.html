@@ -36,8 +36,15 @@
   <aside class="pane" aria-label="문제 자료">
    <section id="viewer" aria-label="PDF 문제 뷰어">
     <div class="viewer-tab-row"><div class="viewer-tabs" role="tablist" aria-label="문제 페이지"><button data-page="5" class="active" role="tab" aria-selected="true">제어회로도</button><button data-page="6" role="tab" aria-selected="false">추가 결선도</button><button data-page="4" role="tab" aria-selected="false">배치도</button><button data-page="1" role="tab" aria-selected="false">규칙 1</button><button data-page="2" role="tab" aria-selected="false">규칙 2</button></div><button id="progress-toggle" type="button" aria-controls="progress-panel" aria-expanded="false" hidden>진행상황 <span id="progress-toggle-count">0/0</span></button></div>
-    <div class="viewer-toolbar"><button id="zoomout" aria-label="축소" title="축소">−</button><output id="zoom-label">맞춤</output><button id="zoomin" aria-label="확대" title="확대">＋</button><button id="fit">맞춤</button><button id="rotate-ccw" aria-label="반시계방향 90도 회전">↶ 90°</button><button id="rotate-cw" aria-label="시계방향 90도 회전">↷ 90°</button><button id="rotate-180" aria-label="180도 회전">180°</button><button id="fullscreen">전체화면</button><a id="original" href="assets/p01/5.webp" target="_blank" rel="noopener">원본</a></div>
-    <div id="document" tabindex="0"><div id="page-stage"><img id="page" src="assets/p01/5.webp" alt="기출문제 원본 제어회로도" draggable="false"></div></div>
+    <div class="viewer-toolbar"><button id="zoomout" aria-label="축소" title="축소">−</button><output id="zoom-label">맞춤</output><button id="zoomin" aria-label="확대" title="확대">＋</button><button id="fit">맞춤</button><button id="rotate-ccw" aria-label="반시계방향 90도 회전">↶ 90°</button><button id="rotate-cw" aria-label="시계방향 90도 회전">↷ 90°</button><button id="rotate-180" aria-label="180도 회전">180°</button><button id="annotation-toggle" type="button" aria-pressed="false" title="제어회로도/추가 결선도에 메모">✎ 메모</button><button id="fullscreen">전체화면</button><a id="original" href="assets/p01/5.webp" target="_blank" rel="noopener">원본</a></div>
+    <div id="annotation-toolbar" class="annotation-toolbar" hidden>
+     <div class="annotation-tool-group" role="group" aria-label="메모 도구"><button type="button" data-annotation-tool="highlighter" class="active">형광펜</button><button type="button" data-annotation-tool="marker">사인펜</button><button type="button" data-annotation-tool="eraser">지우개</button></div>
+     <div id="annotation-colors" class="annotation-colors" role="group" aria-label="펜 색상"></div>
+     <label class="annotation-range">두께 <input id="annotation-width" type="range" min="2" max="48" step="1"><output id="annotation-width-value"></output></label>
+     <label class="annotation-range">불투명도 <input id="annotation-opacity" type="range" min="5" max="100" step="1"><output id="annotation-opacity-value"></output></label>
+     <div class="annotation-actions"><button id="annotation-undo" type="button" title="메모 실행취소">↶</button><button id="annotation-redo" type="button" title="메모 다시 실행">↷</button><button id="annotation-clear" type="button">전체 삭제</button></div>
+    </div>
+    <div id="document" tabindex="0"><div id="page-stage"><img id="page" src="assets/p01/5.webp" alt="기출문제 원본 제어회로도" draggable="false"><svg id="annotation-layer" aria-label="도면 메모 레이어"></svg></div></div>
    </section>
    <details id="results" hidden><summary><span id="result-summary">채점 결과</span></summary><div id="errors"></div></details>
    <section id="progress-panel" aria-label="배선 진행상황" aria-hidden="true">

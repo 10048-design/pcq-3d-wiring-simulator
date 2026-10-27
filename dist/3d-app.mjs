@@ -8,6 +8,8 @@ import {groupErrorsForMarkers} from './error-markers.mjs';
 import {ProgressStore,captureProgress,restoreProgress} from './progress-storage.mjs';
 import {assessPractice} from './practice-feedback.mjs';
 import {analyzeProgress,progressFilter as matchesProgressFilter} from './progress-status.mjs';
+import {ANNOTATABLE_PAGES,ANNOTATION_COLORS,DEFAULT_ANNOTATION_SETTINGS,createAnnotationDocument,createStroke,appendPoint,strokePath,addAnnotationStroke,removeAnnotationStroke,clearAnnotationStrokes,undoAnnotation,redoAnnotation,cloneAnnotationSettings} from './annotations.mjs';
+import {AnnotationStore} from './annotation-store.mjs';
 
 const $=id=>document.getElementById(id);
 const catalog=await fetch('./catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('문제 목록을 불러오지 못했습니다.')));
@@ -17,10 +19,13 @@ const progressStore=new ProgressStore(),savedProgress=await progressStore.load(p
 const readStored=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
 const saveStored=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{}};
 const viewerStorageKey=`pcq-3d-view-v2:${problemId}`,viewerState=new ViewerState(readStored(viewerStorageKey,{})),splitState=new SplitState(readStored('pcq-3d-split-v1',60));
+const annotationSettingsKey='pcq-3d-annotation-settings-v1',annotationStore=new AnnotationStore(),annotationSettings=cloneAnnotationSettings(readStored(annotationSettingsKey,DEFAULT_ANNOTATION_SETTINGS)),annotationDocs=new Map();
+for(const annotationPage of ANNOTATABLE_PAGES){const loaded=await annotationStore.load(problemId,annotationPage);annotationDocs.set(annotationPage,createAnnotationDocument(loaded.strokes));}
 let lastWire=readStored('pcq-3d-wire-v2',{kind:'연선',area:1.5,color:'노란색'});
 let sessionMode=readStored('pcq-3d-session-mode-v1','exam');
 if(!['exam','practice'].includes(sessionMode))sessionMode='exam';
 let board,selectedWireId=null,viewerResizeTimer=null,statusTimer=null,progressFilterMode='all';
+let annotationEnabled=false,annotationDraft=null,annotationPointerId=null;const annotationSaveTimers=new Map();
 let progressSaveTimer=null,progressSaveChain=Promise.resolve();
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const act=fn=>{try{return fn();}catch(e){notify(e.message);return null;}};
@@ -176,16 +181,80 @@ $('progress-toggle').onclick=()=>$('progress-panel').classList.contains('open')?
 $('progress-close').onclick=closeProgressPanel;
 document.querySelectorAll('[data-progress-filter]').forEach(button=>button.onclick=()=>{progressFilterMode=button.dataset.progressFilter;document.querySelectorAll('[data-progress-filter]').forEach(x=>x.classList.toggle('active',x===button));refreshProgressPanel();});
 
-// PDF viewer
-const page=$('page'),stage=$('page-stage'),documentPane=$('document');
+// PDF viewer + diagram annotations
+const page=$('page'),stage=$('page-stage'),documentPane=$('document'),annotationLayer=$('annotation-layer'),annotationToolbar=$('annotation-toolbar');
+const annotationSvgNs='http://www.w3.org/2000/svg';
 function saveViewer(){saveStored(viewerStorageKey,viewerState.snapshot());}
 function viewerCenter(){return {x:(documentPane.scrollLeft+documentPane.clientWidth/2)/Math.max(documentPane.scrollWidth,1),y:(documentPane.scrollTop+documentPane.clientHeight/2)/Math.max(documentPane.scrollHeight,1)};}
-function renderViewer({preserveCenter=true}={}){if(!page.naturalWidth)return;const center=viewerCenter(),g=pageGeometry(page.naturalWidth,page.naturalHeight,viewerState);stage.style.width=g.stageWidth+'px';stage.style.height=g.stageHeight+'px';page.style.width=g.imageWidth+'px';page.style.height=g.imageHeight+'px';page.style.left='50%';page.style.top='50%';page.style.transform=`translate(-50%,-50%) rotate(${g.rotation}deg)`;$('zoom-label').textContent=Math.round(viewerState.scale*100)+'%';if(preserveCenter)requestAnimationFrame(()=>{documentPane.scrollLeft=center.x*documentPane.scrollWidth-documentPane.clientWidth/2;documentPane.scrollTop=center.y*documentPane.scrollHeight-documentPane.clientHeight/2;});saveViewer();}
+function currentAnnotationPage(){return Number(viewerState.page);}
+function currentAnnotationDoc(){return annotationDocs.get(currentAnnotationPage())??null;}
+function saveAnnotationSettings(){saveStored(annotationSettingsKey,annotationSettings);}
+function scheduleAnnotationSave(pageNumber=currentAnnotationPage()){
+ if(!ANNOTATABLE_PAGES.has(Number(pageNumber)))return;clearTimeout(annotationSaveTimers.get(Number(pageNumber)));
+ annotationSaveTimers.set(Number(pageNumber),setTimeout(()=>{annotationSaveTimers.delete(Number(pageNumber));const doc=annotationDocs.get(Number(pageNumber));if(doc)annotationStore.save(problemId,Number(pageNumber),doc.strokes);},120));
+}
+function flushAnnotationSaves(){for(const pageNumber of ANNOTATABLE_PAGES){clearTimeout(annotationSaveTimers.get(Number(pageNumber)));annotationSaveTimers.delete(Number(pageNumber));const doc=annotationDocs.get(Number(pageNumber));if(doc)annotationStore.save(problemId,Number(pageNumber),doc.strokes);}}
+function annotationPathElement(stroke,{draft=false}={}){
+ const path=document.createElementNS(annotationSvgNs,'path');path.setAttribute('d',strokePath(stroke.points));path.setAttribute('stroke',stroke.color);path.setAttribute('stroke-width',String(stroke.width));path.setAttribute('stroke-opacity',String(stroke.opacity));path.dataset.tool=stroke.tool;if(!draft)path.dataset.strokeId=stroke.id;return path;
+}
+function renderAnnotations(){
+ annotationLayer.replaceChildren();if(!ANNOTATABLE_PAGES.has(currentAnnotationPage()))return;
+ const doc=currentAnnotationDoc();for(const stroke of doc?.strokes??[])annotationLayer.append(annotationPathElement(stroke));
+ if(annotationDraft)annotationLayer.append(annotationPathElement(annotationDraft,{draft:true}));
+}
+function annotationPoint(event){
+ const matrix=annotationLayer.getScreenCTM();if(!matrix||!page.naturalWidth)return null;const pnt=new DOMPoint(event.clientX,event.clientY).matrixTransform(matrix.inverse());
+ return {x:Math.max(0,Math.min(page.naturalWidth,pnt.x)),y:Math.max(0,Math.min(page.naturalHeight,pnt.y))};
+}
+function cancelAnnotationDraft(){annotationDraft=null;annotationPointerId=null;renderAnnotations();}
+function finishAnnotationDraft(){
+ if(!annotationDraft)return false;const doc=currentAnnotationDoc(),stroke=annotationDraft;annotationDraft=null;annotationPointerId=null;if(!doc)return false;
+ const added=addAnnotationStroke(doc,stroke);renderAnnotations();refreshAnnotationUi();if(added)scheduleAnnotationSave();return added;
+}
+function eraseAnnotationAt(event){
+ const target=document.elementFromPoint(event.clientX,event.clientY),path=target?.closest?.('path[data-stroke-id]');if(!path||!annotationLayer.contains(path))return false;
+ const doc=currentAnnotationDoc();if(!doc||!removeAnnotationStroke(doc,path.dataset.strokeId))return false;renderAnnotations();refreshAnnotationUi();scheduleAnnotationSave();return true;
+}
+function updateAnnotationColors(){
+ const host=$('annotation-colors');host.replaceChildren();const tool=annotationSettings.tool;if(!ANNOTATION_COLORS[tool])return;
+ const current=annotationSettings[tool].color;for(const color of ANNOTATION_COLORS[tool]){const b=document.createElement('button');b.type='button';b.className='annotation-color'+(color===current?' active':'');b.title=color;b.setAttribute('aria-label',`${tool==='highlighter'?'형광펜':'사인펜'} 색상 ${color}`);const swatch=document.createElement('span');swatch.style.background=color;b.append(swatch);b.onclick=()=>{annotationSettings[tool].color=color;saveAnnotationSettings();refreshAnnotationUi();};host.append(b);}
+}
+function refreshAnnotationUi(){
+ const pageNumber=currentAnnotationPage(),supported=ANNOTATABLE_PAGES.has(pageNumber),active=supported&&annotationEnabled,tool=annotationSettings.tool;
+ const toggle=$('annotation-toggle');toggle.hidden=!supported;toggle.setAttribute('aria-pressed',String(active));annotationToolbar.hidden=!active;annotationLayer.classList.toggle('active',active);annotationLayer.classList.toggle('eraser',active&&tool==='eraser');annotationToolbar.classList.toggle('eraser-mode',tool==='eraser');
+ document.querySelectorAll('[data-annotation-tool]').forEach(b=>b.classList.toggle('active',b.dataset.annotationTool===tool));
+ if(tool!=='eraser'){
+  const settings=annotationSettings[tool];$('annotation-width').value=String(settings.width);$('annotation-opacity').value=String(Math.round(settings.opacity*100));$('annotation-width-value').value=`${settings.width}px`;$('annotation-width-value').textContent=`${settings.width}px`;$('annotation-opacity-value').value=`${Math.round(settings.opacity*100)}%`;$('annotation-opacity-value').textContent=`${Math.round(settings.opacity*100)}%`;
+ }
+ updateAnnotationColors();const doc=currentAnnotationDoc();$('annotation-undo').disabled=!doc?.history.length;$('annotation-redo').disabled=!doc?.future.length;$('annotation-clear').disabled=!doc?.strokes.length;
+}
+function renderViewer({preserveCenter=true}={}){
+ if(!page.naturalWidth)return;const center=viewerCenter(),g=pageGeometry(page.naturalWidth,page.naturalHeight,viewerState);stage.style.width=g.stageWidth+'px';stage.style.height=g.stageHeight+'px';
+ for(const element of [page,annotationLayer]){element.style.width=g.imageWidth+'px';element.style.height=g.imageHeight+'px';element.style.left='50%';element.style.top='50%';element.style.transform=`translate(-50%,-50%) rotate(${g.rotation}deg)`;}
+ annotationLayer.setAttribute('viewBox',`0 0 ${page.naturalWidth} ${page.naturalHeight}`);$('zoom-label').textContent=Math.round(viewerState.scale*100)+'%';renderAnnotations();refreshAnnotationUi();
+ if(preserveCenter)requestAnimationFrame(()=>{documentPane.scrollLeft=center.x*documentPane.scrollWidth-documentPane.clientWidth/2;documentPane.scrollTop=center.y*documentPane.scrollHeight-documentPane.clientHeight/2;});saveViewer();
+}
 function fitViewer(){if(!page.naturalWidth)return;viewerState.fit(documentPane.clientWidth,documentPane.clientHeight,page.naturalWidth,page.naturalHeight);renderViewer({preserveCenter:false});requestAnimationFrame(()=>{documentPane.scrollLeft=(documentPane.scrollWidth-documentPane.clientWidth)/2;documentPane.scrollTop=(documentPane.scrollHeight-documentPane.clientHeight)/2;});}
-function rotateViewer(degrees){viewerState.rotate(degrees);viewerState.fitMode?fitViewer():renderViewer();}
+function rotateViewer(degrees){if(annotationDraft)finishAnnotationDraft();viewerState.rotate(degrees);viewerState.fitMode?fitViewer():renderViewer();}
 page.onload=()=>{viewerState.fitMode?fitViewer():renderViewer({preserveCenter:false});};if(page.complete)page.onload();
-document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{viewerState.setPage(b.dataset.page);document.querySelectorAll('[data-page]').forEach(x=>{const active=x===b;x.classList.toggle('active',active);x.setAttribute('aria-selected',String(active));});page.src=`assets/${problemId}/${viewerState.page}.webp`;page.alt=`${problemItem.name} 원본 ${viewerState.page}페이지`;$('original').href=page.src;saveViewer();});
-$('zoomin').onclick=()=>{viewerState.zoom(1.25);renderViewer();};$('zoomout').onclick=()=>{viewerState.zoom(.8);renderViewer();};$('fit').onclick=fitViewer;$('rotate-cw').onclick=()=>rotateViewer(90);$('rotate-ccw').onclick=()=>rotateViewer(-90);$('rotate-180').onclick=()=>rotateViewer(180);
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{if(annotationDraft)finishAnnotationDraft();viewerState.setPage(b.dataset.page);document.querySelectorAll('[data-page]').forEach(x=>{const active=x===b;x.classList.toggle('active',active);x.setAttribute('aria-selected',String(active));});page.src=`assets/${problemId}/${viewerState.page}.webp`;page.alt=`${problemItem.name} 원본 ${viewerState.page}페이지`;$('original').href=page.src;renderAnnotations();refreshAnnotationUi();saveViewer();});
+$('zoomin').onclick=()=>{if(annotationDraft)finishAnnotationDraft();viewerState.zoom(1.25);renderViewer();};$('zoomout').onclick=()=>{if(annotationDraft)finishAnnotationDraft();viewerState.zoom(.8);renderViewer();};$('fit').onclick=()=>{if(annotationDraft)finishAnnotationDraft();fitViewer();};$('rotate-cw').onclick=()=>rotateViewer(90);$('rotate-ccw').onclick=()=>rotateViewer(-90);$('rotate-180').onclick=()=>rotateViewer(180);
+$('annotation-toggle').onclick=()=>{if(!ANNOTATABLE_PAGES.has(currentAnnotationPage()))return;annotationEnabled=!annotationEnabled;if(!annotationEnabled&&annotationDraft)finishAnnotationDraft();refreshAnnotationUi();notify(annotationEnabled?'메모 모드를 켰습니다.':'메모 모드를 껐습니다.');};
+document.querySelectorAll('[data-annotation-tool]').forEach(button=>button.onclick=()=>{annotationSettings.tool=button.dataset.annotationTool;saveAnnotationSettings();refreshAnnotationUi();});
+$('annotation-width').oninput=e=>{const tool=annotationSettings.tool;if(tool==='eraser')return;annotationSettings[tool].width=Math.max(2,Math.min(48,Number(e.target.value)||2));saveAnnotationSettings();refreshAnnotationUi();};
+$('annotation-opacity').oninput=e=>{const tool=annotationSettings.tool;if(tool==='eraser')return;annotationSettings[tool].opacity=Math.max(.05,Math.min(1,(Number(e.target.value)||5)/100));saveAnnotationSettings();refreshAnnotationUi();};
+$('annotation-undo').onclick=()=>{const doc=currentAnnotationDoc();if(doc&&undoAnnotation(doc)){renderAnnotations();refreshAnnotationUi();scheduleAnnotationSave();}};
+$('annotation-redo').onclick=()=>{const doc=currentAnnotationDoc();if(doc&&redoAnnotation(doc)){renderAnnotations();refreshAnnotationUi();scheduleAnnotationSave();}};
+$('annotation-clear').onclick=()=>{const doc=currentAnnotationDoc();if(!doc?.strokes.length||!confirm('현재 도면의 모든 메모를 삭제할까요?'))return;if(clearAnnotationStrokes(doc)){renderAnnotations();refreshAnnotationUi();scheduleAnnotationSave();}};
+annotationLayer.addEventListener('pointerdown',event=>{
+ if(!annotationEnabled||!ANNOTATABLE_PAGES.has(currentAnnotationPage())||event.button!==0)return;event.preventDefault();annotationPointerId=event.pointerId;annotationLayer.setPointerCapture?.(event.pointerId);
+ if(annotationSettings.tool==='eraser'){eraseAnnotationAt(event);return;}const point=annotationPoint(event);if(!point)return;annotationDraft=createStroke(annotationSettings.tool,annotationSettings,point);renderAnnotations();
+});
+annotationLayer.addEventListener('pointermove',event=>{
+ if(event.pointerId!==annotationPointerId)return;if(annotationSettings.tool==='eraser'){if(event.buttons&1)eraseAnnotationAt(event);return;}if(!annotationDraft)return;const point=annotationPoint(event);if(point&&appendPoint(annotationDraft,point,{minDistance:1,maxPoints:20000})){const draftPath=annotationLayer.querySelector('path:not([data-stroke-id])');if(draftPath)draftPath.setAttribute('d',strokePath(annotationDraft.points));}
+});
+const finishAnnotationPointer=event=>{if(event.pointerId!==annotationPointerId)return;try{annotationLayer.releasePointerCapture?.(event.pointerId);}catch{}if(annotationSettings.tool==='eraser'){annotationPointerId=null;return;}finishAnnotationDraft();};
+annotationLayer.addEventListener('pointerup',finishAnnotationPointer);annotationLayer.addEventListener('pointercancel',event=>{if(event.pointerId!==annotationPointerId)return;try{annotationLayer.releasePointerCapture?.(event.pointerId);}catch{}cancelAnnotationDraft();});
 $('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await $('viewer').requestFullscreen();}catch{notify('전체화면을 사용할 수 없습니다.');}};document.addEventListener('fullscreenchange',()=>{$('fullscreen').textContent=document.fullscreenElement?'종료':'전체화면';setTimeout(()=>viewerState.fitMode&&fitViewer(),50);});
 const initialTab=document.querySelector(`[data-page="${viewerState.page}"]`)??document.querySelector('[data-page="5"]');initialTab.click();
 
@@ -205,8 +274,8 @@ document.addEventListener('keydown',e=>{
 });
 setInterval(()=>{$('clock').textContent=formatTime(attempt.elapsed());},100);
 setInterval(()=>{if(attempt.state==='running')saveProgressNow();},5000);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgressNow();});
-window.addEventListener('pagehide',()=>saveProgressNow());
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){saveProgressNow();flushAnnotationSaves();}});
+window.addEventListener('pagehide',()=>{saveProgressNow();flushAnnotationSaves();});
 refreshModeUi();buildShelf();refreshConnections();refreshDraft();
 
 const resumeDialog=$('resume-dialog');resumeDialog.oncancel=e=>e.preventDefault();
