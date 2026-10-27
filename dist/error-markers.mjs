@@ -1,4 +1,4 @@
-const wireTypes=new Set(['잘못된 연결','전선 종류','전선 굵기','전선 색상','배선 경로','기구 접촉','케이블타이','CT 관통']);
+const wireTypes=new Set(['잘못된 연결','연결망 오류 영향','전선 종류','전선 굵기','전선 색상','배선 경로','기구 접촉','케이블타이','CT 관통']);
 
 export function friendlyTerminal(problem,id){
  const t=problem.terminalMap[id];if(!t)return String(id??'단자');
@@ -11,6 +11,7 @@ export function simpleErrorMessage(problem,error,connections=[]){
  switch(error.type){
   case '필수 연결 누락':{const suggested=String(error.correct??'').match(/^(.+?) ↔ (.+?) 또는/),names=suggested?[friendlyTerminal(problem,suggested[1]),friendlyTerminal(problem,suggested[2])]:[...new Set((error.terminalIds??[]).map(id=>friendlyTerminal(problem,id)))];return names.length>1?`${names[0]} → ${names[1]} 연결 X`:`${terminal} 연결 X`;}
   case '잘못된 연결':return from&&to?`${from} → ${to} 연결 X`:'잘못된 단자 연결 X';
+  case '연결망 오류 영향':return from&&to?`${from} → ${to} 기존 오결선 영향`:'기존 오결선 영향';
   case '전선 색상':return `${from&&to?`${from} → ${to} `:''}선 색상 X (${error.wrong.split(': ').at(-1)} / ${error.correct.split(': ').at(-1)})`;
   case '전선 굵기':return `${from&&to?`${from} → ${to} `:''}전선 굵기 X (${error.wrong.split(': ').at(-1)} / ${error.correct.split(': ').at(-1)})`;
   case '전선 종류':return `${from&&to?`${from} → ${to} `:''}전선 종류 X (${error.wrong.split(': ').at(-1)} / ${error.correct.split(': ').at(-1)})`;

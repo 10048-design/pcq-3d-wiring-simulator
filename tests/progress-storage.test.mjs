@@ -38,3 +38,21 @@ test('browser-local fallback store saves, loads and deletes one problem independ
 test('mismatched or malformed saved data is rejected instead of mutating the attempt',()=>{
  const problem=fixture(),attempt=new Attempt(()=>0),wiring=new WiringController(problem,attempt);assert.throws(()=>restoreProgress({version:1,problemId:'other'},problem,attempt,wiring));assert.equal(attempt.state,'ready');
 });
+
+
+test('redo histories survive progress save and restore',()=>{
+ const problem=fixture(),attempt=new Attempt(()=>0),wiring=new WiringController(problem,attempt);attempt.start();beginWire(wiring,problem.terminalMap.A);finishWire(wiring,problem.terminalMap.B);wiring.undo();
+ assert.equal(attempt.future.length,1);
+ beginWire(wiring,problem.terminalMap.A);wiring.undo();
+ assert.equal(wiring.future.length,1);
+ const saved=captureProgress(problem,attempt,wiring),restoredAttempt=new Attempt(()=>100),restoredWiring=new WiringController(problem,restoredAttempt);restoreProgress(saved,problem,restoredAttempt,restoredWiring);
+ assert.equal(restoredWiring.future.length,1);assert.equal(restoredAttempt.future.length,0);
+ assert.equal(restoredWiring.redo().type,'draft');
+});
+
+
+test('connection redo history also survives progress save and restore',()=>{
+ const problem=fixture(),attempt=new Attempt(()=>0),wiring=new WiringController(problem,attempt);attempt.start();beginWire(wiring,problem.terminalMap.A);finishWire(wiring,problem.terminalMap.B);wiring.undo();
+ const saved=captureProgress(problem,attempt,wiring),restoredAttempt=new Attempt(()=>100),restoredWiring=new WiringController(problem,restoredAttempt);restoreProgress(saved,problem,restoredAttempt,restoredWiring);
+ assert.equal(restoredAttempt.future.length,1);assert.equal(restoredWiring.redo().type,'connection');assert.equal(restoredAttempt.connections.length,1);
+});

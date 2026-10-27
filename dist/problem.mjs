@@ -61,12 +61,24 @@ net('인버터 보호도체',['INVERTER.E','TB3.E1'],pe);
 net('PLC 보호도체',['PLC.E','TB3.E2'],pe);
 // p1 §8 requires TB4, whereas p5 draws TB2 E to SMPS. Never resolve silently.
 net('SMPS/전원 보호도체 확인 필요',['SMPS.E','TB2.E','TB4.E'],pe,1,'pending');
-export const problem={id:'p01',name:'2025년 12월 13일 기출문제',devices,terminals,nets,terminalMap:tm,equivalentPairs:Array.from({length:5},(_,i)=>[`RY${i+1}.13`,`RY${i+1}.14`]),materialUnconfirmedTerminals:['PLC.SG','PLC.485+','PLC.485-','INVERTER.S+','INVERTER.S-'],
+const equivalentPairs=[
+ ...Array.from({length:5},(_,i)=>[`RY${i+1}.13`,`RY${i+1}.14`]),
+ ...Array.from({length:7},(_,i)=>[`PB${i+1}.접점 위`,`PB${i+1}.접점 아래`]),
+ ...Array.from({length:3},(_,i)=>[`SS${i+1}.접점 위`,`SS${i+1}.접점 아래`]),
+ ...['YL2','RL2','GL2','RL1','YL1','GL1'].map(id=>[`${id}.상단 접속부`,`${id}.하단 접속부`]),
+];
+const equivalentPairGroups=[
+ [
+  ['MCCB.1차 L','MCCB.1차 N'],
+  ['MCCB.2차 L','MCCB.2차 N'],
+ ],
+];
+export const problem={id:'p01',name:'2025년 12월 13일 기출문제',devices,terminals,nets,terminalMap:tm,equivalentPairs,equivalentPairGroups,materialUnconfirmedTerminals:['PLC.SG','PLC.485+','PLC.485-','INVERTER.S+','INVERTER.S-'],
  pending:[
  {id:'physical',title:'제품별 실제 단자 위치',detail:'4페이지는 기구 외곽만 제공. TB와 릴레이 외 단자는 기능명 선택 방식이며 물리 위치를 재현하지 않았습니다.'},
  {id:'direction',title:'Y형 방향·2개 압착단자 체결 방향',detail:'1~6페이지에 세부 방향 기준 없음. 선택값은 저장하지만 옳고 그름은 판정하지 않습니다.'},
  {id:'earth',title:'SMPS·전원 보호도체',detail:'1페이지 8항의 TB4 지시와 5페이지 TB2 E 그림이 상충. 이 구간은 전기적 정답 확정 보류.'},
- {id:'pins',title:'번호 없는 접점·제품에 따른 단자',detail:'PB·SS·램프는 도면의 위/아래 접속부 기능명. MC·OCR은 6페이지 예시 번호이며 실물 호환 확인 필요. AC 릴레이 코일 13/14 교환은 허용합니다.'},
+ {id:'pins',title:'번호 없는 접점·제품에 따른 단자',detail:'PB·SS·램프의 양 단자와 AC 릴레이 코일 13/14는 무극성으로 교환을 허용합니다. MCCB는 좌우 pole을 입력·출력에서 함께 뒤집는 경우를 허용합니다. MC·OCR은 6페이지 예시 번호이며 실물 호환 확인 필요.'},
  {id:'material',title:'명시되지 않은 자재 규격',detail:'PLC 전원·통신, 인버터 제어의 압착 규격, 통신 전선, 인버터 출력 색상, OCR 주회로 압착규격은 확인 필요.'},
  {id:'workmanship',title:'실물 시공·인출선 점검',detail:'기구 접촉·타이·조임은 입력한 작업 상태로만 검사합니다. TB1 인출선 50~100mm·끝단 약10mm, 실물 고정 및 동작 시험은 사람이 확인해야 합니다.'}
  ]};

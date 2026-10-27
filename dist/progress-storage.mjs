@@ -24,8 +24,8 @@ export function captureProgress(problem,attempt,wiring,{selectedWireId=null,last
  if(!['running','finished'].includes(attempt.state))return null;
  return {
   version:PROGRESS_VERSION,problemId:problem.id,savedAt:now(),
-  attempt:{state:attempt.state,elapsedMs:attempt.elapsed(),serial:attempt.serial,connections:clone(attempt.connections),history:clone(attempt.history)},
-  wiring:compactWiring(wiring.snapshot()),wiringHistory:wiring.history.map(compactWiring),
+  attempt:{state:attempt.state,elapsedMs:attempt.elapsed(),serial:attempt.serial,connections:clone(attempt.connections),history:clone(attempt.history),future:clone(attempt.future)},
+  wiring:compactWiring(wiring.snapshot()),wiringHistory:wiring.history.map(compactWiring),wiringFuture:wiring.future.map(compactWiring),
   selectedWireId,lastWire:clone(lastWire)
  };
 }
@@ -33,12 +33,14 @@ export function captureProgress(problem,attempt,wiring,{selectedWireId=null,last
 export function restoreProgress(record,problem,attempt,wiring){
  if(!record||record.version!==PROGRESS_VERSION||record.problemId!==problem.id)throw Error('이 문제의 저장 데이터가 아닙니다.');
  const saved=record.attempt;if(!saved||!['running','finished'].includes(saved.state)||!Array.isArray(saved.connections)||!Array.isArray(saved.history))throw Error('저장된 실습 상태가 올바르지 않습니다.');
- if(!saved.connections.every(w=>validConnection(problem,w))||!saved.history.every(items=>Array.isArray(items)&&items.every(w=>validConnection(problem,w))))throw Error('저장된 전선 데이터가 올바르지 않습니다.');
- attempt.state=saved.state;attempt.elapsedMs=Math.max(0,Number(saved.elapsedMs)||0);attempt.connections=clone(saved.connections);attempt.history=clone(saved.history);attempt.result=null;
+ const future=saved.future??[];if(!Array.isArray(future))throw Error('저장된 다시 실행 상태가 올바르지 않습니다.');
+ if(!saved.connections.every(w=>validConnection(problem,w))||!saved.history.every(items=>Array.isArray(items)&&items.every(w=>validConnection(problem,w)))||!future.every(items=>Array.isArray(items)&&items.every(w=>validConnection(problem,w))))throw Error('저장된 전선 데이터가 올바르지 않습니다.');
+ attempt.state=saved.state;attempt.elapsedMs=Math.max(0,Number(saved.elapsedMs)||0);attempt.connections=clone(saved.connections);attempt.history=clone(saved.history);attempt.future=clone(future);attempt.result=null;
  const greatest=attempt.connections.reduce((n,w)=>Math.max(n,Number(String(w.id).match(/^W(\d+)$/)?.[1])||0),0);attempt.serial=Math.max(greatest,Number(saved.serial)||0);
  attempt.startedAt=attempt.state==='running'?attempt.now()-attempt.elapsedMs:null;
  wiring.restore(validateWiring(problem,record.wiring));
  wiring.history=(record.wiringHistory??[]).map(s=>validateWiring(problem,s));
+ wiring.future=(record.wiringFuture??[]).map(s=>validateWiring(problem,s));
  const selectedWireId=attempt.connections.some(w=>w.id===record.selectedWireId)?record.selectedWireId:null;
  return {selectedWireId,lastWire:clone(record.lastWire)};
 }

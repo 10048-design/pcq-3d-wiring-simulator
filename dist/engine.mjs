@@ -14,25 +14,39 @@ export function groupRepairErrors(errors){
  return grouped;
 }
 export function grade(problem,connections){
- // The p6 AC relay coil is non-polar. Resolve its 13/14 roles from the user's
- // connections without changing their physical terminal IDs or wire metadata.
- if(problem.equivalentPairs?.length){
+ // Resolve non-polar / physically reversible terminal roles from the user's
+ // connections without changing physical terminal IDs or wire metadata.
+ // Some devices swap one pair independently; MCCB swaps input/output pole pairs together.
+ if(problem.equivalentPairs?.length||problem.equivalentPairGroups?.length){
   problem={...problem,nets:structuredClone(problem.nets)};
   const roles=new Map(problem.nets.flatMap(n=>n.status==='confirmed'?n.members.map(t=>[t,n.id]):[]));
   const same=(a,b)=>roles.has(a)&&roles.get(a)===roles.get(b);
-  for(let pass=0;pass<problem.equivalentPairs.length;pass++){
+  const applySwap=pairs=>{
+   const swap=id=>{for(const [a,b] of pairs){if(id===a)return b;if(id===b)return a;}return id;};
+   const touched=new Set(pairs.flat());
+   const relevant=connections.filter(w=>touched.has(w.from)||touched.has(w.to));
+   const before=relevant.filter(w=>same(w.from,w.to)).length;
+   const after=relevant.filter(w=>same(swap(w.from),swap(w.to))).length;
+   if(after<=before)return false;
+   const previous=new Map(pairs.flat().map(id=>[id,roles.get(id)]));
+   for(const [a,b] of pairs){roles.set(a,previous.get(b));roles.set(b,previous.get(a));}
+   for(const n of problem.nets)n.members=n.members.map(swap);
+   return true;
+  };
+  const choices=[...(problem.equivalentPairs??[]).map(pair=>[pair]),...(problem.equivalentPairGroups??[])];
+  for(let pass=0;pass<choices.length;pass++){
    let changed=false;
-   for(const [a,b] of problem.equivalentPairs){const relevant=connections.filter(w=>[w.from,w.to].some(t=>t===a||t===b));
-    const before=relevant.filter(w=>same(w.from,w.to)).length;
-    const swap=id=>id===a?b:id===b?a:id;
-    const after=relevant.filter(w=>same(swap(w.from),swap(w.to))).length;
-    if(after>before){const ra=roles.get(a),rb=roles.get(b);roles.set(a,rb);roles.set(b,ra);for(const n of problem.nets)n.members=n.members.map(swap);changed=true;}
-   }
+   for(const pairs of choices)if(applySwap(pairs))changed=true;
    if(!changed)break;
   }
  }
- const errors=[],reviews=[],ts=problem.terminalMap,netOf=new Map(),pending=new Set();
- for(const n of problem.nets)for(const id of n.members){if(!ts[id])throw Error(`정답 데이터 단자 누락: ${id}`);if(netOf.has(id)||pending.has(id))throw Error(`정답 NET 중복: ${id}`);if(n.status==='pending')pending.add(id);else netOf.set(id,n);}
+ const errors=[],reviews=[],ts=problem.terminalMap,netOf=new Map(),pending=new Set(),pendingNetOf=new Map();
+ for(const n of problem.nets)for(const id of n.members){
+  if(!ts[id])throw Error(`정답 데이터 단자 누락: ${id}`);
+  if(netOf.has(id)||pending.has(id))throw Error(`정답 NET 중복: ${id}`);
+  if(n.status==='pending'){pending.add(id);pendingNetOf.set(id,n);}
+  else netOf.set(id,n);
+ }
  for(const t of problem.terminals)if(!netOf.has(t.id)&&!pending.has(t.id))netOf.set(t.id,{id:'unused:'+t.id,members:[t.id],policy:{},status:'confirmed'});
  const uf=new UnionFind(problem.terminals.map(t=>t.id)),incident=new Map(),wrong=[];
  for(const [a,b] of problem.internalLinks??[])uf.join(a,b);
@@ -42,12 +56,24 @@ export function grade(problem,connections){
   if(ids.has(w.id))throw Error('중복 전선 ID');ids.add(w.id);
   if(!ts[w.from]||!ts[w.to]||w.from===w.to||ts[w.from].connectable===false||ts[w.to].connectable===false){add('invalid:'+w.id,'연결 데이터',[w.from,w.to],[w.id],'유효하지 않은 단자 연결입니다.','서로 다른 실제 등록 단자를 선택하세요.');continue;}
   for(const [side,id]of [['from',w.from],['to',w.to]]){if(!incident.has(id))incident.set(id,[]);incident.get(id).push({w,side});}
-  if(pending.has(w.from)||pending.has(w.to)){reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],detail:'보호도체 도면 상충 구간: 연결 관계 확인 필요'});}
-  else if(netOf.get(w.from).id!==netOf.get(w.to).id){wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 서로 다른 NET을 연결했습니다.`,`${netOf.get(w.from).id} / ${netOf.get(w.to).id}를 분리하고 목적지를 확인하세요.`));}
-  else uf.join(w.from,w.to);
+  const pn=pendingNetOf.get(w.from),pm=pendingNetOf.get(w.to);
+  if(pn||pm){
+   if(pn&&pm&&pn.id===pm.id){
+    reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],detail:`${pn.id}: 도면·유의사항 상충으로 연결 관계 확인 필요`});
+    // Pending NETs are excluded from scoring, but their internal connectivity is
+    // still useful for practice-mode progress visualization.
+    uf.join(w.from,w.to);
+   }else{
+    const left=pn?.id??netOf.get(w.from)?.id??'미분류',right=pm?.id??netOf.get(w.to)?.id??'미분류';
+    wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 확인 필요 NET과 다른 NET을 연결했습니다.`,`${left} / ${right}를 분리하고 목적지를 확인하세요.`));
+   }
+  }else if(netOf.get(w.from).id!==netOf.get(w.to).id){
+   wrong.push(add('electrical:'+w.id,'잘못된 연결',[w.from,w.to],[w.id],`${w.from} ↔ ${w.to}: 서로 다른 NET을 연결했습니다.`,`${netOf.get(w.from).id} / ${netOf.get(w.to).id}를 분리하고 목적지를 확인하세요.`));
+  }else uf.join(w.from,w.to);
   const n=netOf.get(w.from),m=netOf.get(w.to);
   // A cross-net wire has no unambiguous circuit class. Do not invent material errors.
-  const policy=n&&m&&n.id===m.id?n.policy:(pending.has(w.from)&&pending.has(w.to)?{kind:'단선',area:2.5,color:'녹색-노란색'}:null);
+  const samePending=pn&&pm&&pn.id===pm.id;
+  const policy=n&&m&&n.id===m.id?n.policy:(samePending?pn.policy:null);
   if(policy&&![w.from,w.to].some(id=>problem.materialUnconfirmedTerminals?.includes(id)))for(const [field,label]of [['kind','전선 종류'],['area','전선 굵기'],['color','전선 색상']])if(policy[field]!=null&&w[field]!==policy[field])add(`${field}:${w.id}`,label,[w.from,w.to],[w.id],`${label}: 사용 ${w[field]??'미선택'}`,`필요: ${policy[field]}${field==='area'?'㎟':''}`);
   if(w.route?.inDuct===false)add('route:'+w.id,'배선 경로',[w.from,w.to],[w.id],'음영 배선 구역을 벗어난 경로로 지정했습니다.','4페이지 음영 구역을 따르고 기구 사이를 통과하지 마세요.');
   if(w.route?.touchesDevice===true)add('touch:'+w.id,'기구 접촉',[w.from,w.to],[w.id],'기구 접촉 상태로 지정했습니다.','전선이 기구에 닿지 않도록 배선하세요.');
@@ -82,19 +108,38 @@ export function grade(problem,connections){
   if(ends.length===2&&t.doubleCrimpRule&&(!t.orientationYOnly||ends.every(({w,side})=>w.ends[side].crimp?.endsWith('Y')))&&ends.some(({w,side})=>w.ends[side].doubleMount!==t.doubleCrimpRule))add('double:'+id,'2개 압착단자 체결',[id],ends.map(x=>x.w.id),`${id}: 2개 압착단자 체결 방법이 다릅니다.`,`필요: ${t.doubleCrimpRule}`);
  }
  const repairErrors=groupRepairErrors(errors);
- return {errors:repairErrors,count:repairErrors.length,reviews,pending:problem.pending,completeAssessment:false,netGroups:problem.nets.filter(n=>n.status==='confirmed').map(n=>({id:n.id,components:[...new Set(n.members.map(t=>uf.find(t)))].length})),basis:'확정된 NET 및 명시 규칙에 대한 부분 채점. 확인 필요 항목은 오류 개수에서 제외.'};
+ const blockingProgressTypes=new Set(['잘못된 연결','연결 데이터','CT 관통']);
+ const netProgress=problem.nets.map(n=>{
+  const memberSet=new Set(n.members),groups=new Map();
+  for(const t of n.members){const root=uf.find(t);if(!groups.has(root))groups.set(root,[]);groups.get(root).push(t);}
+  const components=[...groups.values()].map(items=>items.sort()).sort((a,b)=>b.length-a.length||a[0].localeCompare(b[0]));
+  const wireIds=connections.filter(w=>memberSet.has(w.from)||memberSet.has(w.to)).map(w=>w.id);
+  const relatedErrors=repairErrors.filter(e=>(e.terminalIds??[]).some(t=>memberSet.has(t)));
+  const relatedReviews=reviews.filter(r=>(r.terminalIds??[]).some(t=>memberSet.has(t)));
+  const blockers=relatedErrors.filter(e=>blockingProgressTypes.has(e.type));
+  const warnings=relatedErrors.filter(e=>e.type!=='필수 연결 누락'&&!blockingProgressTypes.has(e.type));
+  const started=wireIds.length>0;
+  let state;
+  if(n.status==='pending')state=blockers.length?'error':started?'review':'pending';
+  else if(blockers.length)state='error';
+  else if(components.length===1)state='complete';
+  else state=started?'progress':'not-started';
+  return {id:n.id,status:n.status,state,members:[...n.members],components,componentCount:components.length,wireIds:[...new Set(wireIds)].sort(),errorIds:blockers.map(e=>e.id).sort(),warningIds:warnings.map(e=>e.id).sort(),warningCount:warnings.length,reviewIds:relatedReviews.map(r=>r.id).sort(),reviewCount:relatedReviews.length,requiredPassages:(problem.requiredPassages??[]).filter(r=>r.netId===n.id).map(r=>r.portId).sort()};
+ });
+ return {errors:repairErrors,count:repairErrors.length,reviews,pending:problem.pending,completeAssessment:false,netGroups:netProgress.filter(n=>n.status==='confirmed').map(n=>({id:n.id,components:n.componentCount})),netProgress,basis:'확정된 NET 및 명시 규칙에 대한 부분 채점. 확인 필요 항목은 오류 개수에서 제외.'};
 }
 export class Attempt {
  constructor(now=()=>performance.now()){this.now=now;this.reset();}
- reset(){this.state='ready';this.startedAt=null;this.elapsedMs=0;this.connections=[];this.history=[];this.result=null;this.serial=0;}
+ reset(){this.state='ready';this.startedAt=null;this.elapsedMs=0;this.connections=[];this.history=[];this.future=[];this.result=null;this.serial=0;}
  start(){if(this.state!=='ready')return false;this.startedAt=this.now();this.state='running';return true;}
  elapsed(){return this.state==='running'?Math.max(0,this.now()-this.startedAt):this.elapsedMs;}
  finish(){if(this.state!=='running')return false;this.elapsedMs=this.elapsed();this.state='finished';return true;}
- mutate(fn){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');this.history.push(structuredClone(this.connections));fn(this.connections);}
+ mutate(fn){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');this.history.push(structuredClone(this.connections));this.future=[];fn(this.connections);}
  add(w){const id='W'+String(++this.serial).padStart(3,'0');this.mutate(a=>a.push({...structuredClone(w),id}));return id;}
  update(id,w){this.mutate(a=>{const i=a.findIndex(x=>x.id===id);if(i<0)throw Error('전선 없음');a[i]={...structuredClone(w),id};});}
  remove(id){this.mutate(a=>{const i=a.findIndex(x=>x.id===id);if(i>=0)a.splice(i,1);});}
- undo(){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');if(this.history.length)this.connections=this.history.pop();}
+ undo(){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');if(!this.history.length)return false;this.future.push(structuredClone(this.connections));this.connections=this.history.pop();return true;}
+ redo(){if(this.state!=='running')throw Error('배선 작업이 잠겨 있습니다.');if(!this.future.length)return false;this.history.push(structuredClone(this.connections));this.connections=this.future.pop();return true;}
  score(problem){if(!['finished','graded'].includes(this.state))throw Error('완료 후에만 채점할 수 있습니다.');this.result=grade(problem,this.connections);this.state='graded';return this.result;}
 }
 export function formatTime(ms){const s=Math.floor(ms/1000);return [Math.floor(s/3600),Math.floor(s/60)%60,s%60].map(n=>String(n).padStart(2,'0')).join(':');}
