@@ -48,3 +48,10 @@ test('all 26 profiles keep confirmed, pending and cross-NET grading boundaries s
   }
  }
 });
+
+test('supply and SMPS PE direct-to-TB4 links are confirmed while TB2.E to SMPS.E stays review-only',()=>{
+ const p=createHardwareProblem('p20');
+ for(const [from,to] of [['TB2.E','TB4.E'],['SMPS.E','TB4.E']]){const r=grade(p,[wire(p,from,to)]);assert.equal(r.reviews.length,0,`${from} ↔ ${to} should be confirmed`);assert.equal(r.errors.some(e=>e.type==='잘못된 연결'),false);}
+ const review=grade(p,[wire(p,'TB2.E','SMPS.E')]);
+ assert.equal(review.reviews.length,1);assert.equal(review.errors.some(e=>e.type==='잘못된 연결'),false);assert.match(review.reviews[0].detail,/TB4\.E/);
+});

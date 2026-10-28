@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {analyzeProgress,progressFilter} from '../dist/progress-status.mjs';
+import {analyzeProgress,progressFilter,progressPanelPresentation} from '../dist/progress-status.mjs';
 
 const aux={kind:'연선',area:1.5,color:'노란색'};
 function fixture(){
@@ -83,4 +83,16 @@ test('progress marks a downstream MCCB NET as error when an upstream wrong wire 
  const downstream=summary.items.find(n=>n.id==='보조회로 N');
  assert.equal(downstream.state,'error');
  assert.equal(downstream.networkImpact,true);
+});
+
+test('pair review keeps the confirmed NET in review state and exposes its explanation',()=>{
+ const p=fixture();p.nets=p.nets.filter(n=>n.id!=='접지 확인 필요');p.nets[0].members=['A','B','C'];p.reviewPairs=[{terminals:['A','C'],pendingId:'earth'}];p.pending=[{id:'earth',title:'접지 확인',detail:'A-C 직접 연결 확인 필요'}];
+ const summary=analyzeProgress(p,[wire('A','C','W9')]),net=item(summary,'ABC');
+ assert.equal(net.state,'review');assert.equal(net.reviewCount,1);assert.equal(net.reviewDetails[0].detail,'A-C 직접 연결 확인 필요');assert.equal(summary.counts.reviewRequired,1);
+});
+
+test('progress panel stays live in practice, becomes a result panel after finish, and appears in exam only after grading',()=>{
+ assert.deepEqual(progressPanelPresentation('practice','running'),{visible:true,resultMode:false,title:'배선 진행상황',toggleLabel:'진행상황',subtitle:'정답 전선 순서가 아닌 전기적 NET 연결 기준'});
+ const finished=progressPanelPresentation('practice','finished');assert.equal(finished.visible,true);assert.equal(finished.title,'배선 점검 결과');assert.equal(finished.toggleLabel,'점검결과');
+ assert.equal(progressPanelPresentation('exam','finished').visible,false);const graded=progressPanelPresentation('exam','graded');assert.equal(graded.visible,true);assert.equal(graded.title,'배선 점검 결과');
 });
