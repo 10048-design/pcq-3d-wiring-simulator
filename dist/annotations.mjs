@@ -11,6 +11,7 @@ export const DEFAULT_ANNOTATION_SETTINGS={
  tool:'highlighter',
  highlighter:{color:'#ffe45c',width:24,opacity:.24},
  marker:{color:'#1f2937',width:7,opacity:1},
+ eraser:{width:32},
 };
 
 export function createStrokeId({cryptoObj=globalThis.crypto,now=Date.now,random=Math.random}={}){
@@ -61,6 +62,19 @@ export function strokePath(points){
  }
  const last=points.at(-1);return d+` L ${fmt(last.x)} ${fmt(last.y)}`;
 }
+function pointSegmentDistance(point,a,b){
+ const dx=b.x-a.x,dy=b.y-a.y,lengthSquared=dx*dx+dy*dy;
+ if(!lengthSquared)return Math.hypot(point.x-a.x,point.y-a.y);
+ const t=Math.max(0,Math.min(1,((point.x-a.x)*dx+(point.y-a.y)*dy)/lengthSquared));
+ return Math.hypot(point.x-(a.x+t*dx),point.y-(a.y+t*dy));
+}
+export function strokeHitByEraser(stroke,point,eraserWidth=32){
+ if(!stroke?.points?.length||!validPoint(point))return false;
+ const radius=(Math.max(2,Number(eraserWidth)||2)+Math.max(1,Number(stroke.width)||1))/2;
+ if(stroke.points.length===1)return Math.hypot(Number(point.x)-stroke.points[0].x,Number(point.y)-stroke.points[0].y)<=radius;
+ for(let i=1;i<stroke.points.length;i++)if(pointSegmentDistance(point,stroke.points[i-1],stroke.points[i])<=radius)return true;
+ return false;
+}
 function trimHistory(doc,limit=2000){if(doc.history.length>limit)doc.history.splice(0,doc.history.length-limit);}
 export function addAnnotationStroke(doc,stroke){
  const normalized=normalizeStroke(stroke);if(!normalized)return false;
@@ -95,5 +109,6 @@ export function cloneAnnotationSettings(settings=DEFAULT_ANNOTATION_SETTINGS){
   if(Number.isFinite(Number(src.width)))next[tool].width=Math.max(1,Math.min(80,Number(src.width)));
   if(Number.isFinite(Number(src.opacity)))next[tool].opacity=Math.max(.02,Math.min(1,Number(src.opacity)));
  }
+ if(Number.isFinite(Number(settings?.eraser?.width)))next.eraser.width=Math.max(4,Math.min(100,Number(settings.eraser.width)));
  return next;
 }
