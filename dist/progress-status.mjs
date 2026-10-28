@@ -55,6 +55,7 @@ export function analyzeProgress(problem,connections=[]){
   error:confirmed.filter(net=>net.state==='error').length,
   notStarted:confirmed.filter(net=>net.state==='not-started').length,
   pending:pending.length,
+  reviewRequired:items.filter(net=>net.state==='review'||net.state==='pending').length,
   warnings:items.reduce((sum,net)=>sum+net.warningCount,0),
  };
  return {
@@ -71,4 +72,15 @@ export function progressFilter(net,mode='all'){
  if(mode==='incomplete')return net.status==='confirmed'&&net.state!=='complete';
  if(mode==='issues')return net.state==='error'||net.state==='review'||net.state==='pending'||net.warningCount>0||net.reviewCount>0;
  return true;
+}
+
+export function progressPanelPresentation(sessionMode='exam',attemptState='ready'){
+ const resultMode=attemptState==='finished'||attemptState==='graded';
+ return {
+  visible:sessionMode==='practice'||attemptState==='graded',
+  resultMode,
+  title:resultMode?'배선 점검 결과':'배선 진행상황',
+  toggleLabel:resultMode?'점검결과':'진행상황',
+  subtitle:resultMode?'완료된 배선을 전기적 NET 연결 기준으로 점검한 결과':'정답 전선 순서가 아닌 전기적 NET 연결 기준',
+ };
 }

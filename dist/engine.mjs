@@ -41,6 +41,8 @@ export function grade(problem,connections){
   }
  }
  const errors=[],reviews=[],ts=problem.terminalMap,netOf=new Map(),pending=new Set(),pendingNetOf=new Map();
+ const reviewPairs=(problem.reviewPairs??[]).map(item=>Array.isArray(item)?{terminals:item}:item);
+ const pairReviewFor=(a,b)=>reviewPairs.find(item=>{const pair=item.terminals??[];return pair.length===2&&pair.includes(a)&&pair.includes(b);});
  for(const n of problem.nets)for(const id of n.members){
   if(!ts[id])throw Error(`정답 데이터 단자 누락: ${id}`);
   if(netOf.has(id)||pending.has(id))throw Error(`정답 NET 중복: ${id}`);
@@ -56,10 +58,12 @@ export function grade(problem,connections){
   if(ids.has(w.id))throw Error('중복 전선 ID');ids.add(w.id);
   if(!ts[w.from]||!ts[w.to]||w.from===w.to||ts[w.from].connectable===false||ts[w.to].connectable===false){add('invalid:'+w.id,'연결 데이터',[w.from,w.to],[w.id],'유효하지 않은 단자 연결입니다.','서로 다른 실제 등록 단자를 선택하세요.');continue;}
   for(const [side,id]of [['from',w.from],['to',w.to]]){if(!incident.has(id))incident.set(id,[]);incident.get(id).push({w,side});}
+  const pairReview=pairReviewFor(w.from,w.to);
+  if(pairReview){const evidence=problem.pending?.find(x=>x.id===pairReview.pendingId);reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],pendingId:pairReview.pendingId??null,title:pairReview.title??evidence?.title??'확인 필요',detail:pairReview.detail??evidence?.detail??'이 연결은 확인이 필요합니다.'});}
   const pn=pendingNetOf.get(w.from),pm=pendingNetOf.get(w.to);
   if(pn||pm){
    if(pn&&pm&&pn.id===pm.id){
-    reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],detail:`${pn.id}: 도면·유의사항 상충으로 연결 관계 확인 필요`});
+    reviews.push({id:'review:'+w.id,wireIds:[w.id],terminalIds:[w.from,w.to],title:pn.id,detail:`${pn.id}: 도면·유의사항 상충으로 연결 관계 확인 필요`});
     // Pending NETs are excluded from scoring, but their internal connectivity is
     // still useful for practice-mode progress visualization.
     uf.join(w.from,w.to);
@@ -122,9 +126,10 @@ export function grade(problem,connections){
   let state;
   if(n.status==='pending')state=blockers.length?'error':started?'review':'pending';
   else if(blockers.length)state='error';
+  else if(relatedReviews.length)state='review';
   else if(components.length===1)state='complete';
   else state=started?'progress':'not-started';
-  return {id:n.id,status:n.status,state,members:[...n.members],components,componentCount:components.length,wireIds:[...new Set(wireIds)].sort(),errorIds:blockers.map(e=>e.id).sort(),warningIds:warnings.map(e=>e.id).sort(),warningCount:warnings.length,reviewIds:relatedReviews.map(r=>r.id).sort(),reviewCount:relatedReviews.length,requiredPassages:(problem.requiredPassages??[]).filter(r=>r.netId===n.id).map(r=>r.portId).sort()};
+  return {id:n.id,status:n.status,state,members:[...n.members],components,componentCount:components.length,wireIds:[...new Set(wireIds)].sort(),errorIds:blockers.map(e=>e.id).sort(),warningIds:warnings.map(e=>e.id).sort(),warningCount:warnings.length,reviewIds:relatedReviews.map(r=>r.id).sort(),reviewCount:relatedReviews.length,reviewDetails:relatedReviews.map(r=>({id:r.id,title:r.title??'확인 필요',detail:r.detail,wireIds:[...(r.wireIds??[])]})),requiredPassages:(problem.requiredPassages??[]).filter(r=>r.netId===n.id).map(r=>r.portId).sort()};
  });
  return {errors:repairErrors,count:repairErrors.length,reviews,pending:problem.pending,completeAssessment:false,netGroups:netProgress.filter(n=>n.status==='confirmed').map(n=>({id:n.id,components:n.componentCount})),netProgress,basis:'확정된 NET 및 명시 규칙에 대한 부분 채점. 확인 필요 항목은 오류 개수에서 제외.'};
 }

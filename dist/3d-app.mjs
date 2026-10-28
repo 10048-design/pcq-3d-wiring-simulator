@@ -7,7 +7,7 @@ import {SplitState} from './split-state.mjs';
 import {groupErrorsForMarkers} from './error-markers.mjs';
 import {ProgressStore,captureProgress,restoreProgress} from './progress-storage.mjs';
 import {assessPractice} from './practice-feedback.mjs';
-import {analyzeProgress,progressFilter as matchesProgressFilter} from './progress-status.mjs';
+import {analyzeProgress,progressFilter as matchesProgressFilter,progressPanelPresentation} from './progress-status.mjs';
 import {ANNOTATABLE_PAGES,ANNOTATION_COLORS,DEFAULT_ANNOTATION_SETTINGS,createAnnotationDocument,createStroke,appendPoint,strokePath,addAnnotationStroke,removeAnnotationStroke,clearAnnotationStrokes,undoAnnotation,redoAnnotation,cloneAnnotationSettings,strokeHitByEraser} from './annotations.mjs';
 import {AnnotationStore} from './annotation-store.mjs';
 
@@ -40,7 +40,7 @@ const problemSelect=$('problem-select');for(const item of [...catalog].sort((a,b
 problemSelect.onchange=()=>{if(attempt.state==='running'&&!confirm('진행 중인 작업을 끝내고 다른 문제로 이동할까요?')){problemSelect.value=problemId;return;}location.href=`3d.html?problem=${encodeURIComponent(problemSelect.value)}`;};
 const modeSelect=$('mode-select');modeSelect.value=sessionMode;modeSelect.onchange=()=>{if(attempt.state!=='ready'){modeSelect.value=sessionMode;return;}sessionMode=modeSelect.value;saveStored('pcq-3d-session-mode-v1',sessionMode);refreshModeUi();notify(sessionMode==='practice'?'연습 모드: 연결할 때마다 즉시 확인합니다.':'시험 모드: 완료 후 채점합니다.');};
 function closeProgressPanel(){const panel=$('progress-panel'),toggle=$('progress-toggle');panel.classList.remove('open');panel.setAttribute('aria-hidden','true');toggle.setAttribute('aria-expanded','false');}
-function refreshModeUi(){const practice=sessionMode==='practice';document.body.dataset.mode=sessionMode;$('instruction').classList.toggle('practice',practice&&attempt.state==='running');$('progress-toggle').hidden=!practice;if(!practice)closeProgressPanel();else refreshProgressPanel();}
+function refreshModeUi(){const practice=sessionMode==='practice',presentation=progressPanelPresentation(sessionMode,attempt.state);document.body.dataset.mode=sessionMode;$('instruction').classList.toggle('practice',practice&&attempt.state==='running');$('progress-toggle').hidden=!presentation.visible;$('progress-toggle-label').textContent=presentation.toggleLabel;$('progress-panel-title').textContent=presentation.title;$('progress-panel-subtitle').textContent=presentation.subtitle;if(!presentation.visible)closeProgressPanel();else refreshProgressPanel();}
 
 try{
  board=new Workbench3D($('viewport'),p,{
@@ -127,25 +127,26 @@ const progressStateUi={
 };
 function compactMembers(members){const shown=members.slice(0,3).join(' · ');return members.length>3?`${shown} 외 ${members.length-3}개`:shown;}
 function refreshProgressPanel(){
- const toggle=$('progress-toggle');if(sessionMode!=='practice'){toggle.hidden=true;return;}toggle.hidden=false;
+ const toggle=$('progress-toggle'),presentation=progressPanelPresentation(sessionMode,attempt.state);if(!presentation.visible){toggle.hidden=true;return;}toggle.hidden=false;
  const summary=analyzeProgress(p,attempt.connections),{counts}=summary;toggle.querySelector('#progress-toggle-count').textContent=`${counts.completed}/${counts.total}`;
  $('progress-score').textContent=`${counts.completed} / ${counts.total}`;$('progress-bar').style.width=`${Math.round(summary.ratio*100)}%`;
- $('progress-stats').innerHTML=`<span>완료 <b>${counts.completed}</b></span><span>진행 중 <b>${counts.progress}</b></span><span>오류 <b>${counts.error}</b></span><span>미시작 <b>${counts.notStarted}</b></span>${counts.pending?`<span>확인 필요 <b>${counts.pending}</b></span>`:''}${counts.warnings?`<span>시공 경고 <b>${counts.warnings}</b></span>`:''}`;
+ $('progress-stats').innerHTML=`<span>완료 <b>${counts.completed}</b></span><span>진행 중 <b>${counts.progress}</b></span><span>오류 <b>${counts.error}</b></span><span>미시작 <b>${counts.notStarted}</b></span>${counts.reviewRequired?`<span>확인 필요 <b>${counts.reviewRequired}</b></span>`:''}${counts.warnings?`<span>시공 경고 <b>${counts.warnings}</b></span>`:''}`;
  const host=$('progress-groups');host.replaceChildren();let visible=0;
  for(const group of summary.groups){
   const items=group.items.filter(n=>matchesProgressFilter(n,progressFilterMode));if(!items.length)continue;visible+=items.length;
   const details=document.createElement('details');details.className='progress-group';details.open=true;
-  const head=document.createElement('summary');const confirmed=items.filter(n=>n.status==='confirmed'),done=confirmed.filter(n=>n.state==='complete').length;head.innerHTML=`${escapeHtml(group.name)} <span>${done}/${confirmed.length}${items.some(n=>n.status==='pending')?' · 확인 필요':''}</span>`;details.append(head);
-  for(const net of items){const ui=progressStateUi[net.state]??progressStateUi['not-started'],button=document.createElement('button');button.type='button';button.className=`progress-net ${net.state}${net.warningCount?' has-warning':''}`;button.title='클릭하면 관련 단자와 배선을 3D 작업판에서 표시합니다.';
+  const head=document.createElement('summary');const confirmed=items.filter(n=>n.status==='confirmed'),done=confirmed.filter(n=>n.state==='complete').length;head.innerHTML=`${escapeHtml(group.name)} <span>${done}/${confirmed.length}${items.some(n=>n.state==='review'||n.state==='pending'||n.reviewCount)?' · 확인 필요':''}</span>`;details.append(head);
+  for(const net of items){const ui=progressStateUi[net.state]??progressStateUi['not-started'],reviewDetails=net.reviewDetails??[],hasReviewDetail=reviewDetails.length>0,entry=hasReviewDetail?document.createElement('details'):null,button=hasReviewDetail?document.createElement('summary'):document.createElement('button');if(!hasReviewDetail)button.type='button';button.className=`progress-net ${net.state}${net.warningCount?' has-warning':''}`;button.title=hasReviewDetail?'클릭하면 확인 필요 설명을 펼치거나 접고, 관련 위치를 표시합니다.':'클릭하면 관련 단자와 배선을 3D 작업판에서 표시합니다.';
    const extra=net.warningCount?` · 시공 경고 ${net.warningCount}`:net.reviewCount?` · 확인 ${net.reviewCount}`:'';
    button.innerHTML=`<span class="state" aria-hidden="true">${ui.icon}</span><span class="net-copy"><strong>${escapeHtml(net.id)}</strong><small>${escapeHtml(compactMembers(net.members))}</small></span><span class="net-meta">${escapeHtml(ui.label+extra)}</span>`;
-   button.onclick=()=>{board?.focusItems(net.members,net.wireIds);if(net.state==='error')notify(`${net.id}: 오류가 있는 NET입니다.`);else if(net.state==='complete')notify(`${net.id}: 연결 완료`);else notify(`${net.id}: ${ui.label}`);};details.append(button);
+   button.onclick=()=>{board?.focusItems(net.members,net.wireIds);if(net.state==='error')notify(`${net.id}: 오류가 있는 NET입니다.`);else if(net.state==='complete')notify(`${net.id}: 연결 완료`);else notify(`${net.id}: ${ui.label}`);};
+   if(hasReviewDetail){entry.className='progress-net-item';entry.append(button);const explanation=document.createElement('div');explanation.className='progress-review-detail';explanation.innerHTML=reviewDetails.map(item=>`<p><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.detail)}</span>${item.wireIds?.length?`<small>관련 배선: ${escapeHtml(item.wireIds.join(' · '))}</small>`:''}</p>`).join('');entry.append(explanation);details.append(entry);}else details.append(button);
   }
   host.append(details);
  }
  if(!visible){const empty=document.createElement('div');empty.className='progress-empty';empty.textContent=progressFilterMode==='all'?'표시할 NET이 없습니다.':'현재 필터에 해당하는 NET이 없습니다.';host.append(empty);}
 }
-function openProgressPanel(){if(sessionMode!=='practice')return;refreshProgressPanel();const panel=$('progress-panel');panel.setAttribute('aria-hidden','false');requestAnimationFrame(()=>panel.classList.add('open'));$('progress-toggle').setAttribute('aria-expanded','true');}
+function openProgressPanel(){if(!progressPanelPresentation(sessionMode,attempt.state).visible)return;refreshProgressPanel();const panel=$('progress-panel');panel.setAttribute('aria-hidden','false');requestAnimationFrame(()=>panel.classList.add('open'));$('progress-toggle').setAttribute('aria-expanded','true');}
 function refreshPracticeFeedback(latestWireId=null){
  if(sessionMode!=='practice'||attempt.state!=='running'){if(attempt.state==='running')board?.setErrorMarkers([]);return;}
  const assessment=assessPractice(p,attempt.connections,latestWireId),groups=groupErrorsForMarkers(p,assessment.errors,attempt.connections);
@@ -153,7 +154,7 @@ function refreshPracticeFeedback(latestWireId=null){
  if(latestWireId){
   if(assessment.latestErrors.length)notify(`${latestWireId} 연결에 오류가 있습니다. 느낌표를 확인하세요.`);
   else if(assessment.latestImpacts.length)notify(`${latestWireId} 연결 자체는 맞지만 현재 연결망에 기존 오결선이 있습니다. 느낌표를 확인하세요.`);
-  else if(assessment.latestReviews.length)notify(`${latestWireId} 연결은 확인 필요 항목입니다. 최종 채점의 확인 필요 목록을 참고하세요.`);
+  else if(assessment.latestReviews.length)notify(`${latestWireId} 연결은 확인 필요 항목입니다. 진행상황의 오류·확인에서 근거를 확인하세요.`);
   else notify(`${latestWireId} 연결이 올바릅니다.`);
  }
 }
@@ -170,7 +171,7 @@ function renderResults(r){
 $('start').onclick=()=>{if(attempt.start()){wiring.cancel();notify(sessionMode==='practice'?'연습 모드를 시작합니다. 연결마다 바로 확인합니다.':'시험 모드를 시작합니다.');refreshConnections();refreshDraft();}};
 $('finish').onclick=()=>$('confirm').showModal();$('keepworking').onclick=()=>$('confirm').close();
 $('confirmfinish').onclick=()=>{if(!attempt.finish())return;wiring.cancel();$('confirm').close();saveStored(`pcq-3d-last-completed-v1:${problemId}`,{problemId:p.id,elapsedMs:attempt.elapsedMs,completedAt:new Date().toISOString(),connections:attempt.connections});refreshDraft();refreshConnections();saveProgressNow();notify('작업판이 잠겼습니다.');};
-$('grade').onclick=()=>act(()=>{const r=attempt.score(p);clearProgress();renderResults(r);refreshDraft();notify('오류 위치에 느낌표를 표시했습니다.');});
+$('grade').onclick=()=>act(()=>{const r=attempt.score(p);clearProgress();renderResults(r);refreshDraft();if(sessionMode==='exam')openProgressPanel();notify('오류 위치에 느낌표를 표시했습니다.');});
 $('retry').onclick=()=>{if((attempt.connections.length||attempt.state==='running')&&!confirm('현재 작업을 지우고 같은 문제를 다시 풀까요?'))return;clearProgress();attempt.reset();wiring.cancel();selectedWireId=null;$('results').hidden=true;$('errors').replaceChildren();$('error-popover').hidden=true;$('clock').textContent='00:00:00';board?.setErrorMarkers([]);board?.highlight();board?.home();refreshConnections();refreshDraft();};
 $('undo').onclick=()=>act(()=>{const e=wiring.undo();if(e?.type==='none')return;if(e.type==='connection')deselectWire();refreshConnections();refreshDraft();notify('마지막 작업을 되돌렸습니다.');});
 $('redo').onclick=()=>act(()=>{const e=wiring.redo();if(e?.type==='none')return;if(e.type==='connection')deselectWire();refreshConnections();refreshDraft();notify('되돌린 작업을 다시 실행했습니다.');});
