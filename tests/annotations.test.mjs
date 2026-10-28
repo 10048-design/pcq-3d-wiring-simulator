@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createStrokeId,createAnnotationDocument,createStroke,appendPoint,addAnnotationStroke,removeAnnotationStroke,undoAnnotation,redoAnnotation,cloneAnnotationSettings,strokePath} from '../dist/annotations.mjs';
+import {createStrokeId,createAnnotationDocument,createStroke,appendPoint,addAnnotationStroke,removeAnnotationStroke,undoAnnotation,redoAnnotation,cloneAnnotationSettings,strokePath,strokeHitByEraser} from '../dist/annotations.mjs';
 
 test('fallback stroke IDs remain unique well beyond 1000 strokes',()=>{
  const ids=new Set();const cryptoObj={};
@@ -24,4 +24,11 @@ test('annotation undo and redo work for add and remove operations',()=>{
 
 test('strokePath produces a drawable path for dots and multi-point strokes',()=>{
  assert.match(strokePath([{x:1,y:2}]),/^M /);assert.match(strokePath([{x:1,y:2},{x:3,y:4},{x:5,y:6}]),/ Q /);
+});
+
+test('eraser width is cloned independently and changes stroke hit radius',()=>{
+ const settings=cloneAnnotationSettings({tool:'eraser',eraser:{width:64}});assert.equal(settings.tool,'eraser');assert.equal(settings.eraser.width,64);
+ const stroke={id:'s1',tool:'marker',color:'#000',width:6,opacity:1,points:[{x:10,y:10},{x:90,y:10}]};
+ assert.equal(strokeHitByEraser(stroke,{x:50,y:20},8),false);
+ assert.equal(strokeHitByEraser(stroke,{x:50,y:20},24),true);
 });
