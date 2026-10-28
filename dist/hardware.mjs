@@ -110,7 +110,7 @@ export function createHardwareProblem(problemId='p01'){
  }
  // The SMPS photo shows all usable screws in one strip along the front edge.
  const smps=p.devices.find(d=>d.id==='SMPS');
- [['L1',-32],['N',-16],['E',0],['-V',16],['+V',32]].forEach(([n,x])=>{const t=find('SMPS.'+n);t.localPositionMm=[x,-27,27];});
+ [['N',-32],['L1',-16],['E',0],['-V',16],['+V',32]].forEach(([n,x])=>{const t=find('SMPS.'+n);t.localPositionMm=[x,-27,27];});
  // MC-9b exposes a second A1/A2 fastening pair at the lower edge.
  const mc=p.devices.find(d=>d.id==='MC');
  for(const n of ['A1','A2']){
