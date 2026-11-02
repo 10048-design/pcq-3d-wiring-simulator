@@ -15,7 +15,7 @@ export class WiringController {
  chooseTube(use){this.requireRunning();if(![STAGES.START_TUBE,STAGES.END_TUBE].includes(this.stage))throw Error('지금은 절연튜브를 선택할 단계가 아닙니다.');this.remember();const side=this.stage===STAGES.START_TUBE?'from':'to';this.draft.ends[side].tube=Boolean(use);this.stage=side==='from'?STAGES.START_CRIMP:STAGES.END_CRIMP;return {type:'tube',side,use:Boolean(use)};}
  chooseCrimp(crimp){this.requireRunning();if(![STAGES.START_CRIMP,STAGES.END_CRIMP].includes(this.stage))throw Error('먼저 전선과 절연튜브 사용 여부를 선택해주세요.');this.remember();const side=this.stage===STAGES.START_CRIMP?'from':'to';this.draft.ends[side].crimp=crimp;if(side==='from'){this.stage=STAGES.START_TERMINAL;return {type:'crimp',side};}const id=this.complete();return {type:'connection',side,id};}
  select(terminal){
-  this.requireRunning();if(this.problem.terminalMap[terminal.id]!==terminal||!terminal.connectable)throw Error('연결 가능한 등록 단자를 선택해주세요.');
+  this.requireRunning();if(this.problem.terminalMap[terminal.id]!==terminal)throw Error('연결 가능한 등록 단자를 선택해주세요.');if(!terminal.connectable)throw Error(terminal.disabledReason??'연결 가능한 등록 단자를 선택해주세요.');
   if(this.legacy)return this.legacySelect(terminal);
   if(this.stage===STAGES.START_TERMINAL){this.remember();this.draft.source=terminal;this.stage=STAGES.ROUTE;return {type:'source',terminal};}
   if(this.stage===STAGES.ROUTE){if(terminal===this.draft.source)throw Error('다른 목적 단자를 선택해주세요.');this.remember();this.draft.destination=terminal;this.stage=STAGES.END_TUBE;return {type:'destination',terminal};}

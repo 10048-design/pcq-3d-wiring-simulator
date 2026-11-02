@@ -16,16 +16,27 @@ function replaceRelayPins(p,top='11',bottom='7',lampOrder=['RL1','GL1','YL1','RL
  for(let i=1;i<=5;i++){const net=p.nets.find(n=>n.id==='릴레이 표시 '+i);net.members=[`RY${i}.${bottom}`,`${lampOrder[i-1]}.상단 접속부`];}
 }
 function applyCircuitProfile(p,profile){
- const supply=p.nets.find(n=>n.id==='보조회로 L'),control=p.nets.find(n=>n.id==='OCR b접점 이후'),hold=p.nets.find(n=>n.id==='자기유지 분기'),coil=p.nets.find(n=>n.id==='MC 코일');
+ const supply=p.nets.find(n=>n.id==='보조회로 L'),control=p.nets.find(n=>n.id==='OCR b접점 이후'),hold=p.nets.find(n=>n.id==='자기유지 분기'),coil=p.nets.find(n=>n.id==='MC 코일'),stopLamp=p.nets.find(n=>n.id==='정지 표시등');
  if(profile.circuit==='trip-on-mc-11'){
   control.members=['OCR.96','PB6.접점 위','MC.43'];supply.members.push('MC.31');
  }else if(profile.circuit==='trip-off-10')replaceRelayPins(p,'10','6');
  else if(profile.circuit==='trip-lamp-11'||profile.circuit==='trip-lamp-swapped-10'){
-  control.id='OCR a접점 표시';control.members=['OCR.98','YL2.상단 접속부'];p.nets=p.nets.filter(n=>n.id!=='정지 표시등');
-  if(profile.circuit==='trip-lamp-11')supply.members.push('PB6.접점 위','MC.43');
-  else{
-   supply.members.push('PB7.접점 위','MC.43');hold.members=['PB7.접점 아래','MC.44','PB6.접점 위'];coil.members=['PB6.접점 아래','MC.A1'];
-    replaceRelayPins(p,'10','6');
+  // In the trip-lamp drawings OCR 95 is the common supply, 96 feeds the
+  // control/relay rail, and 98 feeds YL2. Keep both OCR output rails instead
+  // of replacing the 95-96 control rail with the 95-98 lamp rail.
+  stopLamp.id='OCR a접점 표시';stopLamp.members=['OCR.98','YL2.상단 접속부'];
+  control.members=control.members.filter(id=>id!=='MC.31');
+  if(profile.circuit==='trip-lamp-11'){
+   const relayInputs=Array.from({length:5},(_,i)=>`RY${i+1}.11`);
+   supply.members=supply.members.filter(id=>!relayInputs.includes(id));
+   control.members.push(...relayInputs);
+  }else{
+   replaceRelayPins(p,'10','6');
+   const relayInputs=Array.from({length:5},(_,i)=>`RY${i+1}.10`);
+   supply.members=supply.members.filter(id=>!relayInputs.includes(id));
+   control.members=['OCR.96','PB7.접점 위',...relayInputs];
+   hold.members=['PB7.접점 아래','PB6.접점 위','MC.43'];
+   coil.members=['PB6.접점 아래','MC.44','MC.A1'];
   }
  }
 }
@@ -34,7 +45,25 @@ function applyLayoutProfile(p,profile){
  const boxes=Object.fromEntries(['PB4','PB5','PB6','PB7'].map(id=>[id,[...p.devices.find(d=>d.id===id).box]]));
  for(const [target,source] of [['PB4','PB6'],['PB5','PB7'],['PB6','PB4'],['PB7','PB5']])p.devices.find(d=>d.id===target).box=boxes[source];
 }
-export function createHardwareProblem(problemId='p01'){
+export function configureOcr97(problem,mode='absent'){
+ if(!['present','absent'].includes(mode))throw Error(`지원하지 않는 OCR 97 설정입니다: ${mode}`);
+ const terminal=problem.terminalMap?.['OCR.97']??problem.terminals?.find(t=>t.id==='OCR.97');
+ if(!terminal)throw Error('OCR.97 단자를 찾을 수 없습니다.');
+ const supply=problem.nets.find(n=>n.id==='보조회로 L');
+ if(!supply)throw Error('보조회로 L NET을 찾을 수 없습니다.');
+ const usesNoContact=problem.profile?.circuit==='trip-lamp-11'||problem.profile?.circuit==='trip-lamp-swapped-10';
+ const present=mode==='present';
+ terminal.connectable=present;
+ terminal.disabledReason=present?null:"OCR 97 단자는 '97 없음' 설정으로 비활성화되어 있습니다.";
+ problem.ocr97Mode=mode;
+ supply.members=supply.members.filter(id=>id!=='OCR.95'&&id!=='OCR.97');
+ supply.members.push('OCR.95');
+ if(usesNoContact&&present)supply.members.push('OCR.97');
+ for(const id of ['OCR.95','OCR.97']){const t=problem.terminalMap?.[id]??problem.terminals?.find(x=>x.id===id);if(t)t.allowedWires=problem.nets.filter(n=>n.status==='confirmed'&&n.members.includes(id)).map(n=>({...n.policy}));}
+ return problem;
+}
+
+export function createHardwareProblem(problemId='p01',{ocr97Mode='absent'}={}){
  const profile=getProblemProfile(problemId),p=getProblem('AC');p.id=profile.id;p.name=profile.name;p.profile=profile;p.hardwareVersion='core-3d-2';p.internalLinks=[];p.routePorts=[];p.requiredPassages=[];
  applyCircuitProfile(p,profile);applyLayoutProfile(p,profile);
  const remove=id=>{p.terminals=p.terminals.filter(t=>t.id!==id);for(const d of p.devices)d.terminals=d.terminals.filter(x=>x!==id);};
@@ -44,8 +73,8 @@ export function createHardwareProblem(problemId='p01'){
  const contactDevices=[...Array.from({length:7},(_,i)=>`PB${i+1}`),...Array.from({length:3},(_,i)=>`SS${i+1}`)];
  const activeContactType=id=>{
   if(/^PB[1-5]$/.test(id)||/^SS[1-3]$/.test(id))return 'NO';
-  if(id==='PB6')return profile.circuit==='trip-lamp-swapped-10'?'NC':'NO';
-  if(id==='PB7')return profile.circuit==='trip-lamp-swapped-10'?'NO':'NC';
+  if(id==='PB6')return 'NO';
+  if(id==='PB7')return 'NC';
   return 'NO';
  };
  for(const id of contactDevices){
@@ -166,6 +195,7 @@ export function createHardwareProblem(problemId='p01'){
  // Tunnel centres: 3 x Ø10, staggered arrangement from the official side view.
  for(let i=1;i<=3;i++){const local=[(i-2)*11,0,i===2?73:61];p.routePorts.push({id:'OCR.CT'+i,deviceId:'OCR',label:'CT '+i,diameterMm:10,connectable:false,positionMm:local.map((v,j)=>v+ocr.centerMm[j]),axis:[0,1,0],lengthMm:38,positionConfidence:'drawing-derived-unmeasured',sourceKey:'empr'});}
  p.terminalMap=Object.fromEntries(p.terminals.map(t=>[t.id,t]));
+ configureOcr97(p,ocr97Mode);
  p.assetRoot=profile.assetRoot;p.answerStatus=profile.answerStatus;p.answerProfilesComplete=true;
  p.pending=[...p.pending.filter(x=>!['physical','direction','pins','material'].includes(x.id)),
   {id:'material3d',title:'미명시 자재 및 매뉴얼 상충',detail:'PLC 전원·통신과 인버터 제어의 압착 규격, 통신 전선, 인버터 출력 색상은 미확정. PLC 권장 전선 굵기와 시험지 1.5㎟가 다름. 시험 채점은 시험지 우선. GMP 97–98 접점 동작 표기는 카탈로그 내부 상충.'},

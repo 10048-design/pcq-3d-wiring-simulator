@@ -1,4 +1,4 @@
-import {createHardwareProblem} from './hardware.mjs';
+import {createHardwareProblem,configureOcr97} from './hardware.mjs';
 import {Attempt,formatTime} from './engine.mjs';
 import {WiringController,connectionNets,STAGES} from './wiring-controller.mjs';
 import {Workbench3D} from './workbench-3d.mjs';
@@ -18,6 +18,10 @@ const p=createHardwareProblem(problemId),attempt=new Attempt(),wiring=new Wiring
 const progressStore=new ProgressStore(),savedProgress=await progressStore.load(problemId);
 const readStored=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
 const saveStored=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{}};
+const ocr97StorageKey=`pcq-3d-ocr97-mode-v1:${problemId}`;
+let ocr97Mode=savedProgress?.sessionConfig?.ocr97Mode??readStored(ocr97StorageKey,'');
+if(!['present','absent'].includes(ocr97Mode))ocr97Mode='';
+configureOcr97(p,ocr97Mode||'absent');
 const viewerStorageKey=`pcq-3d-view-v2:${problemId}`,viewerState=new ViewerState(readStored(viewerStorageKey,{})),splitState=new SplitState(readStored('pcq-3d-split-v1',60));
 const annotationSettingsKey='pcq-3d-annotation-settings-v1',annotationStore=new AnnotationStore(),annotationSettings=cloneAnnotationSettings(readStored(annotationSettingsKey,DEFAULT_ANNOTATION_SETTINGS)),annotationDocs=new Map();
 for(const annotationPage of ANNOTATABLE_PAGES){const loaded=await annotationStore.load(problemId,annotationPage);annotationDocs.set(annotationPage,createAnnotationDocument(loaded.strokes));}
@@ -30,7 +34,7 @@ let progressSaveTimer=null,progressSaveChain=Promise.resolve();
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const act=fn=>{try{return fn();}catch(e){notify(e.message);return null;}};
 function notify(text){const box=$('status');box.textContent=text;box.classList.add('show');clearTimeout(statusTimer);statusTimer=setTimeout(()=>box.classList.remove('show'),2600);}
-function progressSnapshot(){return captureProgress(p,attempt,wiring,{selectedWireId,lastWire});}
+function progressSnapshot(){const snapshot=captureProgress(p,attempt,wiring,{selectedWireId,lastWire});if(snapshot)snapshot.sessionConfig={ocr97Mode};return snapshot;}
 function saveProgressNow(){clearTimeout(progressSaveTimer);progressSaveTimer=null;const snapshot=progressSnapshot();if(snapshot)progressSaveChain=progressSaveChain.then(()=>progressStore.save(snapshot));return progressSaveChain;}
 function scheduleProgressSave(){if(!['running','finished'].includes(attempt.state))return;clearTimeout(progressSaveTimer);progressSaveTimer=setTimeout(saveProgressNow,80);}
 function clearProgress(){clearTimeout(progressSaveTimer);progressSaveTimer=null;progressSaveChain=progressSaveChain.then(()=>progressStore.delete(problemId));return progressSaveChain;}
@@ -39,6 +43,9 @@ document.title=`${problemItem.name} · PCQ 3D 배선 실습`;$('problem-title').
 const problemSelect=$('problem-select');for(const item of [...catalog].sort((a,b)=>a.name.localeCompare(b.name,'ko'))){const option=document.createElement('option');option.value=item.id;option.textContent=item.name;option.selected=item.id===problemId;problemSelect.append(option);}
 problemSelect.onchange=()=>{if(attempt.state==='running'&&!confirm('진행 중인 작업을 끝내고 다른 문제로 이동할까요?')){problemSelect.value=problemId;return;}location.href=`3d.html?problem=${encodeURIComponent(problemSelect.value)}`;};
 const modeSelect=$('mode-select');modeSelect.value=sessionMode;modeSelect.onchange=()=>{if(attempt.state!=='ready'){modeSelect.value=sessionMode;return;}sessionMode=modeSelect.value;saveStored('pcq-3d-session-mode-v1',sessionMode);refreshModeUi();notify(sessionMode==='practice'?'연습 모드: 연결할 때마다 즉시 확인합니다.':'시험 모드: 완료 후 채점합니다.');};
+const ocr97Select=$('ocr97-select');ocr97Select.value=ocr97Mode;
+function refreshOcr97Visual(){const terminal=p.terminalMap['OCR.97'];if(!terminal||!board?.scene)return;board.scene.traverse(o=>{if(o.userData?.terminal?.id!=='OCR.97'||!o.isMesh||o.material?.visible===false)return;if(o.geometry?.type==='CylinderGeometry'){const base=Number(o.geometry.parameters?.radiusTop)||2,target=terminal.connectable?2:1.5;o.scale.x=target/base;o.scale.z=target/base;o.material?.color?.set(terminal.connectable?'#c6bb91':'#647077');}});}
+ocr97Select.onchange=()=>{if(attempt.state!=='ready'){ocr97Select.value=ocr97Mode;return;}ocr97Mode=ocr97Select.value;if(!ocr97Mode){configureOcr97(p,'absent');}else{configureOcr97(p,ocr97Mode);saveStored(ocr97StorageKey,ocr97Mode);}refreshOcr97Visual();refreshProgressPanel();refreshControls();notify(ocr97Mode==='present'?'OCR 97 단자를 사용하는 기종으로 설정했습니다.':ocr97Mode==='absent'?'OCR 97 단자가 없는 기종으로 설정했습니다.':'OCR 97 단자 여부를 선택해주세요.');};
 function closeProgressPanel(){const panel=$('progress-panel'),toggle=$('progress-toggle');panel.classList.remove('open');panel.setAttribute('aria-hidden','true');toggle.setAttribute('aria-expanded','false');}
 function refreshModeUi(){const practice=sessionMode==='practice',presentation=progressPanelPresentation(sessionMode,attempt.state);document.body.dataset.mode=sessionMode;$('instruction').classList.toggle('practice',practice&&attempt.state==='running');$('progress-toggle').hidden=!presentation.visible;$('progress-toggle-label').textContent=presentation.toggleLabel;$('progress-panel-title').textContent=presentation.title;$('progress-panel-subtitle').textContent=presentation.subtitle;if(!presentation.visible)closeProgressPanel();else refreshProgressPanel();}
 
@@ -119,7 +126,7 @@ function refreshDraft(){
 }
 function refreshControls(){
  const run=attempt.state==='running',done=['finished','graded'].includes(attempt.state);
- $('start').disabled=attempt.state!=='ready'||!board;$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('redo').disabled=!run||(!wiring.future.length&&!attempt.future.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;modeSelect.disabled=attempt.state!=='ready';$('clock-label').textContent=done?'최종 작업시간':'경과시간';
+ $('start').disabled=attempt.state!=='ready'||!board||!ocr97Mode;$('start').title=!ocr97Mode?'OCR 97 단자 여부를 먼저 선택해주세요.':'';$('finish').disabled=!run;$('grade').disabled=!done;$('undo').disabled=!run||(!wiring.history.length&&!attempt.history.length);$('redo').disabled=!run||(!wiring.future.length&&!attempt.future.length);$('delete').disabled=!run||!selectedWireId;$('cancel').disabled=!run||!wiring.draft;modeSelect.disabled=attempt.state!=='ready';ocr97Select.disabled=attempt.state!=='ready';ocr97Select.title=attempt.state==='ready'?'시험 시작 전에 사용할 OCR의 97 단자 존재 여부를 선택하세요.':'시작 후에는 OCR 97 단자 설정을 변경할 수 없습니다.';$('clock-label').textContent=done?'최종 작업시간':'경과시간';
  for(const b of document.querySelectorAll('#material-shelf button')){const allowed=b.dataset.kind==='wire'?wiring.stage===STAGES.WIRE:b.dataset.kind==='tube'?[STAGES.START_TUBE,STAGES.END_TUBE].includes(wiring.stage):[STAGES.START_CRIMP,STAGES.END_CRIMP].includes(wiring.stage);b.disabled=!run||!allowed;}
 }
 const progressStateUi={
@@ -168,7 +175,7 @@ function renderResults(r){
  board?.setErrorMarkers(groups);
 }
 
-$('start').onclick=()=>{if(attempt.start()){wiring.cancel();notify(sessionMode==='practice'?'연습 모드를 시작합니다. 연결마다 바로 확인합니다.':'시험 모드를 시작합니다.');refreshConnections();refreshDraft();}};
+$('start').onclick=()=>{if(!ocr97Mode){notify('OCR 97 단자 여부를 먼저 선택해주세요.');return;}if(attempt.start()){wiring.cancel();notify(sessionMode==='practice'?'연습 모드를 시작합니다. 연결마다 바로 확인합니다.':'시험 모드를 시작합니다.');refreshConnections();refreshDraft();}};
 $('finish').onclick=()=>$('confirm').showModal();$('keepworking').onclick=()=>$('confirm').close();
 $('confirmfinish').onclick=()=>{if(!attempt.finish())return;wiring.cancel();$('confirm').close();saveStored(`pcq-3d-last-completed-v1:${problemId}`,{problemId:p.id,elapsedMs:attempt.elapsedMs,completedAt:new Date().toISOString(),connections:attempt.connections});refreshDraft();refreshConnections();saveProgressNow();notify('작업판이 잠겼습니다.');};
 $('grade').onclick=()=>act(()=>{const r=attempt.score(p);clearProgress();renderResults(r);refreshDraft();if(sessionMode==='exam')openProgressPanel();notify('오류 위치에 느낌표를 표시했습니다.');});
@@ -294,7 +301,7 @@ setInterval(()=>{$('clock').textContent=formatTime(attempt.elapsed());},100);
 setInterval(()=>{if(attempt.state==='running')saveProgressNow();},5000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){saveProgressNow();flushAnnotationSaves();}});
 window.addEventListener('pagehide',()=>{saveProgressNow();flushAnnotationSaves();});
-refreshModeUi();buildShelf();refreshConnections();refreshDraft();
+refreshModeUi();buildShelf();refreshOcr97Visual();refreshConnections();refreshDraft();
 
 const resumeDialog=$('resume-dialog');resumeDialog.oncancel=e=>e.preventDefault();
 $('resume-saved').onclick=()=>{try{const restored=restoreProgress(savedProgress,p,attempt,wiring);selectedWireId=restored.selectedWireId;if(restored.lastWire)lastWire=restored.lastWire;resumeDialog.close();$('clock').textContent=formatTime(attempt.elapsed());refreshConnections();refreshDraft();notify('저장된 실습을 이어서 시작합니다.');}catch(e){clearProgress();resumeDialog.close();notify('저장된 진행상황을 불러올 수 없어 처음부터 시작합니다.');}};
