@@ -55,3 +55,22 @@ test('supply and SMPS PE direct-to-TB4 links are confirmed while TB2.E to SMPS.E
  const review=grade(p,[wire(p,'TB2.E','SMPS.E')]);
  assert.equal(review.reviews.length,1);assert.equal(review.errors.some(e=>e.type==='잘못된 연결'),false);assert.match(review.reviews[0].detail,/TB4\.E/);
 });
+
+
+test('p15 follows the OCR 95-96 / 97-98 hardware and PB7-stop/PB6-start control rails',()=>{
+ const absent=createHardwareProblem('p15',{ocr97Mode:'absent'}),present=createHardwareProblem('p15',{ocr97Mode:'present'});
+ const accepted=(p,from,to)=>{const r=grade(p,[wire(p,from,to)]);assert.equal(r.errors.some(e=>e.type==='잘못된 연결'||e.type==='연결 데이터'),false,`${from} ↔ ${to}: ${JSON.stringify(r.errors)}`);};
+ accepted(absent,'MCCB.2차 L','OCR.95');
+ accepted(absent,'OCR.96','PB7.NC 단자1');
+ accepted(absent,'OCR.96','RY1.10');
+ accepted(absent,'PB7.NC 단자2','PB6.NO 단자1');
+ accepted(absent,'PB7.NC 단자2','MC.43');
+ accepted(absent,'PB6.NO 단자2','MC.44');
+ accepted(absent,'PB6.NO 단자2','MC.A1');
+ accepted(absent,'OCR.98','YL2.상단 접속부');
+ accepted(present,'OCR.A1','OCR.95');
+ accepted(present,'OCR.95','OCR.97');
+ accepted(present,'MCCB.2차 L','OCR.97');
+ const wrong=grade(present,[wire(present,'OCR.96','OCR.98')]);
+ assert.ok(wrong.errors.some(e=>e.type==='잘못된 연결'));
+});
